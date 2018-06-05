@@ -8,11 +8,61 @@
 </head>
 <body>
 <header id="header">
-    <a class="title"><span></span>新闻后台管理系统</a>
+    <div class="headerLBox"><span></span>新闻后台管理系统</div>
+    <ul class="headerRBox">
+        <li>
+            <form class="searchForm">
+                <input type="text" placeholder="Enter Keyword" />
+                <button></button>
+            </form>
+        </li>
+        <li></li>
+        <li></li>
+    </ul>
 </header>
 <section id="main">
-    <div id="sideBar"></div>
-    <div id="content"></div>
+    <div id="sideBar">
+        <ul class="nav">
+            <li><a href="javascript:;"><i></i><span>首页</span></a></li>
+            <li><a href="javascript:;"><i></i><span>阅读统计</span></a></li>
+            <li><a href="javascript:;"><i></i><span>员工统计</span></a></li>
+            <li><a href="javascript:;"><i></i><span>新闻上传</span></a></li>
+            <li><a href="javascript:;"><i></i><span>用户管理</span></a></li>
+            <li><a href="javascript:;"><i></i><span>专栏作家</span></a></li>
+            <li><a href="javascript:;"><i></i><span>广告管理</span></a></li>
+        </ul>
+    </div>
+    <div id="content">
+        <div class="fourUl">
+            <ul class="col">
+                <li class="bg_purple">
+                    <span class="smallText">今日访客量</span>
+                    <span class="bigText">5,356</span>
+                </li>
+            </ul>
+            <ul class="col">
+                <li class="bg_blue">
+                    <span class="smallText">本月访客量</span>
+                    <span class="bigText">3,245,356</span>
+                </li>
+            </ul>
+            <ul class="col">
+                <li class="bg_green">
+                    <span class="smallText">注册用户数</span>
+                    <span class="bigText">3,245,356</span>
+                </li>
+            </ul>
+            <ul class="col">
+                <li class="bg_red">
+                    <span class="smallText">平均在线时长</span>
+                    <span class="bigText">13.25</span>
+                </li>
+            </ul>
+        </div>
+        <div id="table"></div>
+    </div>
 </section>
+<script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
+<script src="js/index.js"></script>
 </body>
 </html>
