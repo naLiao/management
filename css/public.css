@@ -1,0 +1,50 @@
+/*主体背景颜色*/
+/*CSS Reset*/
+* {
+    box-sizing: border-box;
+}
+body,
+div,
+ul,
+h5 {
+    margin: 0;
+    padding: 0;
+}
+li {
+    list-style: none;
+}
+a {
+    text-decoration: none;
+    color: #707478;
+}
+input,
+button {
+    outline: none;
+    border: none;
+}
+/*公用样式*/
+body {
+    font-size: 14px;
+    font-family: Helvetiva, Arial, sans-serif;
+    color: #707478;
+    text-align: center;
+    background: #d9e0e7;
+    cursor: auto;
+}
+.clearFix:after {
+    content: "";
+    display: block;
+    clear: both;
+}
+.bg_purple {
+    background: #727cb6;
+}
+.bg_blue {
+    background: #348fe2;
+}
+.bg_green {
+    background: #00acac;
+}
+.bg_red {
+    background: #ff5b57;
+}

@@ -8,17 +8,23 @@
     border-radius: 3px;
     background: #fff;
     width: 100%;
-
     font-size: 14px;
+    border-collapse: collapse;
 }
 .table1 thead{
     line-height: 30px;
     border-bottom: solid 1px #1D8888;
 }
-.table1 thead th{
+.table1 thead{
     color: #242a30;
-    border-bottom: 2px solid #e2e7eb!important;
+    border-bottom: 2px solid #e2e7eb;
 }
 .table1 tbody{
     line-height: 50px;
+}
+.table1,.table1 thead th,.table1 tbody tr{
+    border-bottom: 1px solid #e2e7eb;
+}
+.table1 tbody tr:nth-of-type(2n-1){
+    background: #eee;
 }

@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>新闻后台管理</title>
-    <link rel="stylesheet" href="css/template.css">
+    <link rel="stylesheet" href="css/public.css">
     <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/sideBar.css">
 </head>
 <body>
 <header id="header">
@@ -23,13 +25,26 @@
 <section id="main">
     <div id="sideBar">
         <ul class="nav">
-            <li><a class="active" href="javascript:;"><i></i><span>首页</span></a></li>
-            <li><a href="javascript:;"><i></i><span>新闻上传</span></a></li>
-            <li><a href="javascript:;"><i></i><span>阅读统计</span></a></li>
+            <li><a class="active" href="#"><i></i><span>首页</span></a></li>
+            <li>
+                <a class="up" href="javascript:;"><i></i><span>新闻上传</span></a>
+                <ul class="newsEdit clearFix">
+                    <a href="newsEdit.html">栏目</a>
+                    <a href="javascript:;">内容</a>
+                    <a href="javascript:;">我的稿件</a>
+                </ul>
+            </li>
+            <li><a href="readCount.html"><i></i><span>阅读统计</span></a></li>
             <li><a href="javascript:;"><i></i><span>员工统计</span></a></li>
             <li><a href="javascript:;"><i></i><span>用户管理</span></a></li>
             <li><a href="javascript:;"><i></i><span>专栏作家</span></a></li>
-            <li><a href="javascript:;"><i></i><span>广告管理</span></a></li>
+            <li>
+                <a class="ad" href="javascript:;"><i></i><span>广告管理</span></a>
+                <ul class="adEdit">
+                    <a href="javascript:;">广告位管理</a>
+                    <a href="javascript:;">广告管理</a>
+                </ul>
+            </li>
         </ul>
     </div>
     <div id="content">
@@ -59,10 +74,16 @@
                 </li>
             </ul>
         </div>
-        <div id="table"></div>
+        <!--<div id="table"></div>-->
     </div>
+    <!--
+    1.写在一个页面里，还是不同页面跳转？
+    2.JS写的位置与后面框架里js写的位置
+    3.
+    -->
 </section>
-<script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
-<script src="js/index.js"></script>
+<!--<script src="http://echarts.baidu.com/build/dist/echarts.js"></script>-->
+<!--<script src="js/echarts.js"></script>-->
+<script src="js/sideBar.js"></script>
 </body>
 </html>

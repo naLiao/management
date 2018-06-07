@@ -1,0 +1,41 @@
+
+
+
+#content {
+    margin-left: 220px;
+    padding: 20px 25px;
+    padding-top: 54px;
+}
+#content .fourUl {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+#content .col {
+    width: 24%;
+}
+#content .col li {
+    border-radius: 3px;
+    padding: 0 10px;
+    position: relative;
+    height: 100px;
+}
+#content .col li .smallText {
+    font-size: 14px;
+    color: #fff;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+#content .col li .bigText {
+    font-size: 24px;
+    color: #fff;
+    position: absolute;
+    top: 50px;
+    left: 20px;
+}
+#table {
+    margin-top: 20px;
+    height: 400px;
+}
