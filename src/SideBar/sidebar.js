@@ -7,6 +7,9 @@ class SideBar extends React.Component {
         super(props);
         this.state = { };
     }
+    click=()=>{
+        this.refs.editUl.style.height = '105px';
+    }
     render(){
         return (
             <div id="sideBar">
@@ -17,11 +20,11 @@ class SideBar extends React.Component {
                         </Link>
                     </li>
                     <li>
-                        <a class="up" href="javascript:;"><i className="fa fa-file-text-o"> </i><span>新闻上传</span></a>
-                        <ul class="newsEdit clearFix">
-                            <a href="newsEdit.html">栏目</a>
-                            <a href="javascript:;">内容</a>
-                            <a href="javascript:;">我的稿件</a>
+                        <a class="up" onClick={this.click} href="javascript:;"><i className="fa fa-file-text-o"> </i><span>新闻上传</span></a>
+                        <ul ref={'editUl'} class="newsEdit clearFix">
+                            <Link to="/edit">栏目</Link>
+                            <Link to="/edit">内容</Link>
+                            <Link to="/edit">我的稿件</Link>
                         </ul>
                     </li>
                     <li>

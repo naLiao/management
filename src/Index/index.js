@@ -8,7 +8,7 @@ class IndexContent extends React.Component {
     }
     render(){
         return (
-            <div id="index">
+            <div id="index" className="content">
                 <div className="fourUl">
                     <ul className="col">
                         <li className="bg_purple">

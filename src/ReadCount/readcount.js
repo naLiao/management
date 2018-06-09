@@ -1,8 +1,7 @@
 import React from 'react';
-import echarts from 'echarts/lib/echarts';
-import  'echarts/lib/chart/bar';
-import option1 from './pieChart';
 import './readCount.css';
+import '../Charts/pie';
+import Pie from "../Charts/pie";
 
 class ReadCount extends React.Component {
     constructor(props){
@@ -10,13 +9,11 @@ class ReadCount extends React.Component {
         this.state = { };
     }
     render(){
-        let pieChart = echarts.init(document.getElementById('pic1'));
-        pieChart.setOption({option1});
         return (
             <div id="readCount" className="content">
                 <div className="table1Title">栏目阅读统计</div>
                 <div className="charts">
-                    <PieChart />
+                    <Pie />
                 </div>
                 <div className="table1Title">今日点击Top 10</div>
                 <table className="table1">
@@ -28,6 +25,7 @@ class ReadCount extends React.Component {
                         <th>阅读量</th>
                         <th>评论量</th>
                         <th>转发量</th>
+                        <th>编辑</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -38,6 +36,7 @@ class ReadCount extends React.Component {
                         <td>1898</td>
                         <td>23</td>
                         <td>45</td>
+                        <td>张三</td>
                     </tr>
                     <tr>
                         <td>2</td>
@@ -46,6 +45,7 @@ class ReadCount extends React.Component {
                         <td>1898</td>
                         <td>23</td>
                         <td>45</td>
+                        <td>张三</td>
                     </tr>
                     <tr>
                         <td>3</td>
@@ -54,6 +54,7 @@ class ReadCount extends React.Component {
                         <td>1898</td>
                         <td>23</td>
                         <td>45</td>
+                        <td>张三</td>
                     </tr>
                     <tr>
                         <td>4</td>
@@ -62,6 +63,7 @@ class ReadCount extends React.Component {
                         <td>1898</td>
                         <td>23</td>
                         <td>45</td>
+                        <td>张三</td>
                     </tr>
                     <tr>
                         <td>5</td>
@@ -70,6 +72,7 @@ class ReadCount extends React.Component {
                         <td>1898</td>
                         <td>23</td>
                         <td>45</td>
+                        <td>张三</td>
                     </tr>
                     <tr>
                         <td>6</td>
@@ -78,6 +81,7 @@ class ReadCount extends React.Component {
                         <td>1898</td>
                         <td>23</td>
                         <td>45</td>
+                        <td>张三</td>
                     </tr>
                     <tr>
                         <td>7</td>
@@ -86,6 +90,7 @@ class ReadCount extends React.Component {
                         <td>1898</td>
                         <td>23</td>
                         <td>45</td>
+                        <td>张三</td>
                     </tr>
                     <tr>
                         <td>8</td>
@@ -94,6 +99,7 @@ class ReadCount extends React.Component {
                         <td>1898</td>
                         <td>23</td>
                         <td>45</td>
+                        <td>张三</td>
                     </tr>
                     <tr>
                         <td>9</td>
@@ -102,6 +108,7 @@ class ReadCount extends React.Component {
                         <td>1898</td>
                         <td>23</td>
                         <td>45</td>
+                        <td>张三</td>
                     </tr>
                     <tr>
                         <td>10</td>
@@ -110,6 +117,7 @@ class ReadCount extends React.Component {
                         <td>1898</td>
                         <td>23</td>
                         <td>45</td>
+                        <td>张三</td>
                     </tr>
                     </tbody>
                 </table>
