@@ -1,6 +1,6 @@
 import React from 'react';
 import echarts from 'echarts/lib/echarts';
-import  'echarts/lib/chart/pie';
+import 'echarts/lib/chart/pie';
 import 'echarts/lib/component/tooltip';
 import 'echarts/lib/component/title';
 
@@ -45,7 +45,7 @@ class Pie extends React.Component {
                     data:[
                         {
                             value:60,
-                            name:'头条',
+                            name:'精选',
                             itemStyle:{
                                 normal:{
                                     color:'rgb(255,192,0)'
@@ -54,7 +54,7 @@ class Pie extends React.Component {
                         },
                         {
                             value:20,
-                            name:'社会',
+                            name:'时事',
                             itemStyle:{
                                 normal:{
                                     color:'rgb(1,175,80)'
@@ -63,7 +63,7 @@ class Pie extends React.Component {
                         },
                         {
                             value:10,
-                            name:'自然',
+                            name:'财经',
                             itemStyle:{
                                 normal:{
                                     color:'rgb(122,48,158)'
@@ -72,7 +72,7 @@ class Pie extends React.Component {
                         },
                         {
                             value:10,
-                            name:'图文',
+                            name:'生活',
                             itemStyle:{
                                 normal:{
                                     color: '#783943'

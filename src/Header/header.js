@@ -8,12 +8,15 @@ class Header extends React.Component {
             avatarOnOff:false
         };
     }
+    //点击让头像下方的设置列表出现
     click = ()=>{
         let {avatarOnOff} = this.state;
         if(avatarOnOff){
             this.refs.list.style.opacity = 0;
+            this.refs.list.style.height = 0;
         }else{
             this.refs.list.style.opacity = 1;
+            this.refs.list.style.height = '110px';
         }
         avatarOnOff = !avatarOnOff;
         this.setState({avatarOnOff});
@@ -25,7 +28,7 @@ class Header extends React.Component {
                 <ul className="headerRBox">
                     <li>
                         <div className="searchForm">
-                            <input type="text" placeholder="请搜索" class="input" />
+                            <input type="text" placeholder="请搜索" className="input" />
                             <button id="searchBtn" className="fa fa-search"></button>
                         </div>
                     </li>

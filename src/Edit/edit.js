@@ -12,16 +12,16 @@ class Edit extends React.Component {
             <form className='content'>
                 <div className="submitBox">
                     <div>
-                        <label className="f163">标题<i>*</i></label>
+                        <label>标题<i>*</i></label>
                         <input type="text" />
                     </div>
                     <div>
                         <label>投放栏目<i>*</i></label>
                         <select>
-                            <option value ="头条">精选</option>
-                            <option value ="图文">时事</option>
-                            <option value="社会">财经</option>
-                            <option value="自然">生活</option>
+                            <option value ="头条">头条</option>
+                            <option value ="时事">时事</option>
+                            <option value="财经">财经</option>
+                            <option value="生活">生活</option>
                         </select>
                     </div>
                     <div>

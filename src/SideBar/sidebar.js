@@ -13,18 +13,18 @@ class SideBar extends React.Component {
     render(){
         return (
             <div id="sideBar">
-                <ul class="nav">
+                <ul className="nav">
                     <li>
-                        <Link to="/" class="active" href="#"><i className="fa fa-desktop"></i>
+                        <Link to="/" className="active" href="#"><i className="fa fa-desktop"></i>
                             <span>首页</span>
                         </Link>
                     </li>
                     <li>
-                        <a class="up" onClick={this.click} href="javascript:;"><i className="fa fa-file-text-o"> </i><span>新闻上传</span></a>
-                        <ul ref={'editUl'} class="newsEdit clearFix">
-                            <Link to="/edit">栏目</Link>
-                            <Link to="/edit">内容</Link>
-                            <Link to="/edit">我的稿件</Link>
+                        <a className="up" onClick={this.click} href="javascript:;"><i className="fa fa-file-text-o"> </i><span>新闻上传</span></a>
+                        <ul ref={'editUl'} className="newsEdit clearFix">
+                            <Link to="/column/headline">栏目列表</Link>
+                            <Link to="/edit">新建稿件</Link>
+                            <Link to="/myarticle/posted">我的稿件</Link>
                         </ul>
                     </li>
                     <li>
@@ -37,8 +37,8 @@ class SideBar extends React.Component {
                     <li><a href="javascript:;"><i className="fa fa-tags"></i><span>用户管理</span></a></li>
                     <li><a href="javascript:;"><i className="fa fa-pencil-square-o"></i><span>专栏作家</span></a></li>
                     <li>
-                        <a class="ad" href="javascript:;"><i className="fa fa-puzzle-piece"></i><span>广告管理</span></a>
-                        <ul class="adEdit">
+                        <a className="ad" href="javascript:;"><i className="fa fa-puzzle-piece"></i><span>广告管理</span></a>
+                        <ul className="adEdit">
                             <a href="javascript:;">广告位管理</a>
                             <a href="javascript:;">广告管理</a>
                         </ul>
