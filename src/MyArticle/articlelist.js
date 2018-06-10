@@ -1,5 +1,5 @@
 import React from 'react';
-import Tr from '../Column/tr';
+import Tr from './tr';
 
 class ArticleList extends React.Component {
     constructor(props){
@@ -14,7 +14,8 @@ class ArticleList extends React.Component {
                     readNum:'1234',
                     commentNum:'35',
                     shareNum:'56',
-                    editor:'张三'
+                    editor:'张三',
+                    time:'2018-6-5'
                 },
                 {
                     id:2,
@@ -23,7 +24,8 @@ class ArticleList extends React.Component {
                     readNum:'1234',
                     commentNum:'35',
                     shareNum:'56',
-                    editor:'张三'
+                    editor:'张三',
+                    time:'2018-6-5'
                 },
                 {
                     id:3,
@@ -32,7 +34,8 @@ class ArticleList extends React.Component {
                     readNum:'1234',
                     commentNum:'35',
                     shareNum:'56',
-                    editor:'张三'
+                    editor:'张三',
+                    time:'2018-6-5'
                 },
                 {
                     id:4,
@@ -41,7 +44,8 @@ class ArticleList extends React.Component {
                     readNum:'1234',
                     commentNum:'35',
                     shareNum:'56',
-                    editor:'张三'
+                    editor:'张三',
+                    time:'2018-6-5'
                 },
                 {
                     id:5,
@@ -50,7 +54,8 @@ class ArticleList extends React.Component {
                     readNum:'1234',
                     commentNum:'35',
                     shareNum:'56',
-                    editor:'张三'
+                    editor:'张三',
+                    time:'2018-6-5'
                 },
                 {
                     id:6,
@@ -59,7 +64,8 @@ class ArticleList extends React.Component {
                     readNum:'1234',
                     commentNum:'35',
                     shareNum:'56',
-                    editor:'张三'
+                    editor:'张三',
+                    time:'2018-6-5'
                 },
                 {
                     id:7,
@@ -68,7 +74,8 @@ class ArticleList extends React.Component {
                     readNum:'1234',
                     commentNum:'35',
                     shareNum:'56',
-                    editor:'张三'
+                    editor:'张三',
+                    time:'2018-6-5'
                 },
                 {
                     id:8,
@@ -77,7 +84,8 @@ class ArticleList extends React.Component {
                     readNum:'1234',
                     commentNum:'35',
                     shareNum:'56',
-                    editor:'张三'
+                    editor:'张三',
+                    time:'2018-6-5'
                 },
                 {
                     id:9,
@@ -86,7 +94,8 @@ class ArticleList extends React.Component {
                     readNum:'1234',
                     commentNum:'35',
                     shareNum:'56',
-                    editor:'张三'
+                    editor:'张三',
+                    time:'2018-6-5'
                 },
                 {
                     id:10,
@@ -95,7 +104,8 @@ class ArticleList extends React.Component {
                     readNum:'1234',
                     commentNum:'35',
                     shareNum:'56',
-                    editor:'张三'
+                    editor:'张三',
+                    time:'2018-6-5'
                 }
             ],
             arr2:[
@@ -106,7 +116,8 @@ class ArticleList extends React.Component {
                     readNum:'1234',
                     commentNum:'35',
                     shareNum:'56',
-                    editor:'张三'
+                    editor:'张三',
+                    time:'2018-6-5'
                 },
                 {
                     id:2,
@@ -115,7 +126,8 @@ class ArticleList extends React.Component {
                     readNum:'1234',
                     commentNum:'35',
                     shareNum:'56',
-                    editor:'张三'
+                    editor:'张三',
+                    time:'2018-6-5'
                 },
                 {
                     id:3,
@@ -124,7 +136,8 @@ class ArticleList extends React.Component {
                     readNum:'1234',
                     commentNum:'35',
                     shareNum:'56',
-                    editor:'张三'
+                    editor:'张三',
+                    time:'2018-6-5'
                 },
                 {
                     id:4,
@@ -133,7 +146,8 @@ class ArticleList extends React.Component {
                     readNum:'1234',
                     commentNum:'35',
                     shareNum:'56',
-                    editor:'张三'
+                    editor:'张三',
+                    time:'2018-6-5'
                 },
                 {
                     id:5,
@@ -142,7 +156,8 @@ class ArticleList extends React.Component {
                     readNum:'1234',
                     commentNum:'35',
                     shareNum:'56',
-                    editor:'张三'
+                    editor:'张三',
+                    time:'2018-6-5'
                 },
                 {
                     id:6,
@@ -151,7 +166,8 @@ class ArticleList extends React.Component {
                     readNum:'1234',
                     commentNum:'35',
                     shareNum:'56',
-                    editor:'张三'
+                    editor:'张三',
+                    time:'2018-6-5'
                 },
                 {
                     id:7,
@@ -160,7 +176,8 @@ class ArticleList extends React.Component {
                     readNum:'1234',
                     commentNum:'35',
                     shareNum:'56',
-                    editor:'张三'
+                    editor:'张三',
+                    time:'2018-6-5'
                 },
                 {
                     id:8,
@@ -169,7 +186,8 @@ class ArticleList extends React.Component {
                     readNum:'1234',
                     commentNum:'35',
                     shareNum:'56',
-                    editor:'张三'
+                    editor:'张三',
+                    time:'2018-6-5'
                 },
                 {
                     id:9,
@@ -178,7 +196,8 @@ class ArticleList extends React.Component {
                     readNum:'1234',
                     commentNum:'35',
                     shareNum:'56',
-                    editor:'张三'
+                    editor:'张三',
+                    time:'2018-6-5'
                 },
                 {
                     id:10,
@@ -187,7 +206,8 @@ class ArticleList extends React.Component {
                     readNum:'1234',
                     commentNum:'35',
                     shareNum:'56',
-                    editor:'张三'
+                    editor:'张三',
+                    time:'2018-6-5'
                 }
             ],
             arr3:[
@@ -198,7 +218,8 @@ class ArticleList extends React.Component {
                     readNum:'1234',
                     commentNum:'35',
                     shareNum:'56',
-                    editor:'张三'
+                    editor:'张三',
+                    time:'2018-6-5'
                 },
                 {
                     id:2,
@@ -207,7 +228,8 @@ class ArticleList extends React.Component {
                     readNum:'1234',
                     commentNum:'35',
                     shareNum:'56',
-                    editor:'张三'
+                    editor:'张三',
+                    time:'2018-6-5'
                 },
                 {
                     id:3,
@@ -216,7 +238,8 @@ class ArticleList extends React.Component {
                     readNum:'1234',
                     commentNum:'35',
                     shareNum:'56',
-                    editor:'张三'
+                    editor:'张三',
+                    time:'2018-6-5'
                 },
                 {
                     id:4,
@@ -225,7 +248,8 @@ class ArticleList extends React.Component {
                     readNum:'1234',
                     commentNum:'35',
                     shareNum:'56',
-                    editor:'张三'
+                    editor:'张三',
+                    time:'2018-6-5'
                 },
                 {
                     id:5,
@@ -234,7 +258,8 @@ class ArticleList extends React.Component {
                     readNum:'1234',
                     commentNum:'35',
                     shareNum:'56',
-                    editor:'张三'
+                    editor:'张三',
+                    time:'2018-6-5'
                 },
                 {
                     id:6,
@@ -243,7 +268,8 @@ class ArticleList extends React.Component {
                     readNum:'1234',
                     commentNum:'35',
                     shareNum:'56',
-                    editor:'张三'
+                    editor:'张三',
+                    time:'2018-6-5'
                 },
                 {
                     id:7,
@@ -252,7 +278,8 @@ class ArticleList extends React.Component {
                     readNum:'1234',
                     commentNum:'35',
                     shareNum:'56',
-                    editor:'张三'
+                    editor:'张三',
+                    time:'2018-6-5'
                 },
                 {
                     id:8,
@@ -261,7 +288,8 @@ class ArticleList extends React.Component {
                     readNum:'1234',
                     commentNum:'35',
                     shareNum:'56',
-                    editor:'张三'
+                    editor:'张三',
+                    time:'2018-6-5'
                 },
                 {
                     id:9,
@@ -270,7 +298,8 @@ class ArticleList extends React.Component {
                     readNum:'1234',
                     commentNum:'35',
                     shareNum:'56',
-                    editor:'张三'
+                    editor:'张三',
+                    time:'2018-6-5'
                 },
                 {
                     id:10,
@@ -279,7 +308,8 @@ class ArticleList extends React.Component {
                     readNum:'1234',
                     commentNum:'35',
                     shareNum:'56',
-                    editor:'张三'
+                    editor:'张三',
+                    time:'2018-6-5'
                 }
             ]
         };
@@ -304,12 +334,14 @@ class ArticleList extends React.Component {
         let newArr = arr.map((e,i)=>{
             let obj={
                 key:i,
+                id:e.id,
                 title:e.title,
                 column:e.column,
                 readNum:e.readNum,
                 commentNum:e.commentNum,
                 shareNum:e.shareNum,
-                editor:e.editor
+                editor:e.editor,
+                time:e.time
             }
             return <Tr {...obj} />;
         })
@@ -324,14 +356,13 @@ class ArticleList extends React.Component {
                         <th>阅读量</th>
                         <th>评论量</th>
                         <th>转发量</th>
-                        <th>编辑</th>
+                        <th>时间</th>
                         <th>修改</th>
-                        <th>置顶</th>
                         <th>删除</th>
                     </tr>
                     </thead>
                     <tbody>
-                    {newArr}
+                        {newArr}
                     </tbody>
                 </table>
                 <ul id="pages">

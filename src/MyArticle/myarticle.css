@@ -1,0 +1,27 @@
+.articleContent{
+    background: #348fe2;
+}
+.articleNav{
+    padding: 20px 0px 20px 15px;
+}
+.articleNav li{
+    display: inline-block;
+    width: 120px;
+    text-align: center;
+    background: #348fe2;
+    border-radius: 4px;
+    margin: 0 15px;
+}
+.articleNav li a{
+    display: block;
+    height: 40px;
+    line-height: 40px;
+    font-size: 16px;
+    color: #fff;
+}
+.articleNav li:hover{
+    background: #65b1f6;
+}
+.articleNav li.active{
+    background: #65b1f6;
+}

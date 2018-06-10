@@ -15,10 +15,6 @@
     text-align: left;
     position: relative;
 }
-.subNav{
-    padding: 20px 0px 20px 15px;
-    /*border-bottom: 2px solid #e2e7eb;*/
-}
 #createNews{
     position: absolute;
     top: 30px;
@@ -33,6 +29,10 @@
 }
 #createNews:hover{
     background-color: #7bbbfc;
+}
+.subNav{
+    padding: 20px 0px 20px 15px;
+    /*border-bottom: 2px solid #e2e7eb;*/
 }
 .subNav li{
     display: inline-block;
@@ -89,6 +89,9 @@
     background: #3992EC;
     border-radius: 6px;
     color: #fff;
+}
+.newsTable td button:hover{
+    background: #65b1f6;
 }
 #pages{
     width: 100%;

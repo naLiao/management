@@ -12,81 +12,59 @@ class Pie extends React.Component {
     componentDidMount() {
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('pie'));
-        // 绘制图表
-        let option = {backgroundColor: 'transparent',
-            title: {
+        let option = {
+            title : {
                 text: '各栏目点击百分比',
-                left: 'center',
-                top: 20,
-                textStyle: {
-                    color: '#ccc'
-                }
+                subtext: '',
+                x:'left'
             },
             tooltip : {
                 trigger: 'item',
-                formatter: "{a} <br/>{b} : {d}%"
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
             },
-            visualMap: {
-                show: false,
-                min: 500,
-                max: 600,
-                inRange: {
-                    colorLightness: [0, 1]
+            legend: {
+                x : 'center',
+                y : 'bottom',
+                data:['rose1','rose2','rose3','rose4','rose5','rose6','rose7','rose8']
+            },
+            toolbox: {
+                show : true,
+                feature : {
+                    mark : {show: true},
+                    dataView : {show: true, readOnly: false},
+                    magicType : {
+                        show: true,
+                        type: ['pie', 'funnel']
+                    },
+                    restore : {show: true},
+                    saveAsImage : {show: true}
                 }
             },
+            calculable : true,
             series : [
                 {
-                    name:'各栏目点击百分比',
+                    name:'面积模式',
                     type:'pie',
-                    clockwise:'true',
-                    startAngle:'0',
-                    radius : '60%',
-                    center: ['50%', '50%'],
+                    radius : [30, 110],
+                    center : ['center', 180],
+                    roseType : 'area',
+                    x: 'left',               // for funnel
+                    max: 40,                // for funnel
+                    sort : 'ascending',     // for funnel
                     data:[
-                        {
-                            value:60,
-                            name:'精选',
-                            itemStyle:{
-                                normal:{
-                                    color:'rgb(255,192,0)'
-                                }
-                            }
-                        },
-                        {
-                            value:20,
-                            name:'时事',
-                            itemStyle:{
-                                normal:{
-                                    color:'rgb(1,175,80)'
-                                }
-                            }
-                        },
-                        {
-                            value:10,
-                            name:'财经',
-                            itemStyle:{
-                                normal:{
-                                    color:'rgb(122,48,158)'
-                                }
-                            }
-                        },
-                        {
-                            value:10,
-                            name:'生活',
-                            itemStyle:{
-                                normal:{
-                                    color: '#783943'
-                                }
-                            }
-                        }
+                        {value:60, name:'头条'},
+                        {value:20, name:'时事'},
+                        {value:16, name:'财经'},
+                        {value:4, name:'生活'}
                     ]
                 }
-            ]};
+            ]
+        };
         myChart.setOption(option,true);
     }
     render(){
         return (
-            <div id="pie" style={{ width: 400, height: 400 }}></div>
+            <div id="pie" style={{ width: 300, height: 300 }}></div>
         )
     }
 }
