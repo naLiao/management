@@ -14,14 +14,14 @@ class Bar extends React.Component {
         var myChart = echarts.init(document.getElementById('bar'));
         let option = {
             title : {
-                text: '世界人口总量',
-                subtext: '数据来自网络'
+                text: '阅读量月份对比图',
+                subtext: ''
             },
             tooltip : {
                 trigger: 'axis'
             },
             legend: {
-                data:['2011年', '2012年']
+                data:['上月', '本月']
             },
             toolbox: {
                 show : true,
@@ -43,19 +43,19 @@ class Bar extends React.Component {
             yAxis : [
                 {
                     type : 'category',
-                    data : ['巴西','印尼','美国','印度','中国','世界人口(万)']
+                    data : ['生活','财经','时事','头条','总阅读量']
                 }
             ],
             series : [
                 {
-                    name:'2011年',
+                    name:'上月',
                     type:'bar',
-                    data:[18203, 23489, 29034, 104970, 131744, 630230]
+                    data:[23489, 29034, 104970, 361744, 630230]
                 },
                 {
-                    name:'2012年',
+                    name:'本月',
                     type:'bar',
-                    data:[19325, 23438, 31000, 121594, 134141, 681807]
+                    data:[23438, 31000, 71594, 143414, 328180]
                 }
             ]
         };
