@@ -5,7 +5,7 @@ class NewsList extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            //每个arr对应4个栏目所有已发布稿件。应该是获取当前pathname并根据pathname请求数据?
+            //每个arr对应4个栏目所有稿件。应该是获取当前pathname并根据pathname请求数据?
             arr:[
                 {
                     id:1,
@@ -15,6 +15,7 @@ class NewsList extends React.Component {
                     commentNum:'35',
                     shareNum:'56',
                     editor:'张三',
+                    status:'审核中',
                     time:'2018-6-10'
                 },
                 {
@@ -25,6 +26,7 @@ class NewsList extends React.Component {
                     commentNum:'35',
                     shareNum:'56',
                     editor:'张三',
+                    status:'修改中',
                     time:'2018-6-10'
                 },
                 {
@@ -35,6 +37,7 @@ class NewsList extends React.Component {
                     commentNum:'35',
                     shareNum:'56',
                     editor:'张三',
+                    status:'已发布',
                     time:'2018-6-10'
                 },
                 {
@@ -45,6 +48,7 @@ class NewsList extends React.Component {
                     commentNum:'35',
                     shareNum:'56',
                     editor:'张三',
+                    status:'已发布',
                     time:'2018-6-10'
                 },
                 {
@@ -55,6 +59,7 @@ class NewsList extends React.Component {
                     commentNum:'35',
                     shareNum:'56',
                     editor:'张三',
+                    status:'已发布',
                     time:'2018-6-10'
                 },
                 {
@@ -65,6 +70,7 @@ class NewsList extends React.Component {
                     commentNum:'35',
                     shareNum:'56',
                     editor:'张三',
+                    status:'已发布',
                     time:'2018-6-10'
                 },
                 {
@@ -75,6 +81,7 @@ class NewsList extends React.Component {
                     commentNum:'35',
                     shareNum:'56',
                     editor:'张三',
+                    status:'已发布',
                     time:'2018-6-10'
                 },
                 {
@@ -85,6 +92,7 @@ class NewsList extends React.Component {
                     commentNum:'35',
                     shareNum:'56',
                     editor:'张三',
+                    status:'已发布',
                     time:'2018-6-10'
                 },
                 {
@@ -95,6 +103,7 @@ class NewsList extends React.Component {
                     commentNum:'35',
                     shareNum:'56',
                     editor:'张三',
+                    status:'已发布',
                     time:'2018-6-10'
                 },
                 {
@@ -105,6 +114,7 @@ class NewsList extends React.Component {
                     commentNum:'35',
                     shareNum:'56',
                     editor:'张三',
+                    status:'已发布',
                     time:'2018-6-10'
                 }
             ],
@@ -117,6 +127,7 @@ class NewsList extends React.Component {
                     commentNum:'35',
                     shareNum:'56',
                     editor:'张三',
+                    status:'待审核',
                     time:'2018-6-10'
                 },
                 {
@@ -127,6 +138,7 @@ class NewsList extends React.Component {
                     commentNum:'35',
                     shareNum:'56',
                     editor:'张三',
+                    status:'待审核',
                     time:'2018-6-10'
                 },
                 {
@@ -137,6 +149,7 @@ class NewsList extends React.Component {
                     commentNum:'35',
                     shareNum:'56',
                     editor:'张三',
+                    status:'修改中',
                     time:'2018-6-10'
                 },
                 {
@@ -147,6 +160,7 @@ class NewsList extends React.Component {
                     commentNum:'35',
                     shareNum:'56',
                     editor:'张三',
+                    status:'已发布',
                     time:'2018-6-10'
                 },
                 {
@@ -157,6 +171,7 @@ class NewsList extends React.Component {
                     commentNum:'35',
                     shareNum:'56',
                     editor:'张三',
+                    status:'已发布',
                     time:'2018-6-10'
                 },
                 {
@@ -167,6 +182,7 @@ class NewsList extends React.Component {
                     commentNum:'35',
                     shareNum:'56',
                     editor:'张三',
+                    status:'已发布',
                     time:'2018-6-10'
                 },
                 {
@@ -177,6 +193,7 @@ class NewsList extends React.Component {
                     commentNum:'35',
                     shareNum:'56',
                     editor:'张三',
+                    status:'已发布',
                     time:'2018-6-10'
                 },
                 {
@@ -187,6 +204,7 @@ class NewsList extends React.Component {
                     commentNum:'35',
                     shareNum:'56',
                     editor:'张三',
+                    status:'已发布',
                     time:'2018-6-10'
                 },
                 {
@@ -197,6 +215,7 @@ class NewsList extends React.Component {
                     commentNum:'35',
                     shareNum:'56',
                     editor:'张三',
+                    status:'已发布',
                     time:'2018-6-10'
                 },
                 {
@@ -207,6 +226,7 @@ class NewsList extends React.Component {
                     commentNum:'35',
                     shareNum:'56',
                     editor:'张三',
+                    status:'已发布',
                     time:'2018-6-10'
                 }
             ],
@@ -219,6 +239,7 @@ class NewsList extends React.Component {
                     commentNum:'35',
                     shareNum:'56',
                     editor:'张三',
+                    status:'已发布',
                     time:'2018-6-10'
                 },
                 {
@@ -229,6 +250,7 @@ class NewsList extends React.Component {
                     commentNum:'35',
                     shareNum:'56',
                     editor:'张三',
+                    status:'已发布',
                     time:'2018-6-10'
                 },
                 {
@@ -239,6 +261,7 @@ class NewsList extends React.Component {
                     commentNum:'35',
                     shareNum:'56',
                     editor:'张三',
+                    status:'已发布',
                     time:'2018-6-10'
                 },
                 {
@@ -249,6 +272,7 @@ class NewsList extends React.Component {
                     commentNum:'35',
                     shareNum:'56',
                     editor:'张三',
+                    status:'已发布',
                     time:'2018-6-10'
                 },
                 {
@@ -259,6 +283,7 @@ class NewsList extends React.Component {
                     commentNum:'35',
                     shareNum:'56',
                     editor:'张三',
+                    status:'已发布',
                     time:'2018-6-10'
                 },
                 {
@@ -269,6 +294,7 @@ class NewsList extends React.Component {
                     commentNum:'35',
                     shareNum:'56',
                     editor:'张三',
+                    status:'已发布',
                     time:'2018-6-10'
                 },
                 {
@@ -279,6 +305,7 @@ class NewsList extends React.Component {
                     commentNum:'35',
                     shareNum:'56',
                     editor:'张三',
+                    status:'已发布',
                     time:'2018-6-10'
                 },
                 {
@@ -289,6 +316,7 @@ class NewsList extends React.Component {
                     commentNum:'35',
                     shareNum:'56',
                     editor:'张三',
+                    status:'已发布',
                     time:'2018-6-10'
                 },
                 {
@@ -299,6 +327,7 @@ class NewsList extends React.Component {
                     commentNum:'35',
                     shareNum:'56',
                     editor:'张三',
+                    status:'已发布',
                     time:'2018-6-10'
                 },
                 {
@@ -309,6 +338,7 @@ class NewsList extends React.Component {
                     commentNum:'35',
                     shareNum:'56',
                     editor:'张三',
+                    status:'已发布',
                     time:'2018-6-10'
                 }
             ],
@@ -321,6 +351,7 @@ class NewsList extends React.Component {
                     commentNum:'35',
                     shareNum:'56',
                     editor:'张三',
+                    status:'已发布',
                     time:'2018-6-10'
                 },
                 {
@@ -331,6 +362,7 @@ class NewsList extends React.Component {
                     commentNum:'35',
                     shareNum:'56',
                     editor:'张三',
+                    status:'已发布',
                     time:'2018-6-10'
                 },
                 {
@@ -341,6 +373,7 @@ class NewsList extends React.Component {
                     commentNum:'35',
                     shareNum:'56',
                     editor:'张三',
+                    status:'已发布',
                     time:'2018-6-10'
                 },
                 {
@@ -351,6 +384,7 @@ class NewsList extends React.Component {
                     commentNum:'35',
                     shareNum:'56',
                     editor:'张三',
+                    status:'已发布',
                     time:'2018-6-10'
                 },
                 {
@@ -361,6 +395,7 @@ class NewsList extends React.Component {
                     commentNum:'35',
                     shareNum:'56',
                     editor:'张三',
+                    status:'已发布',
                     time:'2018-6-10'
                 },
                 {
@@ -371,6 +406,7 @@ class NewsList extends React.Component {
                     commentNum:'35',
                     shareNum:'56',
                     editor:'张三',
+                    status:'已发布',
                     time:'2018-6-10'
                 },
                 {
@@ -381,6 +417,7 @@ class NewsList extends React.Component {
                     commentNum:'35',
                     shareNum:'56',
                     editor:'张三',
+                    status:'已发布',
                     time:'2018-6-10'
                 },
                 {
@@ -391,6 +428,7 @@ class NewsList extends React.Component {
                     commentNum:'35',
                     shareNum:'56',
                     editor:'张三',
+                    status:'已发布',
                     time:'2018-6-10'
                 },
                 {
@@ -401,6 +439,7 @@ class NewsList extends React.Component {
                     commentNum:'35',
                     shareNum:'56',
                     editor:'张三',
+                    status:'已发布',
                     time:'2018-6-10'
                 },
                 {
@@ -411,6 +450,7 @@ class NewsList extends React.Component {
                     commentNum:'35',
                     shareNum:'56',
                     editor:'张三',
+                    status:'已发布',
                     time:'2018-6-10'
                 }
             ]
@@ -447,6 +487,7 @@ class NewsList extends React.Component {
                 commentNum:e.commentNum,
                 shareNum:e.shareNum,
                 editor:e.editor,
+                status:e.status,
                 time:e.time
             }
             return <Tr {...obj} />;
@@ -458,15 +499,14 @@ class NewsList extends React.Component {
                     <tr>
                         <th>ID</th>
                         <th>标题</th>
-                        <th>所属栏目</th>
+                        <th>栏目</th>
                         <th>阅读量</th>
                         <th>评论量</th>
                         <th>转发量</th>
                         <th>编辑</th>
+                        <th>状态</th>
                         <th>时间</th>
-                        <th>修改</th>
-                        <th>置顶</th>
-                        <th>删除</th>
+                        <th>操作</th>
                     </tr>
                     </thead>
                     <tbody>

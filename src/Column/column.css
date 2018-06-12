@@ -4,14 +4,11 @@
 }
 .content2{
     margin-left: 220px;
-    margin-top: -4px;
     padding: 0px 25px 0px 25px;
     margin-bottom: 20px;
 }
 .colBox{
-    background: #fff;
     border-radius: 3px;
-    margin-top: 20px;
     text-align: left;
     position: relative;
 }
@@ -31,8 +28,7 @@
     background-color: #7bbbfc;
 }
 .subNav{
-    padding: 20px 0px 20px 15px;
-    /*border-bottom: 2px solid #e2e7eb;*/
+    padding: 20px 0px 0px 15px;
 }
 .subNav li{
     display: inline-block;
@@ -84,10 +80,11 @@
     background: #f0f3f5;
 }
 .newsTable td button{
-    width: 60px;
+    width: 30px;
     height: 30px;
+    margin: 5px;
     background: #3992EC;
-    border-radius: 6px;
+    border-radius: 3px;
     color: #fff;
 }
 .newsTable td button:hover{

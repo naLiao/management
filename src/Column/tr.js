@@ -6,7 +6,7 @@ class Tr extends React.Component {
         this.state = { };
     }
     render(){
-        let {id,title,column,readNum,commentNum,shareNum,editor,time} = this.props;
+        let {id,title,column,readNum,commentNum,shareNum,editor,status,time} = this.props;
         return (
             <tr>
                 <td>{id}</td>
@@ -16,10 +16,12 @@ class Tr extends React.Component {
                 <td>{commentNum}</td>
                 <td>{shareNum}</td>
                 <td>{editor}</td>
+                <td>{status}</td>
                 <td>{time}</td>
-                <td><button>修改</button></td>
-                <td><button>置顶</button></td>
-                <td><button>删除</button></td>
+                <td>
+                    <button>修改</button>
+                    <button>删除</button>
+                </td>
             </tr>
         )
     }

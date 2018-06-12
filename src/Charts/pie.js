@@ -4,6 +4,7 @@ import 'echarts/lib/chart/pie';
 import 'echarts/lib/component/tooltip';
 import 'echarts/lib/component/title';
 
+
 class Pie extends React.Component {
     constructor(props){
         super(props);
