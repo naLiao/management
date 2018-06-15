@@ -1,0 +1,65 @@
+#sideBar {
+    width: 220px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    margin-top: 54px;
+    background: #2d353c;
+    z-index: 10;
+}
+.nav li {
+    border-bottom: solid 1px #474747;
+}
+.nav li a:hover {
+    background: #232a2f;
+    color: #fff;
+}
+.nav li .active {
+    background: #00acac;
+    color: #fff!important;
+}
+.nav li .active:hover {
+    background: #00acac;
+    color: #fff!important;
+}
+.nav li a {
+    display: block;
+    overflow: hidden;
+    color: #a8acb1;
+}
+.nav li a i {
+    float: left;
+    margin-left: 30px;
+    margin-right: 20px;
+    width: 14px;
+    text-align: center;
+    line-height: 50px;
+    font-size: 18px;
+}
+.nav li a span {
+    display: block;
+    float: left;
+    line-height: 50px;
+    margin-left: 10px;
+}
+.newsEdit,
+.adEdit{
+    height: 0px;
+    opacity: none;
+    transition: 600ms;
+    overflow: hidden;
+}
+.newsEdit a:nth-of-type(1){
+    border-top: solid 1px #474747;
+}
+.adEdit a:nth-of-type(1){
+    border-top: solid 1px #474747;
+}
+#sideBar .nav .newsEdit a,
+#sideBar .nav .adEdit a{
+    line-height: 35px;
+}
+.select{
+    color: #fff!important;
+}

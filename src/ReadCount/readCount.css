@@ -1,0 +1,45 @@
+.charts{
+    margin: 20px 0;
+    overflow: hidden;
+}
+.charts .barchart{
+    width: 70%;
+    float: left;
+}
+.charts .piechart{
+    width: 30%;
+    float: right;
+}
+.table1Title{
+    text-align: left;
+    margin-top: 20px;
+    font-size: 16px;
+}
+.table1{
+    margin-top: 10px;
+    border-radius: 3px;
+    background: #fff;
+    width: 100%;
+    font-size: 14px;
+    border-collapse: collapse;
+}
+.table1 thead{
+    line-height: 30px;
+    border-bottom: solid 1px #1D8888;
+}
+.table1 thead{
+    color: #242a30;
+    border-bottom: 2px solid #e2e7eb;
+}
+.table1 tbody{
+    line-height: 50px;
+}
+.table1 tbody tr td:nth-child(2){
+    text-align: left;
+}
+.table1,.table1 thead th,.table1 tbody tr{
+    border-bottom: 1px solid #e2e7eb;
+}
+.table1 tbody tr:nth-of-type(2n-1){
+    background: #f0f3f5;
+}
