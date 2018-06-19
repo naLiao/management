@@ -14,7 +14,7 @@ class SideBar extends React.Component {
         if(newsEditOnOff){
             this.refs.editUl.style.height = 0;
         }else{
-            this.refs.editUl.style.height = '105px';
+            this.refs.editUl.style.height = '72px';
         }
         newsEditOnOff = !newsEditOnOff;
         this.setState({newsEditOnOff});
@@ -29,7 +29,7 @@ class SideBar extends React.Component {
                         </Link>
                     </li>
                     <li>
-                        <Link to="/myarticle/posted"><i className="fa fa-file-text-o"></i><span>我的稿件</span></Link>
+                        <Link to="/myarticle/my"><i className="fa fa-file-text-o"></i><span>我的稿件</span></Link>
                     </li>
                     <li>
                         <a className="up" onClick={this.click} href="javascript:;"><i className="fa fa-file-text-o"> </i><span>新闻管理</span></a>
@@ -55,8 +55,8 @@ class SideBar extends React.Component {
                             <span>阅读统计</span>
                         </Link>
                     </li>
-                    <li><Link to="/usermanagement"><i className="fa fa-users"></i><span>员工统计</span></Link></li>
-                    <li><Link to="/usermanagement"><i className="fa fa-tags"></i><span>用户管理</span></Link></li>
+                    <li><Link to="/account"><i className="fa fa-tags"></i><span>权限管理</span></Link></li>
+                    <li><Link to="/user"><i className="fa fa-file"></i><span>会员管理</span></Link></li>
                 </ul>
             </div>
         )

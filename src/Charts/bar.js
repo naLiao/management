@@ -1,14 +1,13 @@
 import React from 'react';
 import echarts from 'echarts/lib/echarts';
+import 'echarts/lib/chart/line';
 import 'echarts/lib/chart/bar';
 import 'echarts/lib/component/tooltip';
 import 'echarts/lib/component/title';
+import 'echarts/lib/component/legend';
+import 'echarts/lib/component/toolbox';
 
 class Bar extends React.Component {
-    constructor(props){
-        super(props);
-        this.state = { };
-    }
     componentDidMount() {
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('bar'));
@@ -50,12 +49,14 @@ class Bar extends React.Component {
                 {
                     name:'上月',
                     type:'bar',
-                    data:[23489, 29034, 104970, 361744, 630230]
+                    data:[23489, 29034, 104970, 361744, 630230],
+                    smooth:true
                 },
                 {
                     name:'本月',
                     type:'bar',
-                    data:[23438, 31000, 71594, 143414, 328180]
+                    data:[23438, 31000, 71594, 143414, 328180],
+                    smooth:true
                 }
             ]
         };
