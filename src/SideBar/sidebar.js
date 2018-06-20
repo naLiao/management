@@ -1,62 +1,50 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import {Link,NavLink} from 'react-router-dom';
 import './sidebar.css';
 
 class SideBar extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            newsEditOnOff:false
         };
-    }
-    click=()=>{
-        let {newsEditOnOff} = this.state;
-        if(newsEditOnOff){
-            this.refs.editUl.style.height = 0;
-        }else{
-            this.refs.editUl.style.height = '72px';
-        }
-        newsEditOnOff = !newsEditOnOff;
-        this.setState({newsEditOnOff});
     }
     render(){
         return (
             <div id="sideBar">
                 <ul className="nav">
                     <li>
-                        <Link to="/" className="active" ><i className="fa fa-desktop"></i>
+                        <NavLink to="/index" activeClassName="active"><i className="fa fa-desktop"></i>
                             <span>首页</span>
-                        </Link>
+                        </NavLink>
                     </li>
                     <li>
-                        <Link to="/myarticle/my"><i className="fa fa-file-text-o"></i><span>我的稿件</span></Link>
+                        <NavLink to="/myarticle" activeClassName="active"><i className="fa fa-file-text-o"></i>
+                            <span>我的稿件</span>
+                        </NavLink>
                     </li>
                     <li>
-                        <a className="up" onClick={this.click} href="javascript:;"><i className="fa fa-file-text-o"> </i><span>新闻管理</span></a>
-                        <ul ref={'editUl'} className="newsEdit clearFix">
-                            <Link to="/column/headline">新闻列表</Link>
-                            <Link to="/edit">新建稿件</Link>
-                        </ul>
+                        <NavLink to="/column" activeClassName="active"><i className="fa fa-columns"> </i>
+                            <span>栏目管理</span>
+                        </NavLink>
                     </li>
                     <li>
-                        <Link to="pic"><i className="fa fa-file-text-o"> </i><span>图片管理</span></Link>
-                    </li>
-                    <li><a href="javascript:;"><i className="fa fa-pencil-square-o"></i><span>专栏作家</span></a></li>
-                    <li>
-                        <a className="ad" href="javascript:;"><i className="fa fa-puzzle-piece"></i><span>广告管理</span></a>
-                        <ul className="adEdit">
-                            <a href="javascript:;">广告位管理</a>
-                            <a href="javascript:;">广告管理</a>
-                        </ul>
-                    </li>
-                    <li>
-                        <Link to="/readCount">
+                        <NavLink to="/readCount" activeClassName="active">
                             <i className="fa fa-line-chart"></i>
                             <span>阅读统计</span>
-                        </Link>
+                        </NavLink>
                     </li>
-                    <li><Link to="/account"><i className="fa fa-tags"></i><span>权限管理</span></Link></li>
-                    <li><Link to="/user"><i className="fa fa-file"></i><span>会员管理</span></Link></li>
+                    <li><NavLink to="/account" activeClassName="active"><i className="fa fa-tags"></i>
+                            <span>权限管理</span>
+                        </NavLink>
+                    </li>
+                    <li><NavLink to="/user" activeClassName="active"><i className="fa fa-user"></i>
+                            <span>会员管理</span>
+                        </NavLink>
+                    </li>
+                    <li><NavLink to="/setting" activeClassName="active"><i className="fa fa-cogs"></i>
+                            <span>系统设置</span>
+                        </NavLink>
+                    </li>
                 </ul>
             </div>
         )

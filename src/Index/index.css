@@ -3,6 +3,10 @@
     padding: 20px 25px;
     padding-top: 54px;
 }
+.bread_menu{
+    text-align: left;
+    margin-bottom: 20px;
+}
 .fourUl {
     display: flex;
     align-items: center;

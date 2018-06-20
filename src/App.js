@@ -8,45 +8,52 @@ import Index from './Index/index';
 import Column from './Column/column';
 import NewCol from './Column/newcol';
 
-import Pic from './Pic/pic';
-
 import ReadCount from "./ReadCount/readcount";
 import Edit from './Edit/edit';
-import NewsList from './Column/newslist';
 import MyArticle from './MyArticle/myarticle';
 import Account from './Account/account';
-import UserManagement from './UserManagement/user';
+import User from './User/user';
+import Setting from './Setting/setting';
 
 class App extends Component {
   render() {
     return (
       <div>
+          {/* 头部和侧边栏 */}
           <Header />
           <SideBar />
-          <Route exact path='/' component={Index}/>
+
+          {/* 首页 */}
+          <Route exact path='/' render={()=>{
+              return <Redirect to="/index" />
+          }}/>
+          <Route exact path='/index' component={Index}/>
 
           {/* 我的稿件 */}
-          <Route path='/myarticle' render={url=>{
-            return <Redirect to="/myarticle/my" />
+          <Route exact path='/myarticle' render={()=>{
+              return <Redirect to="/myarticle/my" />
           }}/>
           <Route path='/myarticle/:id' render={(url)=>{
               return <MyArticle {...{url}}/>
           }}/>
+          <Route path='/edit' component={Edit}/>
 
-          {/* 新闻管理 */}
+          {/* 栏目管理 */}
           <Route path='/column' render={(url)=>{
               return <Column {...{url}}/>
           }}/>
 
-          <Route path='/edit' component={Edit}/>
-          
-          <Route path='/pic' component={Pic} />
-
-          
-
+          {/* 阅读统计 */}
           <Route path='/readCount' component={ReadCount}/>
+
+          {/* 权限管理 */}
           <Route path="/account" component={Account} />
-          <Route path="/user" component={UserManagement} />
+
+          {/* 会员管理 */}
+          <Route path="/user" component={User} />
+
+          {/* 系统设置 */}
+          <Route path="/setting" component={Setting} />
       </div>
     );
   }

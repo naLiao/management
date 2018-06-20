@@ -6,7 +6,7 @@
     text-align: center;
 }
 .submitBox div{
-    line-height: 50px;
+    line-height: 40px;
     margin: 20px 0;
     text-align: left;
 }
@@ -34,7 +34,7 @@
     width:500px;
     display:inline-block;
     margin-left: 50px;
-    line-height: 50px;
+    line-height: 40px;
     font-size: 20px;
     padding-left: 10px;
     border: 1px solid #e2e7eb;
@@ -44,8 +44,8 @@
 }
 .submitBox select{
     display:inline-block;
-    height: 50px;
-    line-height: 50px;
+    height: 40px;
+    line-height: 40px;
     padding-left: 10px;
     width: 160px;
     margin-left: 50px;
@@ -105,6 +105,9 @@
     vertical-align: top;
 }
 .submitBox div:nth-of-type(6) label{
+    vertical-align: top;
+}
+.submitBox .main_content label{
     vertical-align: top;
 }
 .submitBox div i{

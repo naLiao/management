@@ -1,13 +1,13 @@
 import React from 'react';
-import {NavLink} from 'react-router-dom';
+import { Link,NavLink } from 'react-router-dom';
 import './myarticle.css';
-import Tr from './tr';
+import Tr from './myarticleTr';
 
 class MyArticle extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            //2个数组对应我的稿件、待审核。应该是获取当前pathname并根据pathname请求数据?
+            //2个数组对应我的稿件、待审核
             arr:[
                 {
                     id:1,
@@ -17,6 +17,7 @@ class MyArticle extends React.Component {
                     commentNum:'35',
                     shareNum:'56',
                     editor:'张三',
+                    approve:'李二',
                     status:'草稿箱',
                     time:'2018-6-5'
                 },
@@ -28,6 +29,7 @@ class MyArticle extends React.Component {
                     commentNum:'35',
                     shareNum:'56',
                     editor:'张三',
+                    approve:'李二',
                     status:'修改中',
                     time:'2018-6-5'
                 },
@@ -39,6 +41,7 @@ class MyArticle extends React.Component {
                     commentNum:'35',
                     shareNum:'56',
                     editor:'张三',
+                    approve:'李二',
                     status:'修改中',
                     time:'2018-6-5'
                 },
@@ -50,6 +53,7 @@ class MyArticle extends React.Component {
                     commentNum:'35',
                     shareNum:'56',
                     editor:'张三',
+                    approve:'李二',
                     status:'已发布',
                     time:'2018-6-5'
                 },
@@ -61,6 +65,7 @@ class MyArticle extends React.Component {
                     commentNum:'35',
                     shareNum:'56',
                     editor:'张三',
+                    approve:'李二',
                     status:'已发布',
                     time:'2018-6-5'
                 },
@@ -72,6 +77,7 @@ class MyArticle extends React.Component {
                     commentNum:'35',
                     shareNum:'56',
                     editor:'张三',
+                    approve:'李二',
                     status:'已发布',
                     time:'2018-6-5'
                 },
@@ -83,6 +89,7 @@ class MyArticle extends React.Component {
                     commentNum:'35',
                     shareNum:'56',
                     editor:'张三',
+                    approve:'李二',
                     status:'已发布',
                     time:'2018-6-5'
                 },
@@ -94,6 +101,7 @@ class MyArticle extends React.Component {
                     commentNum:'35',
                     shareNum:'56',
                     editor:'张三',
+                    approve:'李二',
                     status:'已发布',
                     time:'2018-6-5'
                 },
@@ -105,6 +113,7 @@ class MyArticle extends React.Component {
                     commentNum:'35',
                     shareNum:'56',
                     editor:'张三',
+                    approve:'李二',
                     status:'已发布',
                     time:'2018-6-5'
                 },
@@ -116,6 +125,7 @@ class MyArticle extends React.Component {
                     commentNum:'35',
                     shareNum:'56',
                     editor:'张三',
+                    approve:'李二',
                     status:'已发布',
                     time:'2018-6-5'
                 }
@@ -129,6 +139,7 @@ class MyArticle extends React.Component {
                     commentNum:'35',
                     shareNum:'56',
                     editor:'张三',
+                    approve:'李二',
                     status:'审核中',
                     time:'2018-6-5'
                 },
@@ -140,6 +151,7 @@ class MyArticle extends React.Component {
                     commentNum:'35',
                     shareNum:'56',
                     editor:'张三',
+                    approve:'李二',
                     status:'审核中',
                     time:'2018-6-5'
                 },
@@ -151,6 +163,7 @@ class MyArticle extends React.Component {
                     commentNum:'35',
                     shareNum:'56',
                     editor:'张三',
+                    approve:'李二',
                     status:'审核中',
                     time:'2018-6-5'
                 },
@@ -162,6 +175,7 @@ class MyArticle extends React.Component {
                     commentNum:'35',
                     shareNum:'56',
                     editor:'张三',
+                    approve:'李二',
                     status:'审核中',
                     time:'2018-6-5'
                 },
@@ -173,61 +187,7 @@ class MyArticle extends React.Component {
                     commentNum:'35',
                     shareNum:'56',
                     editor:'张三',
-                    status:'审核中',
-                    time:'2018-6-5'
-                },
-                {
-                    id:6,
-                    title:'与国际接轨 中国今日向外国人颁授首枚“友谊勋章',
-                    column:'时事',
-                    readNum:'1234',
-                    commentNum:'35',
-                    shareNum:'56',
-                    editor:'张三',
-                    status:'审核中',
-                    time:'2018-6-5'
-                },
-                {
-                    id:7,
-                    title:'与国际接轨 中国今日向外国人颁授首枚“友谊勋章',
-                    column:'时事',
-                    readNum:'1234',
-                    commentNum:'35',
-                    shareNum:'56',
-                    editor:'张三',
-                    status:'审核中',
-                    time:'2018-6-5'
-                },
-                {
-                    id:8,
-                    title:'与国际接轨 中国今日向外国人颁授首枚“友谊勋章',
-                    column:'时事',
-                    readNum:'1234',
-                    commentNum:'35',
-                    shareNum:'56',
-                    editor:'张三',
-                    status:'审核中',
-                    time:'2018-6-5'
-                },
-                {
-                    id:9,
-                    title:'与国际接轨 中国今日向外国人颁授首枚“友谊勋章',
-                    column:'时事',
-                    readNum:'1234',
-                    commentNum:'35',
-                    shareNum:'56',
-                    editor:'张三',
-                    status:'审核中',
-                    time:'2018-6-5'
-                },
-                {
-                    id:10,
-                    title:'与国际接轨 中国今日向外国人颁授首枚“友谊勋章',
-                    column:'时事',
-                    readNum:'1234',
-                    commentNum:'35',
-                    shareNum:'56',
-                    editor:'张三',
+                    approve:'李二',
                     status:'审核中',
                     time:'2018-6-5'
                 }
@@ -235,6 +195,7 @@ class MyArticle extends React.Component {
          };
     }
     render(){
+        //根据路由获取数据
         let {url:{location:{pathname}}} = this.props;
         let arr=[];
         switch(pathname){
@@ -257,6 +218,7 @@ class MyArticle extends React.Component {
                 commentNum:e.commentNum,
                 shareNum:e.shareNum,
                 editor:e.editor,
+                approve:e.approve,
                 status:e.status,
                 time:e.time
             }
@@ -272,13 +234,18 @@ class MyArticle extends React.Component {
                         <button>查询</button>
                     </div>
                     <ul className="tab_nav">
-                        <li><NavLink to="/myarticle/my" className="active">我的稿件</NavLink></li>
-                        <li><NavLink to="/myarticle/approve" className="active">待审核</NavLink></li>
+                        <li><NavLink to="/myarticle/my" activeClassName="active">我的稿件</NavLink></li>
+                        <li className="redDotLi">
+                            <NavLink to="/myarticle/approve" activeClassName="active">
+                                待审核
+                            </NavLink>
+                            <span className="redDot">5</span>
+                        </li>
                     </ul>
                 </div>
                 <div className="table_main">
                     <div className="tableBtns">
-                        <button><i className="fa fa-plus"></i>添加</button>
+                        <Link to="/edit"><button><i className="fa fa-plus"></i>添加</button></Link>
                         <button><i className="fa fa-pencil"></i>修改</button>
                         <button className="red"><i className="fa fa-trash"></i>删除</button>
                     </div>
@@ -293,6 +260,7 @@ class MyArticle extends React.Component {
                             <th>评论量</th>
                             <th>转发量</th>
                             <th>编辑</th>
+                            <th>主编</th>
                             <th>状态</th>
                             <th>时间</th>
                             <th>操作</th>
@@ -308,6 +276,7 @@ class MyArticle extends React.Component {
                             <li><a>2</a></li>
                             <li><a>3</a></li>
                         </ul>
+                        <span className="total">共22条</span>
                     </div>
                 </div>
             </div>

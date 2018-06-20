@@ -1,7 +1,7 @@
 .content1{
     text-align: left;
     margin-left: 220px;
-    padding: 80px 25px 0px 25px;
+    padding: 80px 25px 20px 25px;
     border-radius: 20px;
 }
 .table_top{
@@ -26,17 +26,26 @@
 .table_top .tab_search input{
     border: solid 1px #666;
     height: 30px;
-    margin-left: 10px;
+    margin: 0 10px;
     padding-left: 10px;
     background: #fff;
     font-size: 14px;
 }
 .table_top .tab_search{
-    margin-bottom: 20px;
+    padding-bottom: 20px;
+}
+#account_kind{
+    border: solid 1px #666;
+    height: 30px;
+    margin: 0 10px;
+    padding: 0 10px;
+    background: #fff;
+    font-size: 14px;
+    color:#666;
 }
 .table_top button{
     background: #00acac;
-    margin-left: 20px;
+    margin-left: 10px;
     color: #fff;
     padding: 0 10px;
 }
@@ -46,7 +55,6 @@
 .tab_nav li{
     float: left;
     text-align: center;
-    background: #d8e0e6;
     margin-right: 10px;
 }
 .tab_nav li a{
@@ -58,10 +66,24 @@
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
     font-size: 14px;
+    background: #d8e0e6;
     color: #555;
 }
 .tab_nav .active{
     background: #fff;
+}
+.redDotLi{
+    position: relative;
+}
+.redDotLi .redDot{
+    position: absolute;
+    top: 0;
+    right: -20px;
+    padding: 0 10px;
+    line-height: 20px;
+    background: #e74c3c;
+    color: #fff;
+    border-radius:30px;
 }
 .table_main{
     padding: 20px;
@@ -106,9 +128,9 @@
 .newsTable tbody{
     line-height: 50px;
 }
-.newsTable tbody tr td:nth-child(3){
+/* .newsTable tbody tr td:nth-child(3){
     text-align: left;
-}
+} */
 .newsTable,.newsTable thead th,.newsTable tbody tr{
     border-bottom: 1px solid #e2e7eb;
 }
@@ -116,14 +138,15 @@
     background: #f9f9f9;
 }
 .newsTable td button{
-    width: 26px;
+    line-height: 26px;
     height: 26px;
+    padding:0 8px;
     margin: 5px;
     background: #00acac;
     border-radius: 3px;
     color: #fff;
 }
-.newsTable td .red{
+.newsTable td button.red{
     background:#e74c3c;
 }
 .newsTable td button i{
@@ -132,10 +155,27 @@
 .newsTable td button:hover{
     background: #65b1f6;
 }
+.newsTable .circle{
+    font-size: 20px;
+    line-height: 56px;
+    color: #32e28a;
+    margin: 0 5px;
+}
+.newsTable .circle.blue{
+    color: rgb(170, 170, 170);
+}
+.newsTable .circle.red{
+    color:#e74c3c;
+}
 .pageBox{
     width: 100%;
     margin: 20px 0 0 0;
     overflow: hidden;
+}
+.pageBox .total{
+    float:right;
+    line-height: 25px;
+    margin-right: 20px;
 }
 #pages{
     float:right;
