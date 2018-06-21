@@ -37,11 +37,6 @@ body {
     background: #d9e0e7;
     cursor: auto;
 }
-.clearFix:after {
-    content: "";
-    display: block;
-    clear: both;
-}
 .bg_purple {
     background: #727cb6;
 }
@@ -54,3 +49,11 @@ body {
 .bg_red {
     background: #ff5b57;
 }
+/* .clear{
+    zoom:1;
+}
+.clear::after{
+    display:block;
+    content:"";
+    clear:both;
+} */

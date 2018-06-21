@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 
 class ColumnTr extends React.Component {
     constructor(props){
@@ -6,16 +7,18 @@ class ColumnTr extends React.Component {
         this.state = {};
     }
     render(){
-        let {column,newsNum,approve,time} = this.props;
+        let {column:columnName,newsNum,approve,path,time} = this.props;
         return (
             <tr>
                 <td><input type="checkbox"/></td>
-                <td>{column}</td>
+                <td>{columnName}</td>
                 <td>{newsNum}</td>
                 <td>{approve}</td>
                 <td>{time}</td>
                 <td>
-                    <button className="showcolumnNewsBtn">新闻列表</button>
+                    <Link to={path}
+                        className="showcolumnNewsBtn"
+                    >新闻列表</Link>
                 </td>
                 <td>
                     <button><i className="fa fa-pencil"></i></button>

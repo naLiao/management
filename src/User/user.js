@@ -2,98 +2,36 @@ import React from 'react';
 import { Link,NavLink } from 'react-router-dom';
 import './user.css';
 import Tr from './userTr';
+import DelBox from './delbox';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as actionCreators from '../reducers/actions';
 
 class User extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            arr:[
-                {
-                    id:1,
-                    name:'张三',
-                    email:'24352345@qq.com',
-                    phone:13838985679,
-                    commentNum:38,
-                    time:'2018-6-5'
-                },
-                {
-                    id:2,
-                    name:'张三',
-                    email:'24352345@qq.com',
-                    phone:13838985679,
-                    commentNum:38,
-                    time:'2018-6-5'
-                },
-                {
-                    id:3,
-                    name:'张三',
-                    email:'24352345@qq.com',
-                    phone:13838985679,
-                    commentNum:38,
-                    time:'2018-6-5'
-                },
-                {
-                    id:4,
-                    name:'张三',
-                    email:'24352345@qq.com',
-                    phone:13838985679,
-                    commentNum:38,
-                    time:'2018-6-5'
-                },
-                {
-                    id:5,
-                    name:'张三',
-                    email:'24352345@qq.com',
-                    phone:13838985679,
-                    commentNum:38,
-                    time:'2018-6-5'
-                },
-                {
-                    id:6,
-                    name:'张三',
-                    email:'24352345@qq.com',
-                    phone:13838985679,
-                    commentNum:38,
-                    time:'2018-6-5'
-                },
-                {
-                    id:7,
-                    name:'张三',
-                    email:'24352345@qq.com',
-                    phone:13838985679,
-                    commentNum:38,
-                    time:'2018-6-5'
-                },
-                {
-                    id:8,
-                    name:'张三',
-                    email:'24352345@qq.com',
-                    phone:13838985679,
-                    commentNum:38,
-                    time:'2018-6-5'
-                },
-                {
-                    id:9,
-                    name:'张三',
-                    email:'24352345@qq.com',
-                    phone:13838985679,
-                    commentNum:38,
-                    time:'2018-6-5'
-                },
-                {
-                    id:10,
-                    name:'张三',
-                    email:'24352345@qq.com',
-                    phone:13838985679,
-                    commentNum:38,
-                    time:'2018-6-5'
-                }
-            ]
+            //是否显示确认删除弹框
+            isShowDel:false,
+            changeID:0
          };
     }
+
+    //子组件修改时显示弹框 
+    showDel = (status)=>{
+        this.setState({isShowDel:status});
+    }
+
+    //传递当前要禁用的是哪个ID
+    changeId = (id)=>{
+        this.setState({changeID:id})
+    }
+
     render(){
-        let {arr} = this.state;
-        let newArr = arr.map((e,i)=>{
+        let {data} = this.props;
+        let {isShowDel,changeID} = this.state;
+        let com = isShowDel? <DelBox showDel={this.showDel} changeID={changeID}/> :'';
+        let newArr = data.map((e,i)=>{
             let obj={
                 key:i,
                 id:e.id,
@@ -101,7 +39,10 @@ class User extends React.Component {
                 email:e.email,
                 phone:e.phone,
                 commentNum:e.commentNum,
-                time:e.time
+                time:e.time,
+                status:e.status,
+                showDel:this.showDel,
+                changeId:this.changeId
             }
             return <Tr {...obj} />;
         })
@@ -117,9 +58,9 @@ class User extends React.Component {
                 </div>
                 <div className="table_main">
                     <div className="tableBtns">
-                        <Link to="/edit"><button><i className="fa fa-plus"></i>添加</button></Link>
-                        <button><i className="fa fa-pencil"></i>修改</button>
-                        <button className="red"><i className="fa fa-trash"></i>删除</button>
+                        {/* <Link to="/user/new"><button><i className="fa fa-plus"></i>添加</button></Link> */}
+                        {/* <button><i className="fa fa-pencil"></i>修改</button> */}
+                        {/* <button className="red"><i className="fa fa-trash"></i>删除</button> */}
                     </div>
                     <table className="newsTable">
                         <thead>
@@ -131,6 +72,7 @@ class User extends React.Component {
                             <th>手机号</th>
                             <th>评论次数</th>
                             <th>上次登录时间</th>
+                            <th>状态</th>
                             <th>操作</th>
                         </tr>
                         </thead>
@@ -147,8 +89,14 @@ class User extends React.Component {
                         <span className="total">共25条</span>
                     </div>
                 </div>
+                {com}
             </div>
         )
     }
 }
-export default User;
+
+export default connect((state)=>{
+    return {data:state.reduceruser};
+},(dispatch)=>{
+    return {actions:bindActionCreators(actionCreators,dispatch)};
+})(User);

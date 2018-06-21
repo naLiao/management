@@ -23,14 +23,13 @@ class SideBar extends React.Component {
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink to="/column" activeClassName="active"><i className="fa fa-columns"> </i>
-                            <span>栏目管理</span>
+                        <NavLink to="/news" activeClassName="active"><i className="fa fa-newspaper-o"></i>
+                            <span>新闻管理</span>
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink to="/readCount" activeClassName="active">
-                            <i className="fa fa-line-chart"></i>
-                            <span>阅读统计</span>
+                        <NavLink to="/column" activeClassName="active"><i className="fa fa-columns"> </i>
+                            <span>栏目管理</span>
                         </NavLink>
                     </li>
                     <li><NavLink to="/account" activeClassName="active"><i className="fa fa-tags"></i>

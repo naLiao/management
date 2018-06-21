@@ -1,5 +1,6 @@
 import React from 'react';
 import './index.css';
+import Bar from './bar';
 
 class IndexContent extends React.Component {
     constructor(props){
@@ -47,7 +48,7 @@ class IndexContent extends React.Component {
                         </li>
                     </ul>
                 </div>
-                <div id="table"></div>
+                <Bar />
             </div>
         )
     }

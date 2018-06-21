@@ -2,6 +2,7 @@ import React from 'react';
 import { Link,NavLink } from 'react-router-dom';
 import './column.css';
 import ColumnTr from './columnTr';
+import NewCol from './newcol';
 
 class Column extends React.Component {
     constructor(props){
@@ -12,24 +13,28 @@ class Column extends React.Component {
                     column:'头条',
                     newsNum:'1234',
                     approve:'张三',
+                    path:'/column/headline',
                     time:'2018-6-5'
                 },
                 {
                     column:'时事',
                     newsNum:'1234',
                     approve:'张三',
+                    path:'/column/current',
                     time:'2018-6-5'
                 },
                 {
-                    column:'头条',
+                    column:'财经',
                     newsNum:'1234',
                     approve:'张三',
+                    path:'/column/finance',
                     time:'2018-6-5'
                 },
                 {
                     column:'生活',
                     newsNum:'1234',
                     approve:'张三',
+                    path:'/column/life',
                     time:'2018-6-5'
                 }
             ]
@@ -43,7 +48,8 @@ class Column extends React.Component {
                 column:e.column,
                 newsNum:e.newsNum,
                 approve:e.approve,
-                time:e.time
+                time:e.time,
+                path:e.path
             }
             return <ColumnTr {...obj} />;
         })
@@ -63,7 +69,7 @@ class Column extends React.Component {
                 </div>
                 <div className="table_main">
                     <div className="tableBtns">
-                        <button><i className="fa fa-plus"></i>添加栏目</button>
+                        <Link to="/column/new"><button><i className="fa fa-plus"></i>添加栏目</button></Link>
                         <button><i className="fa fa-pencil"></i>修改栏目</button>
                         <button className="red"><i className="fa fa-trash"></i>删除</button>
                     </div>

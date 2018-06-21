@@ -13,7 +13,7 @@ class Bar extends React.Component {
         var myChart = echarts.init(document.getElementById('bar'));
         let option = {
             title : {
-                text: '阅读量月份对比图',
+                text: '栏目阅读统计',
                 subtext: ''
             },
             tooltip : {
@@ -33,13 +33,13 @@ class Bar extends React.Component {
                 }
             },
             calculable : true,
-            xAxis : [
+            yAxis : [
                 {
                     type : 'value',
-                    boundaryGap : [0, 0.01]
+                    boundaryGap : [0, 0.1]
                 }
             ],
-            yAxis : [
+            xAxis : [
                 {
                     type : 'category',
                     data : ['生活','财经','时事','头条','总阅读量']
@@ -49,13 +49,13 @@ class Bar extends React.Component {
                 {
                     name:'上月',
                     type:'bar',
-                    data:[23489, 29034, 104970, 361744, 630230],
+                    data:[3489, 2934, 10497, 36744, 63230],
                     smooth:true
                 },
                 {
                     name:'本月',
                     type:'bar',
-                    data:[23438, 31000, 71594, 143414, 328180],
+                    data:[2348, 3100, 7194, 14314, 32880],
                     smooth:true
                 }
             ]
@@ -64,7 +64,7 @@ class Bar extends React.Component {
     }
     render(){
         return (
-            <div id="bar" style={{ width: 700, height: 300 }}></div>
+            <div id="bar" style={{ width: 100+"%", height: 400 }}></div>
         )
     }
 }

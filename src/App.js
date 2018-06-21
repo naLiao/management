@@ -3,16 +3,21 @@ import React, { Component } from 'react';
 import {Route,Redirect} from 'react-router-dom';
 import Header from './Header/header';
 import SideBar from './SideBar/sidebar';
+
 import Index from './Index/index';
+
+import MyArticle from './MyArticle/myarticle';
+import Edit from './Edit/edit';
+
+import News from './News/news';
 
 import Column from './Column/column';
 import NewCol from './Column/newcol';
 
-import ReadCount from "./ReadCount/readcount";
-import Edit from './Edit/edit';
-import MyArticle from './MyArticle/myarticle';
 import Account from './Account/account';
+
 import User from './User/user';
+
 import Setting from './Setting/setting';
 
 class App extends Component {
@@ -38,13 +43,21 @@ class App extends Component {
           }}/>
           <Route path='/edit' component={Edit}/>
 
+          {/* 新闻管理 */}
+          <Route exact path='/news' render={()=>{
+              return <Redirect to="/news/headline" />
+          }}/>
+          <Route path='/news/:id' render={(url)=>{
+              return <News {...{url}}/>
+          }}/>
+
           {/* 栏目管理 */}
           <Route path='/column' render={(url)=>{
               return <Column {...{url}}/>
           }}/>
-
-          {/* 阅读统计 */}
-          <Route path='/readCount' component={ReadCount}/>
+          <Route path='/column/new' render={(url)=>{
+              return <NewCol {...{url}}/>
+          }}/>
 
           {/* 权限管理 */}
           <Route path="/account" component={Account} />

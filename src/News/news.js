@@ -1,32 +1,36 @@
 import React from 'react';
 import { Link,NavLink } from 'react-router-dom';
-import './myarticle.css';
-import Tr from './myarticleTr';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as actionCreators from '../reducers/actions';
+import './news.css';
+import Tr from './newsTr';
 
-class MyArticle extends React.Component {
+class News extends React.Component {
     constructor(props){
         super(props);
-        this.state = { };
+        this.state = { 
+            path:''
+         };
     }
     render(){
-        //根据路由获取数据
-        let {dataMy,dataApprove,url} = this.props;
-        let pathname = url.location.pathname;
-        let arr=[];
-        switch(pathname){
-            case '/myarticle/my':
-                arr = dataMy;
-                break;
-            case '/myarticle/approve':
-                arr = dataApprove;
-                break;
-            default:
-                arr=dataMy;
-        }
-        let len = arr.length;
+        let {dataNews,dataColumn,url:{location:{pathname}}} = this.props;
+
+        //渲染所有栏目生成二级菜单
+        let columnArr = dataColumn.map((e,i)=>{
+            let path = '/news/'+e.path;
+            return (
+                <li key={i}><NavLink to={path} activeClassName="active">{e.column}</NavLink></li>
+            )
+        })
+
+        //根据路由过滤新闻数据
+        let nowPath = pathname.split('/news/')[1];
+        let arr = dataNews.filter(e=>{
+            e.path == nowPath;
+        })
+        console.log(dataNews,arr);
+        
         let newArr = arr.map((e,i)=>{
             let obj={
                 key:i,
@@ -43,6 +47,7 @@ class MyArticle extends React.Component {
             }
             return <Tr {...obj} />;
         })
+        
         return (
             <div className="content1">
                 <div className="table_top">
@@ -56,22 +61,20 @@ class MyArticle extends React.Component {
                         <button>查询</button>
                     </div>
                     <ul className="tab_nav">
-                        <li><NavLink to="/myarticle/my" activeClassName="active">我的稿件</NavLink></li>
-                        <li className="redDotLi">
+                        {columnArr}
+                        {/* <li className="redDotLi">
                             <NavLink to="/myarticle/approve" activeClassName="active">
                                 待审核
                             </NavLink>
                             <span className="redDot">5</span>
-                        </li>
+                        </li> */}
                     </ul>
                 </div>
                 <div className="table_main">
                     <div className="tableBtns">
                         <Link to="/edit"><button><i className="fa fa-plus"></i>添加</button></Link>
                         <button><i className="fa fa-pencil"></i>修改</button>
-                        <button className="red"><i className="fa fa-trash"></i>批量删除</button>
-                        <button><i className="fa fa-trash"></i>按日期排序</button>
-                        <button><i className="fa fa-trash"></i>按阅读量排序</button>
+                        <button className="red"><i className="fa fa-trash"></i>删除</button>
                     </div>
                     <table className="newsTable">
                         <thead>
@@ -86,7 +89,7 @@ class MyArticle extends React.Component {
                             <th>编辑</th>
                             <th>主编</th>
                             <th>状态</th>
-                            <th>日期</th>
+                            <th>时间</th>
                             <th>操作</th>
                         </tr>
                         </thead>
@@ -100,7 +103,7 @@ class MyArticle extends React.Component {
                             <li><a>2</a></li>
                             <li><a>3</a></li>
                         </ul>
-                        <span className="total">共{len}条</span>
+                        <span className="total">共22条</span>
                     </div>
                 </div>
             </div>
@@ -110,10 +113,10 @@ class MyArticle extends React.Component {
 
 export default connect((state,ownProps)=>{
     return {
-        dataMy:state.reducermyarticle,
-        dataApprove:state.reducerapprove,
+        dataColumn:state.reducercolumn,
+        dataNews:state.reducernews,
         url:ownProps.url
     };
 },(dispatch)=>{
     return {actions:bindActionCreators(actionCreators,dispatch)};
-})(MyArticle);
+})(News);
