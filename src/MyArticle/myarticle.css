@@ -168,33 +168,3 @@
 .newsTable .circle.red{
     color:#e74c3c;
 }
-.pageBox{
-    width: 100%;
-    margin: 20px 0 0 0;
-    overflow: hidden;
-}
-.pageBox .total{
-    float:right;
-    line-height: 25px;
-    margin-right: 20px;
-}
-#pages{
-    float:right;
-    text-align: center;
-}
-#pages li{
-    float: left;
-}
-#pages li a{
-    display: block;
-    width: 25px;
-    height: 25px;
-    line-height: 25px;
-    border-radius: 3px;
-    color: #555;
-    margin: 0 5px;
-}
-#pages li a.active{
-    color: #fff;
-    background: #00acac;
-}

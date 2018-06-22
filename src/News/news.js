@@ -5,6 +5,7 @@ import {bindActionCreators} from 'redux';
 import * as actionCreators from '../reducers/actions';
 import './news.css';
 import Tr from './newsTr';
+import Page from '../Page/page';
 
 class News extends React.Component {
     constructor(props){
@@ -15,8 +16,7 @@ class News extends React.Component {
     }
     render(){
         let {dataNews,dataColumn,url:{location:{pathname}}} = this.props;
-
-        //渲染所有栏目生成二级菜单
+        //渲染所有栏目生成二级菜单,dataColumn是栏目数据
         let columnArr = dataColumn.map((e,i)=>{
             let path = '/news/'+e.path;
             return (
@@ -24,14 +24,15 @@ class News extends React.Component {
             )
         })
 
-        //根据路由过滤新闻数据
+        //根据路由过滤新闻数据,newsArr是当前栏目所有新闻
         let nowPath = pathname.split('/news/')[1];
-        let arr = dataNews.filter(e=>{
-            e.path == nowPath;
+        let newsArr = dataNews.filter(e=>{
+            return e.path===nowPath;
         })
-        console.log(dataNews,arr);
-        
-        let newArr = arr.map((e,i)=>{
+
+        //总共多少条数据，到page页里再分页
+        let len = newsArr.length;
+        let newArr = newsArr.map((e,i)=>{
             let obj={
                 key:i,
                 id:e.id,
@@ -97,14 +98,7 @@ class News extends React.Component {
                             {newArr}
                         </tbody>
                     </table>
-                    <div className="pageBox">
-                        <ul id="pages">
-                            <li><a className="active">1</a></li>
-                            <li><a>2</a></li>
-                            <li><a>3</a></li>
-                        </ul>
-                        <span className="total">共22条</span>
-                    </div>
+                    <Page len={len} />
                 </div>
             </div>
         )

@@ -1,0 +1,62 @@
+.loginBox{
+    width: 600px;
+    height: 300px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin: -150px 0 0 -300px;
+    background: rgba(255,255,255,0.5);
+    border-radius: 8px;
+}
+.loginBox .user{
+    margin-top: 60px;
+    height: 50px;
+    position: relative;
+}
+.loginBox label{
+    width: 60px;
+    text-align: right;
+}
+.loginBox i{
+    position: absolute;
+    top: 14px;
+    left: 200px;
+    font-size: 18px;
+    color: rgb(190, 190, 190);
+}
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {   
+    /* WebKit browsers */   
+   color: rgb(226, 226, 226);   
+   }   
+.loginBox input{
+    width: 280px;
+    padding-left:50px;
+    line-height: 40px;
+    margin-left: 15px;
+    border: solid 1px #e2e2e2;
+    border-radius: 8px;
+    color:#333;
+}
+.loginBox .password{
+    margin-top: 30px;
+    position: relative;
+}
+.loginBox button{
+    margin-top: 30px;
+    width: 90px;
+    height: 36px;
+    font-size: 16px;
+    background: #00acac;
+    color:#fff;
+    border-radius: 4px;
+}
+.tip{
+    display: block;
+    transition: 500ms;
+    color: rgb(224, 124, 77);
+    text-align: center;
+    margin-top: 16px;
+}
+.tip.none{
+    display: none;
+}

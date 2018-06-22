@@ -5,6 +5,7 @@ import Tr from './myarticleTr';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as actionCreators from '../reducers/actions';
+import Page from '../Page/page';
 
 class MyArticle extends React.Component {
     constructor(props){
@@ -94,14 +95,7 @@ class MyArticle extends React.Component {
                             {newArr}
                         </tbody>
                     </table>
-                    <div className="pageBox">
-                        <ul id="pages">
-                            <li><a className="active">1</a></li>
-                            <li><a>2</a></li>
-                            <li><a>3</a></li>
-                        </ul>
-                        <span className="total">共{len}条</span>
-                    </div>
+                    <Page len={len}/>
                 </div>
             </div>
         )

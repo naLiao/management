@@ -21,8 +21,9 @@ input,
 button,
 select{
     outline: none;
+}
+button{
     border: none;
-    background: transparent;
 }
 button,
 a{
