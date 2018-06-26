@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link,NavLink} from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
 import './sidebar.css';
 
 class SideBar extends React.Component {
@@ -13,7 +13,7 @@ class SideBar extends React.Component {
             <div id="sideBar">
                 <ul className="nav">
                     <li>
-                        <NavLink to="/index" activeClassName="active"><i className="fa fa-desktop"></i>
+                        <NavLink to="/index/home" activeClassName="active"><i className="fa fa-desktop"></i>
                             <span>首页</span>
                         </NavLink>
                     </li>

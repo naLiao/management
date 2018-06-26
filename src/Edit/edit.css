@@ -107,9 +107,20 @@
 .submitBox div:nth-of-type(6) label{
     vertical-align: top;
 }
+.submitBox .main_content textarea{
+    padding: 20px;
+}
 .submitBox .main_content label{
     vertical-align: top;
 }
 .submitBox div i{
     margin:0 6px;
+}
+.submitBox .topBox input{
+    width: 30px;
+    margin-left: 0;
+}
+.submitBox div .topBox{
+    margin-left: 20px;
+    width: 70px;
 }

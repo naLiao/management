@@ -1,4 +1,3 @@
-import React from 'react';
 import {combineReducers} from 'redux';
 
 //1.我的稿件数据，根据登录账号动态获取
@@ -201,182 +200,31 @@ const reducercolumn = (state=columnArr,action)=>{
     }
 }
 
-//4.所有新闻数据
-const newsArr=[
-    {
-        id:1,
-        title:'与国际接轨 中国今日向外国人颁授首枚“友谊勋章',
-        column:'头条',
-        path:'headline',
-        readNum:'1234',
-        commentNum:'35',
-        shareNum:'56',
-        editor:'张三',
-        approve:'李二',
-        status:'已发布',
-        time:'2018-6-5'
-    },
-    {
-        id:2,
-        title:'与国际接轨 中国今日向外国人颁授首枚“友谊勋章',
-        column:'头条',
-        path:'headline',
-        readNum:'1234',
-        commentNum:'35',
-        shareNum:'56',
-        editor:'张三',
-        approve:'李二',
-        status:'已发布',
-        time:'2018-6-5'
-    },
-    {
-        id:3,
-        title:'与国际接轨 中国今日向外国人颁授首枚“友谊勋章',
-        column:'头条',
-        path:'headline',
-        readNum:'1234',
-        commentNum:'35',
-        shareNum:'56',
-        editor:'张三',
-        approve:'李二',
-        status:'已发布',
-        time:'2018-6-5'
-    },
-    {
-        id:4,
-        title:'与国际接轨 中国今日向外国人颁授首枚“友谊勋章',
-        column:'头条',
-        path:'headline',
-        readNum:'1234',
-        commentNum:'35',
-        shareNum:'56',
-        editor:'张三',
-        approve:'李二',
-        status:'已发布',
-        time:'2018-6-5'
-    },
-    {
-        id:5,
-        title:'与国际接轨 中国今日向外国人颁授首枚“友谊勋章',
-        column:'头条',
-        path:'headline',
-        readNum:'1234',
-        commentNum:'35',
-        shareNum:'56',
-        editor:'张三',
-        approve:'李二',
-        status:'已发布',
-        time:'2018-6-5'
-    },
-    {
-        id:6,
-        title:'与国际接轨 中国今日向外国人颁授首枚“友谊勋章',
-        column:'头条',
-        path:'headline',
-        readNum:'1234',
-        commentNum:'35',
-        shareNum:'56',
-        editor:'张三',
-        approve:'李二',
-        status:'已发布',
-        time:'2018-6-5'
-    },
-    {
-        id:7,
-        title:'与国际接轨 中国今日向外国人颁授首枚“友谊勋章',
-        column:'头条',
-        path:'headline',
-        readNum:'1234',
-        commentNum:'35',
-        shareNum:'56',
-        editor:'张三',
-        approve:'李二',
-        status:'已发布',
-        time:'2018-6-5'
-    },
-    {
-        id:8,
-        title:'与国际接轨 中国今日向外国人颁授首枚“友谊勋章',
-        column:'头条',
-        path:'headline',
-        readNum:'1234',
-        commentNum:'35',
-        shareNum:'56',
-        editor:'张三',
-        approve:'李二',
-        status:'已发布',
-        time:'2018-6-5'
-    },
-    {
-        id:9,
-        title:'与国际接轨 中国今日向外国人颁授首枚“友谊勋章',
-        column:'头条',
-        path:'headline',
-        readNum:'1234',
-        commentNum:'35',
-        shareNum:'56',
-        editor:'张三',
-        approve:'李二',
-        status:'已发布',
-        time:'2018-6-5'
-    },
-    {
-        id:10,
-        title:'与国际接轨 中国今日向外国人颁授首枚“友谊勋章',
-        column:'头条',
-        path:'headline',
-        readNum:'1234',
-        commentNum:'35',
-        shareNum:'56',
-        editor:'张三',
-        approve:'李二',
-        status:'已发布',
-        time:'2018-6-5'
-    },
-    {
-        id:2,
-        title:'与国际接轨 中国今日向外国人颁授首枚“友谊勋章',
-        column:'财经',
-        path:'finance',
-        readNum:'1234',
-        commentNum:'35',
-        shareNum:'56',
-        editor:'张三',
-        approve:'李二',
-        status:'已发布',
-        time:'2018-6-5'
-    },
-    {
-        id:3,
-        title:'与国际接轨 中国今日向外国人颁授首枚“友谊勋章',
-        column:'时事',
-        path:'current',
-        readNum:'1234',
-        commentNum:'35',
-        shareNum:'56',
-        editor:'张三',
-        approve:'李二',
-        status:'已发布',
-        time:'2018-6-5'
-    },
-    {
-        id:4,
-        title:'与国际接轨 中国今日向外国人颁授首枚“友谊勋章',
-        column:'生活',
-        path:'life',
-        readNum:'1234',
-        commentNum:'35',
-        shareNum:'56',
-        editor:'张三',
-        approve:'李二',
-        status:'已发布',
-        time:'2018-6-5'
-    }
-];
-const reducernews = (state=newsArr,action)=>{
+//4.新闻管理
+// const reducernews = (state=[],action)=>{
+//     switch(action.type){
+//         //初始化获取数据
+//         case 'GET_DATA':
+//             console.log(action.res);
+//             return action.res;
+//         //往新闻列表里添加一条新闻
+//         case 'ADD_SUCCESS':
+//             return state;
+//         default:
+//             return state;
+//     }
+// }
+
+const reducernews = (state={news:[],count:0},action)=>{
     switch(action.type){
-        case 'ACTION_TYPE':
-            return '';
+        //初始化获取数据
+        case 'GET_DATA':
+            console.log(action.res);
+            state.news = action.res;
+            return state;
+        //往新闻列表里添加一条新闻
+        case 'ADD_SUCCESS':
+            return state;
         default:
             return state;
     }

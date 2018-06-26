@@ -17,7 +17,7 @@ class Page extends Component {
         let arr = [];
         //生成页码条
         for(let i=0;i<n;i++){
-            arr.push(<li><NavLink to="/" activeclassname="active">{i+1}</NavLink></li>);
+            arr.push(<li key={i}><NavLink to="/" activeclassname="active">{i+1}</NavLink></li>);
         }
         
         return (

@@ -26,7 +26,9 @@ class App extends Component {
     return (
       <div>
           {/* 登录 */}
-          <Route path="/" exact component={Login} />
+          <Route path="/" exact render={(url)=>{
+              return <Login url={url}/>
+          }} />
         
           {/* 头部和侧边栏 */}
           <Route path='/index' component={HeadSide}/>
@@ -44,8 +46,8 @@ class App extends Component {
           <Route path='/index/edit' component={Edit}/>
 
           {/* 新闻管理 */}
-          <Route exact path='/index/news' render={()=>{
-              return <Redirect to="/index/news/headline" />
+          <Route exact path='/index/news' render={(url)=>{
+              return <News {...{url}}/>
           }}/>
           <Route path='/index/news/:id' render={(url)=>{
               return <News {...{url}}/>

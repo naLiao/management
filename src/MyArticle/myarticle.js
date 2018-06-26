@@ -18,10 +18,10 @@ class MyArticle extends React.Component {
         let pathname = url.location.pathname;
         let arr=[];
         switch(pathname){
-            case '/myarticle/my':
+            case '/index/myarticle/my':
                 arr = dataMy;
                 break;
-            case '/myarticle/approve':
+            case '/index/myarticle/approve':
                 arr = dataApprove;
                 break;
             default:
@@ -57,9 +57,9 @@ class MyArticle extends React.Component {
                         <button>查询</button>
                     </div>
                     <ul className="tab_nav">
-                        <li><NavLink to="/myarticle/my" activeClassName="active">我的稿件</NavLink></li>
+                        <li><NavLink to="/index/myarticle/my" activeClassName="active">我的稿件</NavLink></li>
                         <li className="redDotLi">
-                            <NavLink to="/myarticle/approve" activeClassName="active">
+                            <NavLink to="/index/myarticle/approve" activeClassName="active">
                                 待审核
                             </NavLink>
                             <span className="redDot">5</span>
@@ -71,8 +71,6 @@ class MyArticle extends React.Component {
                         <Link to="/edit"><button><i className="fa fa-plus"></i>添加</button></Link>
                         <button><i className="fa fa-pencil"></i>修改</button>
                         <button className="red"><i className="fa fa-trash"></i>批量删除</button>
-                        <button><i className="fa fa-trash"></i>按日期排序</button>
-                        <button><i className="fa fa-trash"></i>按阅读量排序</button>
                     </div>
                     <table className="newsTable">
                         <thead>

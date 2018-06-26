@@ -25,8 +25,8 @@ class Header extends React.Component {
         return (
             <header id="header">
                 <div className="headerLBox"><span></span>新闻后台管理系统</div>
-                <ul className="headerRBox">
-                    <li>
+                {/* <ul className="headerRBox"> */}
+                    {/* <li>
                         <div className="searchForm">
                             <input type="text" placeholder="请搜索" className="input" />
                             <button id="searchBtn" className="fa fa-search"></button>
@@ -51,7 +51,7 @@ class Header extends React.Component {
                             <li>退出</li>
                         </ul>
                     </li>
-                </ul>
+                </ul> */}
             </header>
         )
     }

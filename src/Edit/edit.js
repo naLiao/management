@@ -2,17 +2,21 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 // import Editor from './Editor/editor';
 import './edit.css';
+//引入图片
+// import
 
 class Edit extends React.Component {
     constructor(props){
         super(props);
-        this.state = { 
+        this.state = {
             title:'',
-            column:'',
-            tag:[],
-            abstract:'',
             picSrc:'',
-            content:'',
+            main:'',
+            column: '',
+            path:'',
+            editor:'',
+            approve:'',
+            isTop: false
          };
     }
     //输入标题
@@ -23,21 +27,63 @@ class Edit extends React.Component {
     columnChange = (ev)=>{
         this.setState({column:ev.target.value});
     }
-    //输入tag标签
-    tagInput = (ev)=>{
-        let val = ev.target.value;
-        this.setState({tag:val.split(',')});
+    //输入栏目路径
+    pathInput = (ev)=>{
+        this.setState({path:ev.target.value});
     }
-    //输入简介
-    abstractInput = (ev)=>{
-        this.setState({abstract:ev.target.value});
+    //输入编辑
+    editorInput = (ev)=>{
+        this.setState({editor:ev.target.value});
+    }
+    //输入主编
+    approveInput = (ev)=>{
+        this.setState({approve:ev.target.value});
     }
     //输入内容
-    contentInput = (ev)=>{
-        this.setState({content:ev.target.value});
+    mainInput = (ev)=>{
+        this.setState({main:ev.target.value});
+    }
+    //是否置顶
+    top = ()=>{
+        this.setState({isTop:true});
+    }
+    notop = ()=>{
+        this.setState({isTop:false});
+    }
+    //提交
+    submit = ()=>{
+        let {title,picSrc,main,column,path,editor,approve,isTop} = this.state;
+        let obj = {
+            title,
+            picSrc,
+            main,
+            column,
+            path,
+            editor,
+            approve,
+            isTop
+        }
+        //添加新闻
+        fetch('http://127.0.0.1:88/api/news/add',{
+            method:"post",
+            body :new URLSearchParams({obj}).toString(),
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        })
+        .then(e=>e.json())
+        .then(data => {
+            console.log(data);
+            if(data.code === 0){
+                console.log('登录成功');
+                
+            }else if(data.code === -3){
+                
+            }
+        })
     }
     render(){
-        let {title,abstract,content} = this.state;
+        let {title,picSrc,main,column,path,editor,approve,isTop} = this.state;
         return (
             <div className='content1'>
                 <div className="bread_menu">
@@ -66,19 +112,46 @@ class Edit extends React.Component {
                                 <option value="生活">生活</option>
                             </select>
                         </div>
-                        <div className="tag">
-                            <label>tag标签(以英文逗号分隔)</label>
+                        <div>
+                            <label>栏目路径<i>*</i></label>
                             <input 
                                 type="text" 
-                                onChange={this.tagInput}
+                                onChange={this.pathInput}
                             />
                         </div>
                         <div>
-                            <label>简介</label>
-                            <textarea
-                                value={abstract}
-                                onChange={this.abstractInput}
-                            ></textarea>
+                            <label>编辑<i>*</i></label> 
+                            <input 
+                                type="text" 
+                                onChange={this.editorInput}
+                            />
+                        </div>
+                        <div>
+                            <label>主编<i>*</i></label>
+                            <input 
+                                type="text" 
+                                onChange={this.approveInput}
+                            />
+                        </div>
+                        <div>
+                            <label>置顶<i>*</i></label>
+                            <label className="topBox" htmlFor="top1">
+                                <input 
+                                id="top1"
+                                type="radio"
+                                name="top"
+                                checked={isTop?true:false}
+                                onChange={this.top}
+                                />是
+                            </label>
+                            <label className="topBox" htmlFor="top2">
+                                <input 
+                                id="top2" 
+                                type="radio" 
+                                name="top"
+                                checked={isTop?false:true}
+                                onChange={this.notop}
+                                />否</label>
                         </div>
                         <div>
                             <label>标题图</label>
@@ -93,15 +166,23 @@ class Edit extends React.Component {
                         <div className="main_content">
                             <label>内容</label>
                             <textarea
-                                value={content}
-                                onChange={this.contentInput}
+                                value={main}
+                                onChange={this.mainInput}
                             ></textarea>
                         </div>
                         <div className="divider"></div>
                         <span className="btns">
-                            <button id="submit" className="greenBtn">提交</button>
-                            <button id="submit" className="greenBtn">保存</button>
-                            <button id="submit" className="greenBtn">取消</button>
+                            <button 
+                                id="submit" 
+                                className="greenBtn"
+                                onClick={this.submit}
+                            >提交</button>
+                            <button
+                                id="submit"
+                                className="greenBtn"
+                                onClick={this.submit}
+                            >保存</button>
+                            <button id="cancel" className="greenBtn">取消</button>
                         </span>
                     </div>
                 </form>

@@ -51,6 +51,7 @@
     padding: 0px 10px;
     font-size: 12px;
     vertical-align: top;
+    border: none;
 }
 #searchBtn {
     width: 30px;
@@ -60,6 +61,7 @@
     left: 190px;
     cursor: pointer;
     font-size: 16px;
+    background: transparent;
 }
 #searchBtn:hover{
     color: #4DCACA;
