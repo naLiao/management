@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link,NavLink } from 'react-router-dom';
+// import { Link,NavLink } from 'react-router-dom';
 import './user.css';
 import Tr from './userTr';
 import DelBox from './delbox';
@@ -17,6 +17,14 @@ class User extends React.Component {
          };
     }
 
+    componentWillMount(){
+        //判断是否登录
+        let {url:{history}} = this.props;
+        if(!document.cookie){
+            history.push('/');
+        }
+    }
+
     //子组件修改时显示弹框 
     showDel = (status)=>{
         this.setState({isShowDel:status});
@@ -31,7 +39,7 @@ class User extends React.Component {
         let {data} = this.props;
         let {isShowDel,changeID} = this.state;
         let com = isShowDel? <DelBox showDel={this.showDel} changeID={changeID}/> :'';
-        let newArr = data.map((e,i)=>{
+        let newArr = [].map((e,i)=>{
             let obj={
                 key:i,
                 id:e.id,

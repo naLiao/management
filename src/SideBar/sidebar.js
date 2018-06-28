@@ -23,20 +23,20 @@ class SideBar extends React.Component {
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink to="/index/news" activeClassName="active"><i className="fa fa-newspaper-o"></i>
+                        <NavLink to="/index/news/page1" activeClassName="active"><i className="fa fa-newspaper-o"></i>
                             <span>新闻管理</span>
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink to="/index/column" activeClassName="active"><i className="fa fa-columns"> </i>
+                        <NavLink to="/index/column/page1" activeClassName="active"><i className="fa fa-columns"> </i>
                             <span>栏目管理</span>
                         </NavLink>
                     </li>
-                    <li><NavLink to="/index/account" activeClassName="active"><i className="fa fa-tags"></i>
+                    <li><NavLink to="/index/account/page1" activeClassName="active"><i className="fa fa-tags"></i>
                             <span>权限管理</span>
                         </NavLink>
                     </li>
-                    <li><NavLink to="/index/user" activeClassName="active"><i className="fa fa-user"></i>
+                    <li><NavLink to="/index/user/page1" activeClassName="active"><i className="fa fa-user"></i>
                             <span>会员管理</span>
                         </NavLink>
                     </li>

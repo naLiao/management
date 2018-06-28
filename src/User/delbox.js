@@ -10,7 +10,7 @@ class DelBox extends Component {
     }
 
     sure = ()=>{
-        let {showDel,data,changeID} = this.props;
+        // let {showDel,data,changeID} = this.props;
         //changeID是拿到当前要禁用的是哪一个
     }
 

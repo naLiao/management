@@ -5,6 +5,15 @@ class Setting extends Component {
         super(props);
         this.state = {  };
     }
+
+    componentWillMount(){
+        //判断是否登录
+        let {url:{history}} = this.props;
+        if(!document.cookie){
+            history.push('/');
+        }
+    }
+    
     render() {
         return (
             <div className="content">

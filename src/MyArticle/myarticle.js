@@ -12,6 +12,15 @@ class MyArticle extends React.Component {
         super(props);
         this.state = { };
     }
+
+    componentWillMount(){
+        //判断是否登录
+        let {url:{history}} = this.props;
+        if(!document.cookie){
+            history.push('/');
+        }
+    }
+    
     render(){
         //根据路由获取数据
         let {dataMy,dataApprove,url} = this.props;

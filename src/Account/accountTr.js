@@ -5,19 +5,40 @@ class Tr extends React.Component {
         super(props);
         this.state = { };
     }
+
+    //修改账户
+    showInTr = ()=>{
+        let {show,e} = this.props;
+        console.log(e);
+        
+        show(e);
+    }
+    //删除账户
+    delInTr = ()=>{
+        let {del,e} = this.props;
+        console.log(e);
+        
+        del(e.id);
+    }
+    
     render(){
-        let {id,name,kind,level,time} = this.props;
+        let {i,e} = this.props;
+        
         return (
             <tr>
                 <td><input type="checkbox"/></td>
-                <td>{id}</td>
-                <td>{name}</td>
-                <td>{kind}</td>
-                <td>{level}</td>
-                <td>{time}</td>
+                <td>{i+1}</td>
+                <td>{e.account}</td>
+                <td>{e.kind}</td>
+                <td>{e.level}</td>
+                <td>{e.time}</td>
                 <td>
-                    <button><i className="fa fa-pencil"></i></button>
-                    <button className="red"><i className="fa fa-trash"></i></button>
+                    <button
+                        onClick={this.showInTr}
+                    ><i className="fa fa-pencil"></i></button>
+                    <button 
+                        onClick={this.delInTr}
+                    className="red"><i className="fa fa-trash"></i></button>
                 </td>
             </tr>
         )

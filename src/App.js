@@ -5,12 +5,10 @@ import {Route,Redirect} from 'react-router-dom';
 import HeadSide from './Index/headside';
 
 import MyArticle from './MyArticle/myarticle';
-import Edit from './Edit/edit';
 
 import News from './News/news';
 
 import Column from './Column/column';
-import NewCol from './Column/newcol';
 
 import Account from './Account/account';
 
@@ -34,38 +32,46 @@ class App extends Component {
           <Route path='/index' component={HeadSide}/>
 
           {/* 首页 */}
-          <Route path='/index/home' component={IndexContent}/>
+          <Route path='/index/home' render={(url)=>{
+              return <IndexContent url={url}/>
+          }}/>
 
-          {/* 我的稿件 */}
+          {/* 我的稿件 */}         
           <Route exact path='/index/myarticle' render={()=>{
               return <Redirect to="/index/myarticle/my" />
           }}/>
           <Route path='/index/myarticle/:id' render={(url)=>{
               return <MyArticle {...{url}}/>
           }}/>
-          <Route path='/index/edit' component={Edit}/>
 
           {/* 新闻管理 */}
-          <Route exact path='/index/news' render={(url)=>{
-              return <News {...{url}}/>
+          <Route path='/index/news' exact render={()=>{
+              return <Redirect to="/index/news/page1" />
           }}/>
           <Route path='/index/news/:id' render={(url)=>{
               return <News {...{url}}/>
           }}/>
 
           {/* 栏目管理 */}
-          <Route path='/index/column' render={(url)=>{
-              return <Column {...{url}}/>
+          <Route path='/index/column' exact render={(url)=>{
+              return <Redirect to="/index/news/page1" />
           }}/>
-          <Route path='/index/column/new' render={(url)=>{
-              return <NewCol {...{url}}/>
+          <Route path='/index/column/:id' render={(url)=>{
+              return <Column {...{url}}/>
           }}/>
 
           {/* 权限管理 */}
-          <Route path="/index/account" component={Account} />
+          <Route path="/index/account" exact render={(url)=>{
+              return <Redirect to="/index/account/page1" />
+          }}/>
+          <Route path="/index/account/:id" render={(url)=>{
+              return <Account url={url} />
+          }}/>
 
           {/* 会员管理 */}
-          <Route path="/index/user" component={User} />
+          <Route path="/index/user" render={(url)=>{
+              return <User url={url} />
+          }}/>
 
           {/* 系统设置 */}
           <Route path="/index/setting" component={Setting} />

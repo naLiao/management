@@ -20,7 +20,7 @@ class Tr extends React.Component {
     }
     render(){
         let {id,name,email,phone,commentNum,status,time} = this.props;
-        let {com} = this.state;
+        // let {com} = this.state;
         return (
             <tr>
                 <td><input type="checkbox"/></td>

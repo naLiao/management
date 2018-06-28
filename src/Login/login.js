@@ -48,6 +48,8 @@ class Login extends React.Component {
                             history.push('/index/home');
                         },1000);
                     });
+                    //种Cookie
+                    document.cookie = 'user='+ account;
                 }else if(data.code === -3){
                     this.setState({tip:data.msg,isTipShow:true,account:'',password:''},()=>{
                         setTimeout(()=>{

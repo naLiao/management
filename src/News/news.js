@@ -1,20 +1,22 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+// import { NavLink,WithRouter } from 'react-router-dom';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as actionCreators from '../reducers/actions';
 import './news.css';
 import Tr from './newsTr';
 import Page from '../Page/page';
+import Tip from '../Tip/tip';
 
 class News extends React.Component {
     constructor(props){
         super(props);
         this.state = {
+            //提示框是否显示
+            isTipShow:false,
+            tipInfo:'',
             //当前栏目
-            path:'',
-            //总页数
-            count:0,
+            path:'all',
             //当前页
             currentPage:1,
             //新添加
@@ -34,17 +36,40 @@ class News extends React.Component {
          };
     }
 
+    componentWillMount(){
+        //判断是否登录
+        let {url:{history}} = this.props;
+        if(!document.cookie){
+            history.push('/');
+        }
+    }
+
     //初始化
     componentDidMount (){
+        let {getColumnData,getNewsData,getCount} = this.props;
+        console.log('初始化');
+        //获取栏目
+        getColumnData(1);  //走中间件，页码
         //获取新闻
-        let {getNewsData} = this.props;
-        getNewsData('all',1);  //走中间件，栏目+页码'
-        
+        getNewsData('all',1);  //走中间件，栏目+页码
         //获取页码
-        let {getCount} = this.props;
         getCount('all');  //走中间件
     }
 
+    componentWillReceiveProps({url:{match:{params}}}){
+        let id1 = params.id;
+        let column = params.column;
+        //切换页码
+        let {url:{match:{params:{id}}},getNewsData} = this.props;
+        let {path} = this.state;
+        let currentPage = id1.split('page')[1]*1;
+        this.setState({currentPage});
+        if(id1 !== id){
+            console.log('页码切换，要请求数据了'+ currentPage);
+            getNewsData(path,currentPage);  //走中间件，栏目+页码
+        }
+    }
+    
     //添加新闻
     add = ()=>{
         this.refs.tan.style.display = 'block';
@@ -67,25 +92,53 @@ class News extends React.Component {
         this.refs.tan.style.display = 'block';
     }
 
-    submit = ()=>{
-        let {tanObj,id} = this.state;
+    submit = async ()=>{
+        let {tanObj,id,path,currentPage} = this.state;
+        console.log(id);
+        
         if(!id){
             //添加新闻
-            let {actions:{addnews}} = this.props;
-            addnews(tanObj);  //往中间件中发送数据
+            let {getNewsData,getCount,addnews} = this.props;
+            await addnews(tanObj);  //往中间件中发送数据
+            this.refs.tan.style.display = 'none';
+            await getNewsData(path,currentPage);
+            await getCount(path);
+            this.tipShow('添加成功');
         }else{
             //修改新闻
-            let {actions:{editNewsData}} = this.props;
+            let {editNewsData} = this.props;
             editNewsData(id,tanObj);  //往中间件中发送数据
+            this.refs.tan.style.display = 'none';
+            this.tipShow('修改成功');
         }
     }
 
-    //删除新闻
-    del = (id)=>{
-        let {actions:{delNewsData}} = this.props;
+    //删除新闻，删除完成后重新渲染数据、页码
+    del = async (id)=>{
+        let {getNewsData,getCount,delNewsData} = this.props;
+        let {path,currentPage} = this.state;
+        await delNewsData(id,currentPage);  //往中间件中发送数据
+        await getNewsData(path,currentPage);
+        await getCount(path);
+        this.tipShow('删除成功');
+    }
+
+    //栏目筛选
+    select = (ev)=>{
+        let {getNewsData} = this.props;
         let {currentPage} = this.state;
-        delNewsData(id,currentPage);  //往中间件中发送数据
-        console.log(currentPage);
+        let column = ev.target.value;
+        console.log(column);
+        getNewsData(column,currentPage);
+    }
+
+    //提示框弹出
+    tipShow = (info)=>{
+        this.setState({isTipShow:true,tipInfo:info});
+        let that = this;
+        setTimeout(function(){
+            that.setState({isTipShow:false,tipInfo:''});
+        },1000)
     }
 
     //关闭弹窗
@@ -111,12 +164,11 @@ class News extends React.Component {
     }
     changeColumn = (ev)=>{
         let {tanObj} = this.state;
-        tanObj.column = ev.target.value;
-        this.setState({tanObj});
-    }
-    changePath = (ev)=>{
-        let {tanObj} = this.state;
+        let index = ev.target.selectedIndex;
+        let column = ev.target.options[index].innerHTML;
         tanObj.path = ev.target.value;
+        tanObj.column = column;
+        console.log(tanObj);
         this.setState({tanObj});
     }
     changeEditor = (ev)=>{
@@ -136,10 +188,15 @@ class News extends React.Component {
     }
     
     render(){
+        let {getNewsData,dataColumn,dataNews,url:{match:{params:{id}}},url:{history:{push}}} = this.props;  //栏目数据 新闻数据
+        let {isTipShow,path,tanObj,tipInfo} = this.state;  //控制提示框是否出现
+        let count = dataNews.count;  //页码
+        let currentPage = id.split('page')[1]*1;  //当前页
+        console.log('render');
+        console.log(dataNews.news);
+        
         //根据组件内的新闻数据渲染页面
-        let {dataNews} = this.props;
-        console.log(dataNews);
-        let newArr = [].map((e,i)=>{
+        let newArr = dataNews.news.map((e,i)=>{
             let obj={
                 key:i,
                 e,
@@ -149,26 +206,21 @@ class News extends React.Component {
             }
             return <Tr {...obj}/>;
         })
-
-        //页码
         
-        //渲染所有栏目生成二级菜单
-        let {dataColumn} = this.props;
-        let columnArr = dataColumn.map((e,i)=>{
-            let path = '/index/news/'+e.path;
+        //渲染栏目选取框
+        let selectColumn = dataColumn.columns.map((e,i)=>{
             return (
-                <li key={i}><NavLink to={path} activeClassName="active">{e.column}</NavLink></li>
+                // <option key={i} value={e.path}>{e.column}</option>
+                <option 
+                    key={i} 
+                    value={e.path}
+                >{e.column}</option>
             )
         })
 
-        //渲染弹框
-        let {tanObj} = this.state;
-        //控制弹框是否出现
-        let {isTanShow} = this.props;
-        let sty = isTanShow?'tan_content block':'tan_content none';
-        
         return (
             <div className="content1">
+                <Tip isTipShow={isTipShow} tipInfo={tipInfo}/>
                 <div className="table_top">
                     <div className="big">搜索查询</div>
                     <div className="tab_search">
@@ -179,10 +231,6 @@ class News extends React.Component {
                         <input type="text" placeholder="请输入"/>
                         <button>查询</button>
                     </div>
-                    <ul className="tab_nav">
-                        <li key='-1'><NavLink to="/index/news" activeClassName="active">所有新闻</NavLink></li>
-                        {columnArr}
-                    </ul>
                 </div>
                 <div className="table_main">
                     <div className="tableBtns">
@@ -194,6 +242,13 @@ class News extends React.Component {
                         <button className="red"><i className="fa fa-trash"></i>批量删除</button>
                         <button><i className="fa fa-trash"></i>按日期排序</button>
                         <button><i className="fa fa-trash"></i>按阅读量排序</button>
+                        <select
+                            onChange={this.select}
+                        >
+                            <option disabled>请选择</option>
+                            <option value='all'>所有新闻</option>
+                            {selectColumn}
+                        </select>
                     </div>
                     <table className="newsTable">
                         <thead>
@@ -216,14 +271,11 @@ class News extends React.Component {
                             {newArr}
                         </tbody>
                     </table>
-                    <Page len={30} />
+                    <Page len={count} path="/index/news" currentPage={currentPage} push={push} />
                 </div>
 
                 {/* 弹框 */}
-                <div 
-                    className={sty}
-                    ref="tan"
-                >
+                <div className="tan_content" ref="tan" >
                     <div className="bg"></div>
                     <div className="tan_box">
                         <div className="tan_title clear">
@@ -251,20 +303,22 @@ class News extends React.Component {
                             </div>
                             <div className="input_info">
                                 <span>栏&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;目：</span>
-                                <input 
-                                    type="text"
-                                    value={tanObj.column}
+                                <select
                                     onChange={this.changeColumn}
-                                />
+                                >
+                                    <option disabled>请选择</option>
+                                    <option value='all'>所有新闻</option>
+                                    {selectColumn}
+                                </select>
                             </div>
-                            <div className="input_info">
+                            {/* <div className="input_info">
                                 <span>栏目路径：</span>
                                 <input 
                                     type="text"
                                     value={tanObj.path}
                                     onChange={this.changePath}
                                 />
-                            </div>
+                            </div> */}
                             <div className="input_info">
                                 <span>编&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;辑：</span>
                                 <input 
@@ -326,14 +380,6 @@ class News extends React.Component {
         )
     }
 }
-
-// export default connect((state,ownProps)=>{
-//     return {
-//         dataNews:state.reducernews,
-//         dataColumn:state.reducercolumn,
-//         url:ownProps.url
-//     };
-// },dispatch=>bindActionCreators(actionCreators,dispatch))(News);
 
 export default connect((state,ownProps)=>{
     return {

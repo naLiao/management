@@ -33,6 +33,15 @@
         status:'已发布',
         time:'2018-6-5'
     }
+2.栏目数据
+    {
+        id:1,
+        column:'时事',
+        path:'current',
+        readNum:'1234',
+        approve:'李二',
+        time:'2018-6-5'
+    }
 3.评论数据
     {
         newsId:1,
@@ -55,7 +64,7 @@
         ],
         
     }
-2.员工账号数据
+4.员工账号数据
     {
         accountId:1,
         name:'admin',
@@ -63,7 +72,7 @@
         level:1 || 2 || 5,
         logtime:'2018-6-5'
     }
-3.会员数据
+5.会员数据
     {
         userId:1,
         name:'会员1',
@@ -72,3 +81,12 @@
         status:'stop || normal',
         regiTime:'2018-6-5'
     }
+
+写项目时遇到的坑：
+1.组件页内发送action，在action里用中间件进行异步数据请求，获取到数据后返回给reducer
+    reducer里的数据变化了，可是组件页没有重新渲染
+    解决方法：reducer里面不能直接修改state，要先拷贝一份，再返回修改后的数据
+2.点击页码跳转的时候，先改变路由，组件页内用componentWillReceiveProps感知路由变化
+    走中间件请求数据，可是请求完数据又走componentWillReceiveProps，重复循环
+    解决方法：在请求数据之前加判断，判断当前路由和前一个路由里的params-id是否相等，不相等才请求数据，
+    保证只请求一次

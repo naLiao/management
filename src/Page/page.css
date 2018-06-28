@@ -42,6 +42,7 @@
 .jumpTo input{
     width: 60px;
     height: 30px;
+    padding:0 10px;
     margin: 0 10px;
     border: solid 1px #e2e2e2;
 }
@@ -49,4 +50,8 @@
     float:right;
     line-height: 30px;
     margin-right: 20px;
+}
+#pages li .unclick{
+    color: rgb(204, 204, 204);
+    cursor: not-allowed;
 }

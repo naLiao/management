@@ -1,28 +1,40 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+// import {Link} from 'react-router-dom';
 
 class ColumnTr extends React.Component {
     constructor(props){
         super(props);
-        this.state = {};
+        this.state = {  };
     }
+
+    //修改栏目
+    showInTr = ()=>{
+        let {show,e} = this.props;
+        show(e);
+    }
+    //删除栏目
+    delInTr = ()=>{
+        let {del,e} = this.props;
+        del(e.id);
+    }
+
     render(){
-        let {column:columnName,newsNum,approve,path,time} = this.props;
+        let {e} = this.props;
         return (
             <tr>
                 <td><input type="checkbox"/></td>
-                <td>{columnName}</td>
-                <td>{newsNum}</td>
-                <td>{approve}</td>
-                <td>{time}</td>
+                <td>{e.column}</td>
+                <td>{e.path}</td>
+                <td>{e.readNum}</td>
+                <td>{e.approve}</td>
+                <td>{e.time}</td>
                 <td>
-                    <Link to={path}
-                        className="showcolumnNewsBtn"
-                    >新闻列表</Link>
-                </td>
-                <td>
-                    <button><i className="fa fa-pencil"></i></button>
-                    <button className="red"><i className="fa fa-trash"></i></button>
+                    <button
+                        onClick={this.showInTr}
+                    ><i className="fa fa-pencil"></i></button>
+                    <button 
+                        onClick={this.delInTr}
+                    className="red"><i className="fa fa-trash"></i></button>
                 </td>
             </tr>
         )
