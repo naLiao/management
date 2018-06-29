@@ -1,13 +1,26 @@
 import React from 'react';
+import {withRouter} from 'react-router-dom';
 import './header.css';
 
 class Header extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            avatarOnOff:false
+            name:false
         };
     }
+
+    componentWillMount(){
+        //判断是否登录，获取登录名
+        let {history} = this.props;
+        if(!document.cookie){
+            history.push('/');
+        }else{
+            let name = document.cookie.split('user=')[1];
+            this.setState({name});
+        }
+    }
+
     //点击让头像下方的设置列表出现
     click = ()=>{
         let {avatarOnOff} = this.state;
@@ -21,11 +34,17 @@ class Header extends React.Component {
         avatarOnOff = !avatarOnOff;
         this.setState({avatarOnOff});
     }
+
+    //点击退出
+    logout = ()=>{
+        document.cookie = '';
+    }
     render(){
+        let {name} = this.state;
         return (
             <header id="header">
                 <div className="headerLBox"><span></span>新闻后台管理系统</div>
-                {/* <ul className="headerRBox"> */}
+                <ul className="headerRBox">
                     {/* <li>
                         <div className="searchForm">
                             <input type="text" placeholder="请搜索" className="input" />
@@ -37,23 +56,27 @@ class Header extends React.Component {
                             <i className="fa fa-bell-o"></i>
                             <span className="count">5</span>
                         </a>
-                    </li>
+                    </li> */}
                     <li className="user" onClick={this.click}>
                         <a>
-                            <img className="avatar" src={require('../images/avatar.jpg')}/>
-                            <span>admin</span>
-                            <i className="triangle"></i>
+                            {/* <img className="avatar" src={require('../images/avatar.jpg')}/> */}
+                            <span>欢迎回来，</span>
+                            <span>{name}</span>
+                            {/* <i className="triangle"></i> */}
                         </a>
-                        <ul className="list" ref="list">
+                        {/* <ul className="list" ref="list">
                             <li>个人中心</li>
                             <li>设置</li>
                             <li className="divider"></li>
                             <li>退出</li>
-                        </ul>
+                        </ul> */}
                     </li>
-                </ul> */}
+                    <li className="logout" onClick={this.logout}>
+                        <span>退出</span>
+                    </li>
+                </ul>
             </header>
         )
     }
 }
-export default Header;
+export default withRouter(Header);

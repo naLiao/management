@@ -25,11 +25,21 @@ class App extends Component {
       <div>
           {/* 登录 */}
           <Route path="/" exact render={(url)=>{
-              return <Login url={url}/>
+            if(document.cookie){
+                return <Redirect to="/index/home" />
+            }else{
+                return <Login url={url}/>
+            }
           }} />
         
           {/* 头部和侧边栏 */}
-          <Route path='/index' component={HeadSide}/>
+          <Route path='/index' render={()=>{
+                if(document.cookie){
+                    return <HeadSide />
+                }else{  
+                    return <Redirect to="/" />
+                }
+          }}/>
 
           {/* 首页 */}
           <Route path='/index/home' render={(url)=>{

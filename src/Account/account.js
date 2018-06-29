@@ -67,8 +67,6 @@ class Account extends React.Component {
     
     //修改账户
     show = (e)=>{
-        console.log(e);
-        
         this.setState({
             tanObj:{
                 account:e.account,
@@ -83,7 +81,6 @@ class Account extends React.Component {
 
     submit = async ()=>{
         let {tanObj,id,currentPage} = this.state;
-        console.log(id);
         
         if(!id){
             //添加账户
@@ -96,20 +93,21 @@ class Account extends React.Component {
             this.tipShow('添加成功');
         }else{
             //修改账户
-            // let {editNewsData} = this.props;
-            // editNewsData(id,tanObj);  //往中间件中发送数据
-            // this.refs.tan.style.display = 'none';
-            // this.tipShow('修改成功');
+            let {editAccData} = this.props;
+            editAccData(id,tanObj);  //往中间件中发送数据
+            this.refs.tan.style.display = 'none';
+            this.tipShow('修改成功');
         }
     }
 
     //删除账户，删除完成后重新渲染数据、页码
     del = async (id)=>{
-        let {getAccountData,getAccountCount,delAccData, url:{location} } = this.props;
+        let {getAccountData,getAccountCount,delAccData, url:{history:{location}}} = this.props;
         let {path,currentPage} = this.state;
         await delAccData(id);  //往中间件中发送数据
-        location.reload();
-        
+        // location.reload();  //不知道为什么拿不到这里的reload方法，返回undefined
+        getAccountData(currentPage);
+        getAccountCount();
         this.tipShow('删除成功');
     }
 

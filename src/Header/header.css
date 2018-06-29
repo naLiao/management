@@ -84,15 +84,15 @@
     color: #fff;
 }
 
-.user{
+/* .user{
     cursor: pointer;
-}
+} */
 .user a{
     color: #707478;
 }
-.user:hover a{
+/* .user:hover a{
     color: #b0bcc7;
-}
+} */
 .user .avatar{
     float: left;
     width: 30px;
@@ -138,4 +138,7 @@
     margin: 9px 0;
     overflow: hidden;
     background-color: #e5e5e5;
+}
+.logout{
+    cursor: pointer;
 }

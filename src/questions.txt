@@ -90,3 +90,18 @@
     走中间件请求数据，可是请求完数据又走componentWillReceiveProps，重复循环
     解决方法：在请求数据之前加判断，判断当前路由和前一个路由里的params-id是否相等，不相等才请求数据，
     保证只请求一次
+3.下拉框里想实现一次选取，可以得到两个值的效果。正常情况下只能获取value值
+    解决方法：
+        获取innerHTML的步骤如下
+        let index = ev.target.selectedIndex;
+        let selectedOption = ev.target.options[index];
+        let a = selectedOption.innerHTML;
+
+
+后台管理功能：
+1.登录验证
+    已登录状态，到任何页面都不需重复登录
+    未登录状态，到任何页面都要先登录
+    可以设置7天免登录
+2.新闻的增删改查
+3.栏目的增删改查

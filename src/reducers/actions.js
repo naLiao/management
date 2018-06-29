@@ -331,27 +331,27 @@ export function delAccData(id){
     }
 }
 
-// //账户管理-修改数据-操作发起
-// export function editColumnData(id,obj){
-//     return (dispatch,getState)=>{
-//         console.log('action新闻管理-修改数据，id：'+id);
-//         fetch('http://127.0.0.1:88/api/news/edit',{
-//             method:"post",
-//             body :new URLSearchParams(obj).toString(),
-//             headers: {
-//                 'Content-Type': 'application/x-www-form-urlencoded'
-//             }
-//         })
-//         .then(e=>e.json())
-//         .then(data => {
-//             console.log(data);
-//             if(data.code===0){
-//                 console.log('添加成功');
-//                 dispatch(addSuccess());
-//             }else if(data.code===-1){
-//                 console.log('添加失败');
-//                 dispatch(addFail());
-//             }
-//         })
-//     }
-// }
+//账户管理-修改数据-操作发起
+export function editAccData(id,obj){
+    return (dispatch)=>{
+        console.log('action账户管理-修改数据，id：'+id);
+        fetch('http://127.0.0.1:88/api/account/edit',{
+            method:"post",
+            body :new URLSearchParams(obj).toString(),
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        })
+        .then(e=>e.json())
+        .then(data => {
+            console.log(data);
+            if(data.code===0){
+                console.log('添加成功');
+                dispatch(addSuccess());
+            }else if(data.code===-1){
+                console.log('添加失败');
+                dispatch(addFail());
+            }
+        })
+    }
+}

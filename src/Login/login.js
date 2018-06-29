@@ -8,20 +8,29 @@ class Login extends React.Component {
             account:'',
             password:'',
             tip:'',
-            isTipShow:false
+            isTipShow:false,
+            isChecked:false
          };
     }
+
     //输入账号
     changeAccount = (ev)=>{
         this.setState({account:ev.target.value});
     }
+
     //输入密码
     changePassword = (ev)=>{
         this.setState({password:ev.target.value});
     }
+
+    //点击勾选
+    check = (ev)=>{
+        this.setState({isChecked:ev.target.checked});
+    }
+
     //点击登录
     login = ()=>{
-        let {account,password} = this.state;
+        let {account,password,isChecked} = this.state;
         let {url:{history}} = this.props;
         if(!account || !password){
             this.setState({tip:'输入不能为空'});
@@ -31,7 +40,7 @@ class Login extends React.Component {
                 that.setState({isTipShow:false});
             },1000)
         }else{
-            //请求用户名和密码是否正确http://127.0.0.1:88/api/user/login
+            //开始登录
             fetch('http://127.0.0.1:88/api/user/login',{
                 method:"post",
                 body :`username=${account}&password=${password}`,
@@ -49,7 +58,14 @@ class Login extends React.Component {
                         },1000);
                     });
                     //种Cookie
-                    document.cookie = 'user='+ account;
+                    if(isChecked){
+                        var days=7;
+                        var expTime  = new Date();
+                        expTime.setTime(expTime.getTime() + days*24*60*60*1000);
+                        document.cookie = 'user='+ account+';expires='+ expTime.toUTCString();
+                    }else{
+                        document.cookie = 'user='+ account;
+                    }
                 }else if(data.code === -3){
                     this.setState({tip:data.msg,isTipShow:true,account:'',password:''},()=>{
                         setTimeout(()=>{
@@ -81,11 +97,18 @@ class Login extends React.Component {
                         <i className="fa fa-lock"></i>
                         <label>密码</label>
                         <input 
-                            type="text" 
+                            type="password" 
                             placeholder="请输入密码"
                             value={password}
                             onChange={this.changePassword}
                         />
+                    </div>
+                    <div className="seven">
+                        <input 
+                            type="checkbox"
+                            onChange={this.check}
+                        />
+                        <span>7天免登录</span>
                     </div>
                     <button
                         onClick={this.login}

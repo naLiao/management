@@ -9,11 +9,12 @@
     border-radius: 8px;
 }
 .loginBox .user{
-    margin-top: 60px;
+    margin-top: 50px;
     height: 50px;
     position: relative;
 }
 .loginBox label{
+    display: inline-block;
     width: 60px;
     text-align: right;
 }
@@ -29,7 +30,7 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
    color: rgb(226, 226, 226);   
    }   
 .loginBox input{
-    width: 280px;
+    width: 320px;
     padding-left:50px;
     line-height: 40px;
     margin-left: 15px;
@@ -42,7 +43,7 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
     position: relative;
 }
 .loginBox button{
-    margin-top: 30px;
+    margin-top: 40px;
     width: 90px;
     height: 36px;
     font-size: 16px;
@@ -59,4 +60,14 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
 }
 .tip.none{
     display: none;
+}
+.seven{
+    width: 110px;
+    position: absolute;
+    top: 220px;
+    left: 110px;
+}
+.seven input{
+    width: 20px;
+    padding: 0;
 }

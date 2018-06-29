@@ -128,7 +128,6 @@ class News extends React.Component {
         let {getNewsData} = this.props;
         let {currentPage} = this.state;
         let column = ev.target.value;
-        console.log(column);
         getNewsData(column,currentPage);
     }
 
@@ -168,7 +167,7 @@ class News extends React.Component {
         let column = ev.target.options[index].innerHTML;
         tanObj.path = ev.target.value;
         tanObj.column = column;
-        console.log(tanObj);
+        // console.log(tanObj);
         this.setState({tanObj});
     }
     changeEditor = (ev)=>{
@@ -210,11 +209,7 @@ class News extends React.Component {
         //渲染栏目选取框
         let selectColumn = dataColumn.columns.map((e,i)=>{
             return (
-                // <option key={i} value={e.path}>{e.column}</option>
-                <option 
-                    key={i} 
-                    value={e.path}
-                >{e.column}</option>
+                <option key={i} value={e.path} >{e.column}</option>
             )
         })
 

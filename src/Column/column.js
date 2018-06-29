@@ -29,14 +29,6 @@ class Column extends React.Component {
          };
     }
 
-    componentWillMount(){
-        //判断是否登录
-        let {url:{history}} = this.props;
-        if(!document.cookie){
-            history.push('/');
-        }
-    }
-    
     //初始化
     componentDidMount (){
         let {getColumnData,getColCount} = this.props;
