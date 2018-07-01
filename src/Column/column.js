@@ -5,7 +5,6 @@ import {bindActionCreators} from 'redux';
 import * as actionCreators from '../reducers/actions';
 import './column.css';
 import ColumnTr from './columnTr';
-import NewCol from './newcol';
 import Tip from '../Tip/tip';
 import Page from '../Page/page';
 
@@ -32,7 +31,7 @@ class Column extends React.Component {
     //初始化
     componentDidMount (){
         let {getColumnData,getColCount} = this.props;
-        console.log('初始化');
+        console.log('栏目页初始化');
         //获取栏目
         getColumnData(1);  //走中间件，页码
         //获取页码
@@ -69,12 +68,11 @@ class Column extends React.Component {
     }
 
     submit = async ()=>{
+        let {editColumnData,getColumnData,getColCount,addColumn} = this.props;
         let {tanObj,id,currentPage} = this.state;
         console.log(id);
-        
         if(!id){
             //添加栏目
-            let {getColumnData,getColCount,addColumn} = this.props;
             await addColumn(tanObj);  //往中间件中发送数据
             this.refs.tan.style.display = 'none';
             await getColumnData(currentPage);
@@ -82,10 +80,11 @@ class Column extends React.Component {
             this.tipShow('添加成功');
         }else{
             //修改栏目
-            // let {editNewsData} = this.props;
-            // editNewsData(id,tanObj);  //往中间件中发送数据
-            // this.refs.tan.style.display = 'none';
-            // this.tipShow('修改成功');
+            await editColumnData(id,tanObj);  //往中间件中发送数据
+            this.refs.tan.style.display = 'none';
+            await getColumnData(currentPage);
+            await getColCount();
+            this.tipShow('修改成功');
         }
     }
 
@@ -167,8 +166,8 @@ class Column extends React.Component {
                         <button
                             onClick={this.add}
                         ><i className="fa fa-plus"></i>添加栏目</button>
-                        <button><i className="fa fa-pencil"></i>修改栏目</button>
-                        <button className="red"><i className="fa fa-trash"></i>删除</button>
+                        {/* <button><i className="fa fa-pencil"></i>修改栏目</button> */}
+                        <button className="red"><i className="fa fa-trash"></i>批量删除</button>
                     </div>
                     <table className="newsTable">
                         <thead>

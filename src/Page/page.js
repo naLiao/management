@@ -20,6 +20,16 @@ class Page extends Component {
         push(path+'/page'+ currentPage);
     }
 
+    jumpToFirst = ()=>{
+        let {path,push} = this.props;
+        push(path+'/page1');
+    }
+
+    jumpToLast = ()=>{
+        let {path,push,len} = this.props;
+        push(path+'/page'+len);
+    }
+
     //跳转到多少页
     jumpTo = (ev)=>{
         if(ev.keyCode===13){
@@ -34,7 +44,7 @@ class Page extends Component {
     }
 
     render() {
-        //count:总共多少页
+        //len:总共多少页
         let {len,path,currentPage} = this.props;
         let prevClass = currentPage===1 ? 'prev unclick' : 'prev';
         let nextClass = currentPage===len ? 'next unclick' : 'next';
@@ -56,6 +66,10 @@ class Page extends Component {
                 <ul id="pages">
                     <li><a 
                         className={prevClass} 
+                        onClick={this.jumpToFirst}
+                    >&lsaquo;&lsaquo;</a></li>
+                    <li><a 
+                        className={prevClass} 
                         href="javascript:;"
                         onClick={this.jumpToPrev}
                     >&lsaquo;</a></li>
@@ -65,6 +79,11 @@ class Page extends Component {
                         href="javascript:;"
                         onClick={this.jumpToNext}
                     >&rsaquo;</a></li>
+                    <li><a 
+                        className={nextClass} 
+                        href="javascript:;"
+                        onClick={this.jumpToLast}
+                    >&rsaquo;&rsaquo;</a></li>
                     <li className="jumpTo">
                         <span>跳转到</span>
                         <input 

@@ -1,5 +1,6 @@
 import React from 'react';
 import './login.css';
+import cookie from 'react-cookies';
 
 class Login extends React.Component {
     constructor(props) {
@@ -9,7 +10,7 @@ class Login extends React.Component {
             password:'',
             tip:'',
             isTipShow:false,
-            isChecked:false
+            isSevenDay:false
          };
     }
 
@@ -23,14 +24,15 @@ class Login extends React.Component {
         this.setState({password:ev.target.value});
     }
 
-    //点击勾选
+    //点击勾选免登录
     check = (ev)=>{
-        this.setState({isChecked:ev.target.checked});
+        this.setState({isSevenDay:ev.target.checked});
     }
 
     //点击登录
     login = ()=>{
-        let {account,password,isChecked} = this.state;
+        let {account,password,isSevenDay} = this.state;
+        
         let {url:{history}} = this.props;
         if(!account || !password){
             this.setState({tip:'输入不能为空'});
@@ -43,7 +45,7 @@ class Login extends React.Component {
             //开始登录
             fetch('http://127.0.0.1:88/api/user/login',{
                 method:"post",
-                body :`username=${account}&password=${password}`,
+                body :`account=${account}&password=${password}&isSevenDay=${isSevenDay}`,
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
@@ -52,20 +54,41 @@ class Login extends React.Component {
             .then(data => {
                 console.log(data);
                 if(data.code === 0){
+                    let level = data.userInfo.level;
                     this.setState({tip:'登录成功！',isTipShow:true},()=>{
                         setTimeout(()=>{
                             history.push('/index/home');
                         },1000);
                     });
                     //种Cookie
-                    if(isChecked){
-                        var days=7;
-                        var expTime  = new Date();
-                        expTime.setTime(expTime.getTime() + days*24*60*60*1000);
-                        document.cookie = 'user='+ account+';expires='+ expTime.toUTCString();
-                    }else{
-                        document.cookie = 'user='+ account;
-                    }
+                    // if(isSevenDay){  //设置失效期为7天
+                    //     const expires = new Date()
+                    //     expires.setDate(expires.getDate() + 7)
+                    //     // cookie.save('user', account, { path: '/' ,expires:expTime.toUTCString()})
+                    //     // cookie.save('level', level, { path: '/' ,expires:expTime.toUTCString()})
+                    //     cookie.save(
+                    //         'user',
+                    //         account,
+                    //         {
+                    //           path: '/',
+                    //           expires,
+                    //           maxAge: 1000,
+                    //           secure: true
+                    //         }
+                    //       )
+                    //     // var days = 7;
+                    //     // var expTime  = new Date();
+                    //     // expTime.setTime(expTime.getTime() + days*24*60*60*1000);
+                    //     // document.cookie = 'user='+ account+';expires='+ expTime.toUTCString();
+                    //     // document.cookie = 'level='+level+';expires='+ expTime.toUTCString();
+                    // }else{
+                    //     cookie.save('user', account, { path: '/' })
+                    //     cookie.save('level', level, { path: '/' })
+                    //     // document.cookie = 'user='+ account;
+                    //     // document.cookie = 'level='+level;
+                    // }
+                    cookie.save('user', account, { path: '/' })
+                    cookie.save('level', level, { path: '/' })
                 }else if(data.code === -3){
                     this.setState({tip:data.msg,isTipShow:true,account:'',password:''},()=>{
                         setTimeout(()=>{
@@ -81,7 +104,17 @@ class Login extends React.Component {
         let c = isTipShow?'tip':'tip none';
         return (
             <div className="login">
-                <span>用户名123，密码123</span>
+                <ul className="accounts">
+                    <li>
+                        <span>超级管理员(admin admin):账户管理</span>
+                    </li>
+                    <li>
+                        <span>主编(李二 123):新建稿件、审核稿件</span>
+                    </li>
+                    <li>
+                        <span>编辑(张三 123):新建稿件</span>
+                    </li>
+                </ul>
                 <div className="loginBox">
                     <div className="user">
                         <i className="fa fa-user"></i>
@@ -103,21 +136,21 @@ class Login extends React.Component {
                             onChange={this.changePassword}
                         />
                     </div>
-                    <div className="seven">
+                    {/* <div className="seven">
                         <input 
                             type="checkbox"
                             onChange={this.check}
                         />
                         <span>7天免登录</span>
-                    </div>
+                    </div> */}
                     <button
                         onClick={this.login}
                     >登录</button>
-                    <span
+                </div>
+                <div
                         className={c}
                         ref="tip"
-                    >{tip}</span>
-                </div>
+                    >{tip}</div>
             </div>
         );
     }

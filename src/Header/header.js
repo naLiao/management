@@ -1,24 +1,19 @@
 import React from 'react';
 import {withRouter} from 'react-router-dom';
 import './header.css';
+import cookie from 'react-cookies'
 
 class Header extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            name:false
+            name:'',
+            level:''
         };
     }
 
     componentWillMount(){
-        //判断是否登录，获取登录名
-        let {history} = this.props;
-        if(!document.cookie){
-            history.push('/');
-        }else{
-            let name = document.cookie.split('user=')[1];
-            this.setState({name});
-        }
+        this.setState({name: cookie.load('user'),level:Number(cookie.load('level'))});
     }
 
     //点击让头像下方的设置列表出现
@@ -37,10 +32,35 @@ class Header extends React.Component {
 
     //点击退出
     logout = ()=>{
-        document.cookie = '';
+        let {history} = this.props;
+        let {name,level} = this.state;
+        // var expTime  = new Date();
+        // expTime.setTime(expTime.getTime()-1000);
+        cookie.remove('user', { path: '/' })
+        cookie.remove('level', { path: '/' })
+        // document.cookie = 'user='+' '+';expires='+ expTime.toUTCString();
+        // document.cookie = 'level= ;expires='+ expTime.toUTCString();
+        setTimeout(()=>{
+            history.push('/');
+        },500);
     }
+
     render(){
-        let {name} = this.state;
+        let {name,level} = this.state;
+        let levelName;
+        switch(level){
+            case 1:
+                levelName = '超级管理员';
+                break;
+            case 2:
+                levelName = '主编';
+                break;
+            case 5:
+                levelName = '编辑';
+                break;
+            default:
+                levelName = '编辑';
+        }
         return (
             <header id="header">
                 <div className="headerLBox"><span></span>新闻后台管理系统</div>
@@ -58,21 +78,11 @@ class Header extends React.Component {
                         </a>
                     </li> */}
                     <li className="user" onClick={this.click}>
-                        <a>
-                            {/* <img className="avatar" src={require('../images/avatar.jpg')}/> */}
-                            <span>欢迎回来，</span>
-                            <span>{name}</span>
-                            {/* <i className="triangle"></i> */}
-                        </a>
-                        {/* <ul className="list" ref="list">
-                            <li>个人中心</li>
-                            <li>设置</li>
-                            <li className="divider"></li>
-                            <li>退出</li>
-                        </ul> */}
+                        <span>欢迎回来，{name}</span>
+                        <span>{levelName}</span>
                     </li>
-                    <li className="logout" onClick={this.logout}>
-                        <span>退出</span>
+                    <li onClick={this.logout}>
+                        <button className="logout">退出</button>
                     </li>
                 </ul>
             </header>

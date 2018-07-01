@@ -36,157 +36,37 @@ const reducercolumn = (state={columns:[],count:0},action)=>{
     }
 }
 
-//3.我的稿件数据，根据登录账号动态获取
-const myarticleArr=[
-    {
-        id:1,
-        title:'与国际接轨 中国今日向外国人颁授首枚“友谊勋章',
-        column:'头条',
-        readNum:'1234',
-        commentNum:'35',
-        shareNum:'56',
-        editor:'张三',
-        approve:'李二',
-        status:'草稿箱',
-        time:'2018-6-5'
-    },
-    {
-        id:2,
-        title:'与国际接轨 中国今日向外国人颁授首枚“友谊勋章',
-        column:'财经',
-        readNum:'1234',
-        commentNum:'35',
-        shareNum:'56',
-        editor:'张三',
-        approve:'李二',
-        status:'修改中',
-        time:'2018-6-5'
-    },
-    {
-        id:3,
-        title:'与国际接轨 中国今日向外国人颁授首枚“友谊勋章',
-        column:'时事',
-        readNum:'1234',
-        commentNum:'35',
-        shareNum:'56',
-        editor:'张三',
-        approve:'李二',
-        status:'修改中',
-        time:'2018-6-5'
-    },
-    {
-        id:4,
-        title:'与国际接轨 中国今日向外国人颁授首枚“友谊勋章',
-        column:'生活',
-        readNum:'1234',
-        commentNum:'35',
-        shareNum:'56',
-        editor:'张三',
-        approve:'李二',
-        status:'已发布',
-        time:'2018-6-5'
-    },
-    {
-        id:5,
-        title:'与国际接轨 中国今日向外国人颁授首枚“友谊勋章',
-        column:'头条',
-        readNum:'1234',
-        commentNum:'35',
-        shareNum:'56',
-        editor:'张三',
-        approve:'李二',
-        status:'已发布',
-        time:'2018-6-5'
-    },
-    {
-        id:6,
-        title:'与国际接轨 中国今日向外国人颁授首枚“友谊勋章',
-        column:'头条',
-        readNum:'1234',
-        commentNum:'35',
-        shareNum:'56',
-        editor:'张三',
-        approve:'李二',
-        status:'已发布',
-        time:'2018-6-5'
-    }
-];
-const reducermyarticle = (state=myarticleArr,action)=>{
+//3.我的稿件数据
+const reducermyarticle = (state={news:[],count:0},action)=>{
     switch(action.type){
-        case 'ACTION_TYPE':
-            return '';
+        case 'GET_MY':
+            let newObj = Object.assign({},state);
+            newObj.news = action.res;
+            // console.log(action.res);
+            return newObj;
+        case 'GET_MY_COUNT':
+            let newObj2 = Object.assign({},state);
+            newObj2.count = action.count;
+            // console.log(action.count);
+            return newObj2;
         default:
             return state;
     }
 }
 
-//4.我的待审核稿件数据
-const approveArr=[
-    {
-        id:1,
-        title:'与国际接轨 中国今日向外国人颁授首枚“友谊勋章',
-        column:'时事',
-        readNum:'1234',
-        commentNum:'35',
-        shareNum:'56',
-        editor:'张三',
-        approve:'李二',
-        status:'审核中',
-        time:'2018-6-5'
-    },
-    {
-        id:2,
-        title:'与国际接轨 中国今日向外国人颁授首枚“友谊勋章',
-        column:'时事',
-        readNum:'1234',
-        commentNum:'35',
-        shareNum:'56',
-        editor:'张三',
-        approve:'李二',
-        status:'审核中',
-        time:'2018-6-5'
-    },
-    {
-        id:3,
-        title:'与国际接轨 中国今日向外国人颁授首枚“友谊勋章',
-        column:'时事',
-        readNum:'1234',
-        commentNum:'35',
-        shareNum:'56',
-        editor:'张三',
-        approve:'李二',
-        status:'审核中',
-        time:'2018-6-5'
-    },
-    {
-        id:4,
-        title:'与国际接轨 中国今日向外国人颁授首枚“友谊勋章',
-        column:'时事',
-        readNum:'1234',
-        commentNum:'35',
-        shareNum:'56',
-        editor:'张三',
-        approve:'李二',
-        status:'审核中',
-        time:'2018-6-5'
-    },
-    {
-        id:5,
-        title:'与国际接轨 中国今日向外国人颁授首枚“友谊勋章',
-        column:'时事',
-        readNum:'1234',
-        commentNum:'35',
-        shareNum:'56',
-        editor:'张三',
-        approve:'李二',
-        status:'审核中',
-        time:'2018-6-5'
-    }
-]
-const reducerapprove = (state=approveArr,action)=>{
+//4.待审核数据
+const reducerapprove = (state={news:[],count:0,total:0},action)=>{
     switch(action.type){
-        case 'ACTION_TYPE':
-            return '';
+        case 'GET_APPROVE':
+            let newObj = Object.assign({},state);
+            newObj.news = action.res;
+            return newObj;
+        case 'GET_APP_COUNT':
+            let newObj2 = Object.assign({},state);
+            newObj2.total = action.total;
+            newObj2.count = action.count;
+            // console.log(state);
+            return newObj2;
         default:
             return state;
     }

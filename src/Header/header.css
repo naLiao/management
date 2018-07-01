@@ -139,6 +139,19 @@
     overflow: hidden;
     background-color: #e5e5e5;
 }
+.user span{
+    display: inline-block;
+    padding: 0 5px;
+    margin-right: 10px;
+}
 .logout{
+    background: #4DCACA;
+    width: 80px;
+    height: 30px;
+    border-radius: 4px;
+    color: #fff;
     cursor: pointer;
+}
+.logout:hover{
+    background: #31A3A3;
 }

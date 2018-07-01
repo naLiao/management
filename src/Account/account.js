@@ -31,19 +31,6 @@ class Account extends React.Component {
          };
     }
 
-    componentWillMount(){
-        //判断是否登录
-        let {getAccDetail,url:{history}} = this.props;
-        if(!document.cookie){
-            history.push('/');
-        }else{
-            let account = document.cookie.split('user=')[1];
-            this.setState({account});  //获取当前登录用户名
-            //根据用户名获取用户信息
-            getAccDetail(account);
-        }
-    }
-
     //初始化
     componentDidMount (){
         let {getAccountData,getAccountCount} = this.props;
@@ -52,6 +39,17 @@ class Account extends React.Component {
         getAccountData(1);  //走中间件，页码
         //获取页码
         getAccountCount();  //走中间件
+    }
+
+    componentWillReceiveProps({url:{match:{params:{id:id1}}}}){
+        //切换页码
+        let {url:{match:{params:{id}}},getAccountData} = this.props;
+        let currentPage = id1.split('page')[1]*1;
+        this.setState({currentPage});
+        if(id1 !== id){
+            console.log('页码切换，要请求数据了'+ currentPage);
+            getAccountData(currentPage);  //走中间件，栏目+页码
+        }
     }
 
     //添加账户
@@ -79,22 +77,22 @@ class Account extends React.Component {
         this.refs.tan.style.display = 'block';
     }
 
-    submit = async ()=>{
+    submit = ()=>{
         let {tanObj,id,currentPage} = this.state;
+        let {getAccountData,getAccountCount,addAccount,editAccData} = this.props;
         
         if(!id){
             //添加账户
-            let {getAccountData,getAccountCount,addAccount} = this.props;
-            console.log(tanObj);
-            await addAccount(tanObj);  //往中间件中发送数据
+            addAccount(tanObj);  //往中间件中发送数据
             this.refs.tan.style.display = 'none';
-            await getAccountData(currentPage);
-            await getAccountCount();
+            getAccountData(currentPage);
+            getAccountCount();
             this.tipShow('添加成功');
         }else{
             //修改账户
-            let {editAccData} = this.props;
             editAccData(id,tanObj);  //往中间件中发送数据
+            getAccountData(currentPage);
+            getAccountCount();
             this.refs.tan.style.display = 'none';
             this.tipShow('修改成功');
         }
@@ -106,8 +104,8 @@ class Account extends React.Component {
         let {path,currentPage} = this.state;
         await delAccData(id);  //往中间件中发送数据
         // location.reload();  //不知道为什么拿不到这里的reload方法，返回undefined
-        getAccountData(currentPage);
-        getAccountCount();
+        await getAccountData(currentPage);
+        await getAccountCount();
         this.tipShow('删除成功');
     }
 
@@ -150,9 +148,9 @@ class Account extends React.Component {
     render(){
         let {dataAccount,url:{match:{params:{id}}},url:{history:{push}}} = this.props;  //栏目数据 新闻数据
         let {account,isTipShow,tanObj,tipInfo,id:tanId} = this.state;  //控制提示框是否出现
-        
-        // let count = dataAccount.count;  //页码
-        // let currentPage = id.split('page')[1]*1;  //当前页
+        console.log(dataAccount);
+        let count = dataAccount.count;  //页码
+        let currentPage = id.split('page')[1]*1;  //当前页
         let accounts = dataAccount.accounts;
         let title = tanId? '修改': '添加';
         let newArr = accounts.map((e,i)=>{
@@ -187,18 +185,17 @@ class Account extends React.Component {
                         <button
                             onClick={this.add}
                         ><i className="fa fa-plus"></i>添加</button>
-                        <button><i className="fa fa-pencil"></i>修改</button>
-                        <button className="red"><i className="fa fa-trash"></i>删除</button>
+                        <button className="red"><i className="fa fa-trash"></i>批量删除</button>
                     </div>
                     <table className="newsTable">
                         <thead>
                         <tr>
                             <th><input type="checkbox"/></th>
                             <th>ID</th>
-                            <th>名字</th>
+                            <th>账户名称</th>
                             <th>账户种类</th>
                             <th>级别</th>
-                            <th>上次登录时间</th>
+                            <th>创建时间</th>
                             <th>操作</th>
                         </tr>
                         </thead>
@@ -206,7 +203,7 @@ class Account extends React.Component {
                             {newArr}
                         </tbody>
                     </table>
-                    <Page len={4} path="/index/column" currentPage={1} push={push} />
+                    <Page len={count} path="/index/account" currentPage={currentPage} push={push} />
                 </div>
 
                 {/* 弹框 */}

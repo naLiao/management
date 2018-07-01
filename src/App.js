@@ -47,10 +47,7 @@ class App extends Component {
           }}/>
 
           {/* 我的稿件 */}         
-          <Route exact path='/index/myarticle' render={()=>{
-              return <Redirect to="/index/myarticle/my" />
-          }}/>
-          <Route path='/index/myarticle/:id' render={(url)=>{
+          <Route path='/index/myarticle/:kind/:id' render={(url)=>{
               return <MyArticle {...{url}}/>
           }}/>
 

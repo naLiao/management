@@ -9,21 +9,19 @@ class Tr extends React.Component {
     //修改账户
     showInTr = ()=>{
         let {show,e} = this.props;
-        console.log(e);
-        
         show(e);
     }
     //删除账户
     delInTr = ()=>{
         let {del,e} = this.props;
-        console.log(e);
-        
         del(e.id);
     }
     
     render(){
         let {i,e} = this.props;
-        
+        let d = new Date();
+        d.setTime(e.time);
+        let time = d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();
         return (
             <tr>
                 <td><input type="checkbox"/></td>
@@ -31,7 +29,7 @@ class Tr extends React.Component {
                 <td>{e.account}</td>
                 <td>{e.kind}</td>
                 <td>{e.level}</td>
-                <td>{e.time}</td>
+                <td>{time}</td>
                 <td>
                     <button
                         onClick={this.showInTr}

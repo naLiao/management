@@ -71,3 +71,7 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
     width: 20px;
     padding: 0;
 }
+.accounts{
+    text-align: center;
+    line-height: 30px;
+}

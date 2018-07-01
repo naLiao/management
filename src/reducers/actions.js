@@ -28,7 +28,7 @@ export function getCount(column){
         .then(e=>e.json())
         .then(res=>{
             dispatch(getcount(res.count));
-            // console.log(res.count);
+            console.log(res.count);
         })
     }
 }
@@ -40,8 +40,11 @@ function getcount(count){
 }
  
  //新闻管理-添加数据-操作发起
-export function addnews(obj){
+export function addnews(obj,status){
     return (dispatch,getState)=>{
+        Object.assign(obj,{status});
+        console.log(obj);
+        
         console.log('新闻管理-添加数据-操作发起');
         fetch('http://127.0.0.1:88/api/news/add',{
             method:"post",
@@ -90,9 +93,11 @@ export function delNewsData(id,currentPage){
 }
 
 //新闻管理-修改数据-操作发起
-export function editNewsData(id,obj){
+export function editNewsData(id,obj,status){
     return (dispatch,getState)=>{
         console.log('action新闻管理-修改数据，id：'+id);
+        Object.assign(obj,{status,id});
+        
         fetch('http://127.0.0.1:88/api/news/edit',{
             method:"post",
             body :new URLSearchParams(obj).toString(),
@@ -203,9 +208,9 @@ export function delColData(id,currentPage){
 
 //栏目管理-修改数据-操作发起
 export function editColumnData(id,obj){
-    return (dispatch,getState)=>{
-        console.log('action新闻管理-修改数据，id：'+id);
-        fetch('http://127.0.0.1:88/api/news/edit',{
+    return (dispatch)=>{
+        console.log('action栏目管理-修改数据，id：'+id);
+        fetch('http://127.0.0.1:88/api/column/edit',{
             method:"post",
             body :new URLSearchParams(obj).toString(),
             headers: {
@@ -216,11 +221,9 @@ export function editColumnData(id,obj){
         .then(data => {
             console.log(data);
             if(data.code===0){
-                console.log('添加成功');
-                dispatch(addSuccess());
+                console.log('修改成功');
             }else if(data.code===-1){
-                console.log('添加失败');
-                dispatch(addFail());
+                console.log('修改失败');
             }
         })
     }
@@ -267,11 +270,11 @@ function getAccountSuccess(res){
 //账户管理-获取页码
 export function getAccountCount(){
     return (dispatch)=>{
-        fetch('http://127.0.0.1:88/api/account/getacccount')
+        fetch('http://127.0.0.1:88/api/account/getcount')
         .then(e=>e.json())
         .then(res=>{
-            dispatch(getcolcount(res.count));
-            // console.log(res.count);
+            dispatch(getacccount(res.count));
+            console.log(res.count);
         })
     }
 }
@@ -331,10 +334,12 @@ export function delAccData(id){
     }
 }
 
-//账户管理-修改数据-操作发起
+//账户管理-修改数据-操作发起/account/edit
 export function editAccData(id,obj){
     return (dispatch)=>{
-        console.log('action账户管理-修改数据，id：'+id);
+        obj.id=id;
+        console.log(obj);
+        
         fetch('http://127.0.0.1:88/api/account/edit',{
             method:"post",
             body :new URLSearchParams(obj).toString(),
@@ -346,12 +351,97 @@ export function editAccData(id,obj){
         .then(data => {
             console.log(data);
             if(data.code===0){
-                console.log('添加成功');
-                dispatch(addSuccess());
+                console.log('成功');
             }else if(data.code===-1){
-                console.log('添加失败');
-                dispatch(addFail());
+                console.log('修改失败');
             }
         })
+    }
+}
+
+//------------------------------------------------------------------------------------------
+
+//已审核-获取数据-操作发起
+export function getApproveData(name,num){
+    return (dispatch)=>{
+        fetch(`http://127.0.0.1:88/api/approve/getlist?name=${name}&page=${num}`)
+        .then(e=>e.json())
+        .then(res=>{
+            dispatch(getApproveSuccess(res));
+            // console.log(res);
+        })
+    }
+}
+function getApproveSuccess(res){
+    return {
+        type:'GET_APPROVE',
+        res
+    }
+}
+//已审核-获取页码
+export function getAppCount(name){
+    return (dispatch)=>{
+        fetch('http://127.0.0.1:88/api/approve/getcount?name='+name)
+        .then(e=>e.json())
+        .then(res=>{
+            dispatch(getappcountsuccess(res.total,res.count));
+            // console.log(res);
+        })
+    }
+}
+function getappcountsuccess(total,count){
+    return {
+        type:'GET_APP_COUNT',
+        total,
+        count
+    }
+}
+//已审核-发布稿件-操作发起
+export function approveArticle(id){
+    return (dispatch)=>{
+        fetch(`http://127.0.0.1:88/api/approve?id=`+id)
+        .then(e=>e.json())
+        .then(res=>{
+            // dispatch(approveArticleSuccess(res));
+            console.log(res);
+        })
+    }
+}
+
+//--------------------------------------------------------------------------------------------
+
+//我的-获取数据-操作发起
+export function getMyData(name,num){
+    return (dispatch)=>{
+        fetch(`http://127.0.0.1:88/api/my/getlist?name=${name}&page=${num}`)
+        .then(e=>e.json())
+        .then(res=>{
+            dispatch(getMySuccess(res));
+            // console.log(res);
+        })
+    }
+}
+function getMySuccess(res){
+    return {
+        type:'GET_MY',
+        res
+    }
+}
+//我的-获取页码
+export function getMyCount(name){
+    return (dispatch)=>{
+        fetch('http://127.0.0.1:88/api/my/getcount?name='+name)
+        .then(e=>e.json())
+        .then(res=>{
+            dispatch(getmycountsuccess(res.total,res.count));
+            console.log(res);
+        })
+    }
+}
+function getmycountsuccess(total,count){
+    return {
+        type:'GET_MY_COUNT',
+        total,
+        count
     }
 }

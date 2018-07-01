@@ -1,5 +1,4 @@
 import React from 'react';
-// import { NavLink,WithRouter } from 'react-router-dom';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as actionCreators from '../reducers/actions';
@@ -7,11 +6,15 @@ import './news.css';
 import Tr from './newsTr';
 import Page from '../Page/page';
 import Tip from '../Tip/tip';
+import cookie from 'react-cookies'
 
 class News extends React.Component {
     constructor(props){
         super(props);
         this.state = {
+            //当前登录用户
+            name:'',
+            level:'',
             //提示框是否显示
             isTipShow:false,
             tipInfo:'',
@@ -37,11 +40,9 @@ class News extends React.Component {
     }
 
     componentWillMount(){
-        //判断是否登录
-        let {url:{history}} = this.props;
-        if(!document.cookie){
-            history.push('/');
-        }
+        let {tanObj} = this.state;
+        tanObj.editor = cookie.load('user');
+        this.setState({name: cookie.load('user'),level:Number(cookie.load('level')),tanObj});
     }
 
     //初始化
@@ -85,7 +86,7 @@ class News extends React.Component {
             status:''
         },id:''})
     }
-    
+
     //修改新闻
     show = (e)=>{
         this.setState({tanObj:e,id:e.id});
@@ -94,25 +95,22 @@ class News extends React.Component {
 
     submit = async ()=>{
         let {tanObj,id,path,currentPage} = this.state;
-        console.log(id);
-        
-        if(!id){
-            //添加新闻
-            let {getNewsData,getCount,addnews} = this.props;
-            await addnews(tanObj);  //往中间件中发送数据
-            this.refs.tan.style.display = 'none';
-            await getNewsData(path,currentPage);
-            await getCount(path);
-            this.tipShow('添加成功');
-        }else{
-            //修改新闻
-            let {editNewsData} = this.props;
-            editNewsData(id,tanObj);  //往中间件中发送数据
-            this.refs.tan.style.display = 'none';
-            this.tipShow('修改成功');
-        }
+        //修改新闻
+        let {editNewsData} = this.props;
+        editNewsData(id,tanObj,'审核中');  //往中间件中发送数据
+        this.refs.tan.style.display = 'none';
+        this.tipShow('修改成功');
     }
 
+    //保存稿件
+    draft = async()=>{
+        let {getMyData,editNewsData,getMyCount,addnews,url:{match:{params:{kind}}}} = this.props;
+        let {tanObj,id,name,currentPage} = this.state;
+        await editNewsData(id,tanObj,'编辑中');
+        this.refs.tan.style.display = 'none';
+        await this.tipShow('保存成功');
+    }
+    
     //删除新闻，删除完成后重新渲染数据、页码
     del = async (id)=>{
         let {getNewsData,getCount,delNewsData} = this.props;
@@ -125,10 +123,11 @@ class News extends React.Component {
 
     //栏目筛选
     select = (ev)=>{
-        let {getNewsData} = this.props;
+        let {getNewsData,getCount} = this.props;
         let {currentPage} = this.state;
         let column = ev.target.value;
         getNewsData(column,currentPage);
+        getCount(column);  
     }
 
     //提示框弹出
@@ -188,11 +187,10 @@ class News extends React.Component {
     
     render(){
         let {getNewsData,dataColumn,dataNews,url:{match:{params:{id}}},url:{history:{push}}} = this.props;  //栏目数据 新闻数据
-        let {isTipShow,path,tanObj,tipInfo} = this.state;  //控制提示框是否出现
+        let {isTipShow,path,tanObj,tipInfo,name,level} = this.state;
         let count = dataNews.count;  //页码
         let currentPage = id.split('page')[1]*1;  //当前页
-        console.log('render');
-        console.log(dataNews.news);
+        // console.log(dataNews.news);
         
         //根据组件内的新闻数据渲染页面
         let newArr = dataNews.news.map((e,i)=>{
@@ -229,15 +227,15 @@ class News extends React.Component {
                 </div>
                 <div className="table_main">
                     <div className="tableBtns">
-                        <button 
+                        {/* <button 
                             onClick={this.add}
                         ><i className="fa fa-plus"></i>添加
-                        </button>
-                        <button><i className="fa fa-pencil"></i>修改</button>
+                        </button> */}
                         <button className="red"><i className="fa fa-trash"></i>批量删除</button>
-                        <button><i className="fa fa-trash"></i>按日期排序</button>
-                        <button><i className="fa fa-trash"></i>按阅读量排序</button>
+                        {/* <button><i className="fa fa-trash"></i>按日期排序</button>
+                        <button><i className="fa fa-trash"></i>按阅读量排序</button> */}
                         <select
+                            className="colSel"
                             onChange={this.select}
                         >
                             <option disabled>请选择</option>
@@ -362,6 +360,11 @@ class News extends React.Component {
                                     className="sure"
                                     onClick={this.submit}
                                 >提交</button>
+                                <button 
+                                    href="javascript:;"
+                                    className="sure"
+                                    onClick={this.draft}
+                                >保存</button>
                                 <button 
                                     className="cancel"
                                     onClick={this.closeTan}
