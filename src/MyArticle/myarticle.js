@@ -14,6 +14,8 @@ class MyArticle extends React.Component {
         this.state = { 
             name:'',
             level:'',
+            //是否全部勾选
+            isCheckAll:false,
             //提示框是否显示
             isTipShow:false,
             tipInfo:'',
@@ -21,6 +23,7 @@ class MyArticle extends React.Component {
             currentPage:1,
             //新添加
             id:'',
+            idArray:[],
             //弹框数据
             tanObj:{
                 title:'', 
@@ -71,6 +74,54 @@ class MyArticle extends React.Component {
                 default:
                     getMyData(name,currentPage);
             }
+        }
+    }
+
+    //点击全选
+    checkAll = (ev)=>{
+        let {dataMy,dataApprove,dataColumn,url:{location:{pathname}},url:{match:{params:{kind}}},url:{history:{push}}} = this.props;
+        let {tanObj,idArray,name,currentPage} = this.state;
+        
+        switch(kind){
+            case 'my':
+                //将当前页面所有ID存储起来，批量提交数据
+                if(ev.target.checked){
+                    for(let i=0;i<dataMy.news.length;i++){
+                        idArray.push(dataMy.news[i].id);
+                    }
+                }else{
+                    idArray = [];
+                }
+                this.setState({isCheckAll:ev.target.checked,idArray});
+                break;
+            case 'approve':
+                if(ev.target.checked){
+                    for(let i=0;i<dataApprove.news.length;i++){
+                        idArray.push(dataApprove.news[i].id);
+                    }
+                }else{
+                    idArray = [];
+                }
+                this.setState({isCheckAll:ev.target.checked,idArray});
+                break;
+            default:
+                return;
+        }
+    }
+
+    //子组件勾选
+    check = (id,isCheck)=>{
+        let {idArray} = this.state;
+        if(isCheck){
+            idArray.push(id);
+        }else{
+            idArray = idArray.filter(e=>e!==id);
+        }
+        let inputs = document.querySelectorAll('.newsTable tbody tr td input');
+        if(idArray.length===inputs.length){
+            this.setState({isCheckAll:true});
+        }else{
+            this.setState({isCheckAll:false});
         }
     }
 
@@ -187,11 +238,11 @@ class MyArticle extends React.Component {
         
         switch(kind){
             case 'my':
-                await delNewsData(id,currentPage);  
+                await delNewsData(id,currentPage);
+                this.refs.tan2.style.display = 'none';
+                await this.tipShow('删除成功');
                 await getMyData(name,currentPage);
                 await getMyCount(name);
-                this.refs.tan2.style.display = 'none';
-                this.tipShow('删除成功');
                 break;
             case 'approve':
                 editNewsData(id,tanObj);  
@@ -259,7 +310,7 @@ class MyArticle extends React.Component {
 
     render(){
         let {dataMy,dataApprove,dataColumn,url:{location:{pathname}},url:{match:{params}},url:{history:{push}}} = this.props;
-        let {isTipShow,path,tanObj,tipInfo,name,level} = this.state;
+        let {isTipShow,path,tanObj,tipInfo,name,level,isCheckAll} = this.state;
         let currentPage = params.id.split('page')[1]*1;  //当前页
         let sty = 'tab_nav noShow';  //默认子菜单不显示
         let newArr = [];  //要渲染的数组
@@ -267,7 +318,7 @@ class MyArticle extends React.Component {
         let count;
         let com = '';
         let btns = '';
-        console.log(dataMy.news);
+        // console.log(dataMy.news);
 
         if(level<=2){
             //显示子菜单
@@ -309,6 +360,11 @@ class MyArticle extends React.Component {
                             </div>
             )
         }else{
+            com = (
+                <button
+                    onClick={this.add}
+                ><i className="fa fa-plus"></i>添加</button>
+            );
             count = dataMy.count;
             newArr = dataMy.news;
         }
@@ -319,7 +375,9 @@ class MyArticle extends React.Component {
                 e,
                 approveFn:this.approveFn,
                 show:this.show,
-                del:this.del
+                del:this.del,
+                isCheckAll,
+                check:this.check
             }
             return <Tr {...obj} />;
         })
@@ -361,7 +419,11 @@ class MyArticle extends React.Component {
                     <table className="newsTable">
                         <thead>
                         <tr>
-                            <th><input type="checkbox"/></th>
+                            <th><input 
+                                type="checkbox"
+                                checked={isCheckAll}
+                                onClick={this.checkAll}
+                            /></th>
                             <th>ID</th>
                             <th>标题</th>
                             <th>栏目</th>

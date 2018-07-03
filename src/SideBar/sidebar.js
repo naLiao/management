@@ -36,11 +36,11 @@ class SideBar extends React.Component {
                             <span>权限管理</span>
                         </NavLink>
                     </li>
-                    {/* <li><NavLink to="/index/user/page1" activeClassName="active"><i className="fa fa-user"></i>
+                    <li><NavLink to="/index/user/page1" activeClassName="active"><i className="fa fa-user"></i>
                             <span>会员管理</span>
                         </NavLink>
                     </li>
-                    <li><NavLink to="/index/setting" activeClassName="active"><i className="fa fa-cogs"></i>
+                    {/* <li><NavLink to="/index/setting" activeClassName="active"><i className="fa fa-cogs"></i>
                             <span>系统设置</span>
                         </NavLink>
                     </li> */}

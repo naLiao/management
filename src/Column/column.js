@@ -1,8 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link,withRouter } from 'react-router-dom';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as actionCreators from '../reducers/actions';
+import cookie from 'react-cookies'
 import './column.css';
 import ColumnTr from './columnTr';
 import Tip from '../Tip/tip';
@@ -12,6 +13,9 @@ class Column extends React.Component {
     constructor(props){
         super(props);
         this.state = { 
+            //当前用户
+            name:'',
+            level:'',
             //提示框是否显示
             isTipShow:false,
             tipInfo:'',
@@ -26,6 +30,10 @@ class Column extends React.Component {
                 approve:''
             }
          };
+    }
+
+    componentWillMount(){
+        this.setState({name: cookie.load('user'),level:Number(cookie.load('level'))});
     }
 
     //初始化
@@ -51,14 +59,20 @@ class Column extends React.Component {
 
     //添加栏目
     add = ()=>{
-        this.refs.tan.style.display = 'block';
-        this.setState({tanObj:{
-            column:'',
-            path:'',
-            approve:'',
-            readNum:0,
-            time:''
-        },id:''})
+        let {level} = this.state;
+        if(level>2){
+            this.tipShow('您的级别不够');
+            return;
+        }else{
+            this.refs.tan.style.display = 'block';
+            this.setState({tanObj:{
+                column:'',
+                path:'',
+                approve:'',
+                readNum:0,
+                time:''
+            },id:''})
+        }
     }
     
     //修改栏目
@@ -90,8 +104,12 @@ class Column extends React.Component {
 
     //删除栏目，删除完成后重新渲染数据、页码
     del = async (id)=>{
-        let {getColumnData,getColCount,delColData} = this.props;
+        let {dataColumn,getColumnData,getColCount,delColData,history} = this.props;
         let {path,currentPage} = this.state;
+        if(dataColumn.columns.length===1){
+            currentPage--;
+            history.push('/index/column/page'+ currentPage);
+        }
         await delColData(id,currentPage);  //往中间件中发送数据
         await getColumnData(currentPage);
         await getColCount();
@@ -142,17 +160,18 @@ class Column extends React.Component {
                 key:i,
                 e,
                 show:this.show,
-                del:this.del
+                del:this.del,
+                tipShow:this.tipShow
             }
             return <ColumnTr {...obj} />;
         })
         return (
             <div className="content1">
                 <Tip isTipShow={isTipShow} tipInfo={tipInfo}/>
-                <div className="bread_menu">
+                {/* <div className="bread_menu">
                     <Link to="/">首页 --></Link>
                     <Link to="/column">栏目管理</Link>
-                </div>
+                </div> */}
                 <div className="table_top">
                     <div className="big">搜索查询</div>
                     <div className="tab_search">
@@ -246,4 +265,4 @@ export default connect((state,ownProps)=>{
         dataColumn:state.reducercolumn,
         url:ownProps.url
     };
-},dispatch=>bindActionCreators(actionCreators,dispatch))(Column);
+},dispatch=>bindActionCreators(actionCreators,dispatch))(withRouter(Column));

@@ -274,7 +274,7 @@ export function getAccountCount(){
         .then(e=>e.json())
         .then(res=>{
             dispatch(getacccount(res.count));
-            console.log(res.count);
+            // console.log(res.count);
         })
     }
 }

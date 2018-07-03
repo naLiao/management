@@ -6,7 +6,14 @@ class Tr extends React.Component {
         this.state = { 
             name:'',
             level:'',
+            isChecked:false
          };
+    }
+
+    componentWillReceiveProps(){
+        let {isCheckAll} = this.props;
+        console.log(isCheckAll);
+        this.setState({isChecked:!isCheckAll});
     }
 
     approveInTr = ()=>{
@@ -22,8 +29,16 @@ class Tr extends React.Component {
         del(e.id);
     }
 
+    checkInTr = (ev)=>{
+        let {check,e} = this.props;
+        this.setState({isChecked:ev.target.checked});
+        check(e.id,ev.target.checked);
+    }
+
     render(){
-        let {e} = this.props;
+        let {e,isCheckAll} = this.props;
+        let {isChecked} = this.state;
+        let check = isChecked? 'checked':'';
         let circleClass;
         switch(e.status){
             case '草稿箱':
@@ -47,7 +62,10 @@ class Tr extends React.Component {
         let time = d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();
         return (
             <tr>
-                <td><input type="checkbox"/></td>
+                <td><input 
+                    type="checkbox"
+                    onClick={this.checkInTr}
+                /></td>
                 <td>{e._id}</td>
                 <td>{e.title}</td>
                 <td>{e.column}</td>

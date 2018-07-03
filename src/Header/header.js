@@ -16,20 +16,6 @@ class Header extends React.Component {
         this.setState({name: cookie.load('user'),level:Number(cookie.load('level'))});
     }
 
-    //点击让头像下方的设置列表出现
-    click = ()=>{
-        let {avatarOnOff} = this.state;
-        if(avatarOnOff){
-            this.refs.list.style.opacity = 0;
-            this.refs.list.style.height = 0;
-        }else{
-            this.refs.list.style.opacity = 1;
-            this.refs.list.style.height = '110px';
-        }
-        avatarOnOff = !avatarOnOff;
-        this.setState({avatarOnOff});
-    }
-
     //点击退出
     logout = ()=>{
         let {history} = this.props;

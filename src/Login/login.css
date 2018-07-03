@@ -54,7 +54,7 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
 .tip{
     display: block;
     transition: 500ms;
-    color: rgb(224, 124, 77);
+    color: #fff;
     text-align: center;
     margin-top: 16px;
 }

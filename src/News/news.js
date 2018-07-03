@@ -113,8 +113,13 @@ class News extends React.Component {
     
     //删除新闻，删除完成后重新渲染数据、页码
     del = async (id)=>{
-        let {getNewsData,getCount,delNewsData} = this.props;
+        let {getNewsData,dataNews,getCount,delNewsData,history} = this.props;
         let {path,currentPage} = this.state;
+
+        if(dataNews.news.length===1){
+            currentPage--;
+            history.push('/index/news/page'+ currentPage);
+        }
         await delNewsData(id,currentPage);  //往中间件中发送数据
         await getNewsData(path,currentPage);
         await getCount(path);

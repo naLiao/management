@@ -104,6 +104,9 @@ o 3.新闻数据的引入、分页展示
         let index = ev.target.selectedIndex;
         let selectedOption = ev.target.options[index];
         let a = selectedOption.innerHTML;
+4.想实现7天免登录功能，session storage关闭浏览器清除，但是不太好定制清除时间
+    react:react-cookies
+
 
 后台管理功能：
 1.登录验证
