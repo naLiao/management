@@ -7,7 +7,7 @@ import cookie from 'react-cookies'
 import './account.css';
 import Tr from './accountTr';
 import Tip from '../Tip/tip';
-import Page from '../Page/page';
+import Page from './page';
 
 class Account extends React.Component {
     constructor(props){
@@ -18,8 +18,6 @@ class Account extends React.Component {
             searchKind:'',
             //是否全选
             isCheckAll:false,
-            //勾选数组
-            idArray:[],
             //当前用户
             name:'',
             level:'',
@@ -47,22 +45,12 @@ class Account extends React.Component {
     //初始化
     componentDidMount (){
         let {getAccountData,getAccountCount} = this.props;
+        let {searchName,searchKind} = this.state;
         console.log('账户页');
         //获取账户
         getAccountData(1);  //走中间件，页码
         //获取页码
-        getAccountCount();  //走中间件
-    }
-
-    componentWillReceiveProps({url:{match:{params:{id:id1}}}}){
-        //切换页码
-        let {url:{match:{params:{id}}},getAccountData} = this.props;
-        let currentPage = id1.split('page')[1]*1;
-        this.setState({currentPage});
-        if(id1 !== id){
-            // console.log('页码切换，要请求数据了'+ currentPage);
-            getAccountData(currentPage);  //走中间件，栏目+页码
-        }
+        getAccountCount(searchName,searchKind);  //走中间件
     }
 
     //修改查询名称
@@ -70,56 +58,45 @@ class Account extends React.Component {
         this.setState({searchName:ev.target.value})
     }
 
+    //修改查询种类
+    select = (ev)=>{
+        this.setState({searchKind:ev.target.value})
+    }
+
     //查询
     search = ()=>{
-        let {getAccountData,getAccountCount} = this.props;
-        let {searchName} = this.state;
-        let searchKind = document.querySelector('#account_kind').value;
+        let {getAccountData,searchAccountData,getAccountCount,url:{history}} = this.props;
+        let {searchName,searchKind,currentPage} = this.state;
+        
         //获取账户
-        // searchAccountData(1,searchName,searchKind);  //走中间件，页码
-        //获取页码
-        // searchAccountCount(searchName,searchKind);  //走中间件
-    }
-
-    //接收组件勾选，勾选就放数组里，取消勾选就从数组中删除
-    check = (id,isTrue)=>{
-        let {idArray,isCheckAll} = this.state;
-
-        if(isTrue){  //勾选
-            idArray.push(id);
-            this.setState({idArray});
-        }else{  //取消勾选
-            idArray = idArray.filter(e=>e!=id);
-            this.setState({idArray});
-        }
-        console.log(idArray);
-        let inputs = document.querySelectorAll('.newsTable tbody input');
-        if(idArray.length === inputs.length){
-            this.setState({isCheckAll:true});
+        if(!searchName&&!searchKind){
+            getAccountData(1);
+            getAccountCount(searchName,searchKind);
         }else{
-            this.setState({isCheckAll:false});
+            searchAccountData(1,searchName,searchKind); 
+            getAccountCount(searchName,searchKind);
         }
+        history.push('page1');
+        this.setState({currentPage:1});
     }
 
-    //勾选全部
+    //接收组件是否全选
+    cc = (isTrue)=>{
+        this.setState({isCheckAll:isTrue});
+    }
+
+    //点击全部勾选
     checkAll = (ev)=>{
         let {dataAccount} = this.props;
-        let {idArray} = this.state;
-        let inputs = Array.from(document.querySelectorAll('.newsTable tbody input'));
-        inputs.forEach(e=>e.checked=ev.target.checked);
+        let {isCheckAll} = this.state;
 
-        this.setState({isCheckAll:ev.target.checked});
-        
-        //将所有ID放入数组
-        if(ev.target.checked){
-            dataAccount.accounts.forEach(e=>{
-                idArray.push(e.id);
-            })
-        }else{
-            idArray = [];
-        }
-        console.log(idArray);
-        this.setState({idArray});
+        isCheckAll = !isCheckAll;
+
+        dataAccount.accounts.forEach(e=>{
+            e.checked = isCheckAll;
+        })
+
+        this.setState({isCheckAll});
     }
 
     //添加账户
@@ -154,20 +131,21 @@ class Account extends React.Component {
     }
 
     submit = ()=>{
-        let {tanObj,id,currentPage} = this.state;
         let {getAccountData,getAccountCount,addAccount,editAccData} = this.props;
+        let {tanObj,id,searchName,searchKind,currentPage} = this.state;
+        
         if(!id){
             //添加账户
             addAccount(tanObj);  //往中间件中发送数据
             this.refs.tan.style.display = 'none';
             getAccountData(currentPage);
-            getAccountCount();
+            getAccountCount(searchName,searchKind);
             this.tipShow('添加成功');
         }else{
             //修改账户
             editAccData(id,tanObj);  //往中间件中发送数据
             getAccountData(currentPage);
-            getAccountCount();
+            getAccountCount(searchName,searchKind);
             this.refs.tan.style.display = 'none';
             this.tipShow('修改成功');
         }
@@ -176,7 +154,7 @@ class Account extends React.Component {
     //删除一个
     del = (id)=>{
         let {getAccountData,dataAccount,getAccountCount,delAccData, url:{history}} = this.props;
-        let {path,currentPage} = this.state;
+        let {path,currentPage,searchName,searchKind} = this.state;
         let ids = JSON.stringify([id]);
         delAccData(ids);  //往中间件中发送数据
         let that = this;
@@ -185,10 +163,10 @@ class Account extends React.Component {
                 currentPage--;
                 that.setState({currentPage});
                 history.push('/index/account/page'+ currentPage);
-                getAccountCount();
+                getAccountCount(searchName,searchKind);
             }else{
                 getAccountData(currentPage);
-                getAccountCount();
+                getAccountCount(searchName,searchKind);
             }
             that.tipShow('删除成功');
         },50);
@@ -196,29 +174,33 @@ class Account extends React.Component {
     
     //点击批量删除
     delMulti = ()=>{
-        let {getAccountData,getAccountCount,delAccData,url:{history}} = this.props;
-        let {currentPage,isCheckAll,idArray,level} = this.state;
+        let {dataAccount,getAccountData,getAccountCount,delAccData,url:{history}} = this.props;
+        let {currentPage,isCheckAll,idArray,level,searchName,searchKind} = this.state;
 
         if(level>1){
             this.tipShow('您的级别不够');
             return;
         }else{
             //批量删除
-            let ids = JSON.stringify(idArray);
+            let arr = [];
+            dataAccount.accounts.forEach(e=>{
+                if(e.checked){
+                    arr.push(e.id);
+                }
+            })
+            console.log(arr);
+            let ids = JSON.stringify(arr);
             delAccData(ids);  //往中间件中发送数据
             let that = this;
             setTimeout(function(){
                 if(isCheckAll&&currentPage>1){
                     currentPage--;
                     that.setState({currentPage});
-                    history.push('/index/account/page'+ currentPage);
-                    getAccountCount();
-                }else{
-                    getAccountData(currentPage);
-                    getAccountCount();
                 }
-                let inputs = Array.from(document.querySelectorAll('.newsTable tbody input'));
-                inputs.forEach(e=>e.checked=false);
+                console.log(currentPage);
+                history.push('/index/account/page'+ currentPage);
+                getAccountData(currentPage);
+                getAccountCount(searchName,searchKind);
                 that.tipShow('删除成功');
                 that.setState({isCheckAll:false});
             },50)
@@ -261,25 +243,20 @@ class Account extends React.Component {
         this.setState({tanObj});
     }
 
-    //点击页码
-    changePage = (i)=>{
-        let {getAccountData,getAccountCount} = this.props;
-        let {searchName,searchKind} = this.state;
-        this.setState({currentPage:i});
-        getAccountData(i);
-        getAccountCount();
+    //接收子组件页码
+    page = (currentPage)=>{
+        this.setState({currentPage,isCheckAll:false});
     }
 
     render(){
         let {dataAccount,url:{match:{params:{id}}},url:{history:{push}}} = this.props;  //栏目数据 新闻数据
-        let {account,isTipShow,tanObj,tipInfo,id:tanId,isCheckAll,searchName} = this.state;  //控制提示框是否出现
+        let {account,isTipShow,tanObj,tipInfo,id:tanId,isCheckAll,searchName,searchKind} = this.state;  //控制提示框是否出现
         // console.log(dataAccount);
         let count = dataAccount.count;  //页码
         let currentPage = id.split('page')[1]*1;  //当前页
         let accounts = dataAccount.accounts;
         let title = tanId? '修改': '添加';
         let newArr = accounts.map((e,i)=>{
-            e.checked = false;
             let obj={
                 key:i,
                 i,
@@ -288,11 +265,12 @@ class Account extends React.Component {
                 show:this.show,
                 del:this.del,
                 tipShow:this.tipShow,
-                check:this.check
+                cc:this.cc
             }
             
             return <Tr {...obj} />;
         })
+
         return (
             <div className="content1">
                 <Tip isTipShow={isTipShow} tipInfo={tipInfo}/>
@@ -307,7 +285,11 @@ class Account extends React.Component {
                             onChange={this.changeSearchName}
                         />
                         <span>账户种类</span>
-                        <select id="account_kind">
+                        <select 
+                            id="account_kind"
+                            onChange={this.select}
+                        >
+                            <option value=''>所有分类</option>
                             <option value="超级管理员">超级管理员</option>
                             <option value="主编">主编</option>
                             <option value="编辑">编辑</option>
@@ -330,9 +312,9 @@ class Account extends React.Component {
                     <table className="newsTable">
                         <thead>
                         <tr>
-                            <th><input 
+                            <th><input
                                 type="checkbox"
-                                checked={isCheckAll}
+                                checked={isCheckAll?'checked':''}
                                 onChange={this.checkAll}
                             /></th>
                             <th>ID</th>
@@ -347,12 +329,12 @@ class Account extends React.Component {
                             {newArr}
                         </tbody>
                     </table>
-                    <Page 
-                        len={count} 
-                        path="/index/account" 
-                        currentPage={currentPage} 
-                        push={push} 
-                        changePage = {this.changePage}
+                    <Page  
+                        len={count}
+                        currentPage={currentPage}
+                        page={this.page}
+                        searchName={searchName}
+                        searchKind={searchKind}
                     />
                 </div>
 

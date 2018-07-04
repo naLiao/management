@@ -7,7 +7,7 @@ import cookie from 'react-cookies'
 import './user.css';
 import Tr from './userTr';
 import Tip from '../Tip/tip';
-import Page from '../Page/page';
+// import Page from '../Page/page';
 
 class User extends React.Component {
     constructor(props){
@@ -268,7 +268,7 @@ class User extends React.Component {
                             {newArr}
                         </tbody>
                     </table>
-                    <Page len={4} path="/index/account" currentPage={1} push={push} />
+                    {/* <Page len={4} path="/index/account" currentPage={1} push={push} /> */}
                 </div>
 
                 {/* 弹框 */}

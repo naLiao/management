@@ -1,4 +1,7 @@
 import React from 'react';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as actionCreators from '../reducers/actions';
 import cookie from 'react-cookies'
 
 class ColumnTr extends React.Component {
@@ -36,14 +39,31 @@ class ColumnTr extends React.Component {
         }
     }
 
+    //提示框弹出
+    tipShow = (info)=>{
+        this.setState({isTipShow:true,tipInfo:info});
+        let that = this;
+        setTimeout(function(){
+            that.setState({isTipShow:false,tipInfo:''});
+        },1000)
+    }
+
     //点击勾选
     checkInTr = (ev)=>{
-        let {e,check} = this.props;
-        check(e.id,ev.target.checked);
+        let {e,cc,dataColumn,isCheckAll} = this.props;
+        e.checked = !e.checked;
+        console.log(e.checked);
+
+        isCheckAll = dataColumn.every(e=>e.checked);
+        console.log(isCheckAll);
+        
+        cc(isCheckAll);
+        this.setState({dataColumn});
+        console.log(dataColumn);
     }
 
     render(){
-        let {e} = this.props;
+        let {i,e} = this.props;
         let d = new Date();
         d.setTime(d.getTime(e.time));
         let time = d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();
@@ -51,6 +71,7 @@ class ColumnTr extends React.Component {
             <tr>
                 <td><input 
                     type="checkbox" 
+                    checked={e.checked?'checked':''}
                     onChange={this.checkInTr}
                 /></td>
                 <td>{e.column}</td>
@@ -70,4 +91,8 @@ class ColumnTr extends React.Component {
         )
     }
 }
-export default ColumnTr;
+export default connect((state)=>{
+    return {
+        dataColumn:state.reducercolumn.columns,
+    };
+},dispatch=>bindActionCreators(actionCreators,dispatch))(ColumnTr);

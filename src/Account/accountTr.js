@@ -1,4 +1,7 @@
 import React from 'react';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as actionCreators from '../reducers/actions';
 import cookie from 'react-cookies'
 
 class Tr extends React.Component {
@@ -47,21 +50,30 @@ class Tr extends React.Component {
 
     //点击勾选
     checkInTr = (ev)=>{
-        let {e,check} = this.props;
-        check(e.id,ev.target.checked);
+        let {e,cc,dataAccount,isCheckAll} = this.props;
+        e.checked = !e.checked;
+        console.log(e.checked);
+
+        isCheckAll = dataAccount.every(e=>e.checked);
+        console.log(isCheckAll);
+        
+        cc(isCheckAll);
+        this.setState({dataAccount});
+        console.log(dataAccount);
     }
     
     render(){
-        let {i,e} = this.props;
+        let {i,e,dataAccount} = this.props;
         let {isCheck} = this.state;
-        
+        // console.log(dataAccount);
         let d = new Date();
         d.setTime(e.time);
         let time = d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();
         return (
             <tr>
-                <td><input 
+                <td><input
                     type="checkbox"
+                    checked={e.checked?'checked':''}
                     onChange={this.checkInTr}
                 /></td>
                 <td>{i+1}</td>
@@ -81,4 +93,8 @@ class Tr extends React.Component {
         )
     }
 }
-export default Tr;
+export default connect((state)=>{
+    return {
+        dataAccount:state.reduceraccount.accounts
+    };
+},dispatch=>bindActionCreators(actionCreators,dispatch))(Tr);

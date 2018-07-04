@@ -72,7 +72,7 @@ class App extends Component {
               return <Redirect to="/index/account/page1" />
           }}/>
           <Route path="/index/account/:id" render={(url)=>{
-              return <Account url={url} />
+              return <Account {...{url}}/>
           }}/>
 
           {/* 会员管理 */}

@@ -4,7 +4,7 @@ import {bindActionCreators} from 'redux';
 import * as actionCreators from '../reducers/actions';
 import './news.css';
 import Tr from './newsTr';
-import Page from '../Page/page';
+// import Page from '../Page/page';
 import Tip from '../Tip/tip';
 import cookie from 'react-cookies'
 
@@ -354,7 +354,7 @@ class News extends React.Component {
                             {newArr}
                         </tbody>
                     </table>
-                    <Page len={count} path="/index/news" currentPage={currentPage} push={push} />
+                    {/* <Page len={count} path="/index/news" currentPage={currentPage} push={push} /> */}
                 </div>
 
                 {/* 弹框 */}

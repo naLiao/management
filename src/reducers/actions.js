@@ -140,9 +140,9 @@ function getColumnSuccess(res){
 }
 
 //栏目管理-获取页码
-export function getColCount(){
+export function getColCount(searchName){
     return (dispatch)=>{
-        fetch('http://127.0.0.1:88/api/column/getcolcount')
+        fetch('http://127.0.0.1:88/api/column/getcolcount?column='+searchName)
         .then(e=>e.json())
         .then(res=>{
             dispatch(getcolcount(res.count));
@@ -154,6 +154,25 @@ function getcolcount(count){
     return {
         type:'GET_COL_COUNT',
         count
+    }
+}
+
+//栏目管理-查询数据-操作发起
+export function searchColumnData(num,searchName){
+    return (dispatch)=>{
+        console.log(num,searchName);
+        fetch(`http://127.0.0.1:88/api/column/search?page=${num}&column=${searchName}`)
+        .then(e=>e.json())
+        .then(res=>{
+            dispatch(searchColumnSuccess(res));
+            console.log(res);
+        })
+    }
+}
+function searchColumnSuccess(res){
+    return {
+        type:'SEARCH_COLUMN',
+        res
     }
 }
 
@@ -268,13 +287,15 @@ function getAccountSuccess(res){
 }
 
 //账户管理-获取页码
-export function getAccountCount(){
+export function getAccountCount(searchName,searchKind){
+    console.log(searchName,searchKind);
+    
     return (dispatch)=>{
-        fetch(`http://127.0.0.1:88/api/account/getcount`)
+        fetch(`http://127.0.0.1:88/api/account/getcount?account=${searchName}&kind=${searchKind}`)
         .then(e=>e.json())
         .then(res=>{
             dispatch(getacccount(res.count));
-            // console.log(res.count);
+            console.log(res.count);
         })
     }
 }
@@ -286,23 +307,23 @@ function getacccount(count){
 }
 
 //账户管理-查询数据-操作发起
-// export function getAccountData(num,searchName,searchKind){
-//     return (dispatch)=>{
-//         // console.log(num,searchName,searchKind);
-//         fetch(`http://127.0.0.1:88/api/account/getlist?page=${num}&account=${searchName}&kind=${searchKind}`)
-//         .then(e=>e.json())
-//         .then(res=>{
-//             dispatch(getAccountSuccess(res));
-//             console.log(res);
-//         })
-//     }
-// }
-// function getAccountSuccess(res){
-//     return {
-//         type:'GET_ACCOUNT',
-//         res
-//     }
-// }
+export function searchAccountData(num,searchName,searchKind){
+    return (dispatch)=>{
+        console.log(num,searchName,searchKind);
+        fetch(`http://127.0.0.1:88/api/account/search?page=${num}&account=${searchName}&kind=${searchKind}`)
+        .then(e=>e.json())
+        .then(res=>{
+            dispatch(searchAccountSuccess(res));
+            console.log(res);
+        })
+    }
+}
+function searchAccountSuccess(res){
+    return {
+        type:'SEARCH_ACCOUNT',
+        res
+    }
+}
 
 // //账户管理-查询数据页码
 // export function getAccountCount(searchName,searchKind){

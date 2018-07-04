@@ -31,6 +31,11 @@ const reducercolumn = (state={columns:[],count:0},action)=>{
             newObj2.count = action.count;
             // console.log(action.count);
             return newObj2;
+        case 'SEARCH_COLUMN':
+            let newObj3 = Object.assign({},state);
+            newObj3.columns = action.res;
+            console.log(action.res);
+            return newObj3;
         default:
             return state;
     }
@@ -85,6 +90,11 @@ const reduceraccount = (state={accounts:[],count:0},action)=>{
             newObj2.count = action.count;
             // console.log(action.count);
             return newObj2;
+        case 'SEARCH_ACCOUNT':
+            let newObj3 = Object.assign({},state);
+            newObj3.accounts = action.res;
+            console.log(action.res);
+            return newObj3;
         default:
             return state;
     }

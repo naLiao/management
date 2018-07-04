@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as actionCreators from '../reducers/actions';
 import cookie from 'react-cookies'
-import Page from '../Page/page';
+// import Page from '../Page/page';
 
 class MyArticle extends React.Component {
     constructor(props){
@@ -455,7 +455,7 @@ class MyArticle extends React.Component {
                             {newArr}
                         </tbody>
                     </table>
-                    <Page len={count} path={`/index/myarticle/${params.kind}`} currentPage={currentPage} push={push} />
+                    {/* <Page len={count} path={`/index/myarticle/${params.kind}`} currentPage={currentPage} push={push} /> */}
                 </div>
                 {/* 文章预览弹框 */}
                 <div className="tan_content" ref="tan" >
