@@ -10,10 +10,8 @@ class Tr extends React.Component {
          };
     }
 
-    componentWillReceiveProps(){
-        let {isCheckAll} = this.props;
-        console.log(isCheckAll);
-        this.setState({isChecked:!isCheckAll});
+    componentDidMount(){
+        console.log(123); 
     }
 
     approveInTr = ()=>{
@@ -29,9 +27,9 @@ class Tr extends React.Component {
         del(e.id);
     }
 
+    //点击勾选
     checkInTr = (ev)=>{
-        let {check,e} = this.props;
-        this.setState({isChecked:ev.target.checked});
+        let {e,check} = this.props;
         check(e.id,ev.target.checked);
     }
 

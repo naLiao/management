@@ -13,6 +13,10 @@ class Column extends React.Component {
     constructor(props){
         super(props);
         this.state = { 
+            //是否全选
+            isCheckAll:false,
+            //勾选数组
+            idArray:[],
             //当前用户
             name:'',
             level:'',
@@ -39,7 +43,9 @@ class Column extends React.Component {
     //初始化
     componentDidMount (){
         let {getColumnData,getColCount} = this.props;
-        console.log('栏目页初始化');
+        let {currentPage} = this.state;
+
+        console.log('栏目页初始化'+currentPage);
         //获取栏目
         getColumnData(1);  //走中间件，页码
         //获取页码
@@ -102,18 +108,97 @@ class Column extends React.Component {
         }
     }
 
-    //删除栏目，删除完成后重新渲染数据、页码
-    del = async (id)=>{
+    //删除一个
+    del = (id)=>{
         let {dataColumn,getColumnData,getColCount,delColData,history} = this.props;
         let {path,currentPage} = this.state;
-        if(dataColumn.columns.length===1){
-            currentPage--;
-            history.push('/index/column/page'+ currentPage);
+        let ids = JSON.stringify([id]);
+        delColData(ids);  //往中间件中发送数据
+        let that = this;
+        setTimeout(function(){
+            if(dataColumn.columns.length===1&&currentPage>1){
+                currentPage--;
+                that.setState({currentPage});
+                history.push('/index/column/page'+ currentPage);
+                getColCount();
+            }else{
+                getColumnData(currentPage);
+                getColCount();
+            }
+            that.tipShow('删除成功');
+        },50);
+}
+
+    //点击批量删除
+    delMulti = ()=>{
+        let {getColumnData,getColCount,delColData,url:{history}} = this.props;
+        let {currentPage,isCheckAll,idArray,level} = this.state;
+
+        if(level>2){
+            this.tipShow('您的级别不够');
+            return;
+        }else{
+            //批量删除
+            let ids = JSON.stringify(idArray);
+            delColData(ids);  //往中间件中发送数据
+            let that = this;
+            setTimeout(function(){
+                if(isCheckAll&&currentPage>1){
+                    currentPage--;
+                    that.setState({currentPage});
+                    history.push('/index/column/page'+ currentPage);
+                    getColCount();
+                }else{
+                    getColumnData(currentPage);
+                    getColCount();
+                }
+                let inputs = Array.from(document.querySelectorAll('.newsTable tbody input'));
+                inputs.forEach(e=>e.checked=false);
+                that.tipShow('删除成功');
+                that.setState({isCheckAll:false});
+            },50);
         }
-        await delColData(id,currentPage);  //往中间件中发送数据
-        await getColumnData(currentPage);
-        await getColCount();
-        this.tipShow('删除成功');
+    }
+
+    //接收组件勾选，勾选就放数组里，取消勾选就从数组中删除
+    check = (id,isTrue)=>{
+        let {idArray,isCheckAll} = this.state;
+
+        if(isTrue){  //勾选
+            idArray.push(id);
+            this.setState({idArray});
+        }else{  //取消勾选
+            idArray = idArray.filter(e=>e!=id);
+            this.setState({idArray});
+        }
+        console.log(idArray);
+        let inputs = document.querySelectorAll('.newsTable tbody input');
+        if(idArray.length === inputs.length){
+            this.setState({isCheckAll:true});
+        }else{
+            this.setState({isCheckAll:false});
+        }
+    }
+
+    //勾选全部
+    checkAll = (ev)=>{
+        let {dataColumn} = this.props;
+        let {idArray} = this.state;
+        let inputs = Array.from(document.querySelectorAll('.newsTable tbody input'));
+        inputs.forEach(e=>e.checked=ev.target.checked);
+
+        this.setState({isCheckAll:ev.target.checked});
+        
+        //将所有ID放入数组
+        if(ev.target.checked){
+            dataColumn.columns.forEach(e=>{
+                idArray.push(e.id);
+            })
+        }else{
+            idArray = [];
+        }
+        console.log(idArray);
+        this.setState({idArray});
     }
 
     //提示框弹出
@@ -149,7 +234,7 @@ class Column extends React.Component {
 
     render(){
         let {getNewsData,dataColumn,url:{match:{params:{id}}},url:{history:{push}}} = this.props;  //栏目数据 新闻数据
-        let {isTipShow,path,tanObj,tipInfo} = this.state;  //控制提示框是否出现
+        let {isTipShow,path,tanObj,isCheckAll,tipInfo} = this.state;  //控制提示框是否出现
         let count = dataColumn.count;  //页码
         let currentPage = id.split('page')[1]*1;  //当前页
         let columns = dataColumn.columns;
@@ -161,7 +246,8 @@ class Column extends React.Component {
                 e,
                 show:this.show,
                 del:this.del,
-                tipShow:this.tipShow
+                tipShow:this.tipShow,
+                check:this.check
             }
             return <ColumnTr {...obj} />;
         })
@@ -186,12 +272,19 @@ class Column extends React.Component {
                             onClick={this.add}
                         ><i className="fa fa-plus"></i>添加栏目</button>
                         {/* <button><i className="fa fa-pencil"></i>修改栏目</button> */}
-                        <button className="red"><i className="fa fa-trash"></i>批量删除</button>
+                        <button 
+                            className="red"
+                            onClick={this.delMulti}
+                        ><i className="fa fa-trash"></i>批量删除</button>
                     </div>
                     <table className="newsTable">
                         <thead>
                         <tr>
-                            <th><input type="checkbox"/></th>
+                            <th><input 
+                                type="checkbox"
+                                checked={isCheckAll}
+                                onChange={this.checkAll}
+                            /></th>
                             <th>栏目名称</th>
                             <th>栏目路径</th>
                             <th>新闻数量</th>

@@ -17,6 +17,12 @@ class Tr extends React.Component {
         del(e.id);
     }
 
+    //点击勾选
+    checkInTr = (ev)=>{
+        let {e,check} = this.props;
+        check(e.id,ev.target.checked);
+    }
+
     render(){
         let {e,i} = this.props;
         let circleClass;
@@ -42,7 +48,10 @@ class Tr extends React.Component {
         let time = d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();
         return (
             <tr>
-                <td><input type="checkbox"/></td>
+                <td><input 
+                    type="checkbox"
+                    onChange={this.checkInTr}
+                /></td>
                 <td>{i+1}</td>
                 <td>{e.title}</td>
                 <td>{e.column}</td>

@@ -80,10 +80,10 @@ export function addFail(){
 }
 
 //新闻管理-删除数据-操作发起
-export function delNewsData(id,currentPage){
+export function delNewsData(ids){
     return (dispatch)=>{
-        console.log('action新闻管理-删除数据，id：'+id);
-        fetch('http://localhost:88/api/news/del?id='+id)
+        console.log('action新闻管理-删除数据，ids：'+ids);
+        fetch('http://localhost:88/api/news/del?ids='+ids)
         .then(e=>e.json())
         .then(res=>{
             console.log(res.msg);
@@ -146,7 +146,7 @@ export function getColCount(){
         .then(e=>e.json())
         .then(res=>{
             dispatch(getcolcount(res.count));
-            console.log(res.count);
+            // console.log(res.count);
         })
     }
 }
@@ -195,10 +195,10 @@ export function addColFail(){
 }
 
 //栏目管理-删除数据-操作发起
-export function delColData(id,currentPage){
+export function delColData(ids,currentPage){
     return (dispatch)=>{
-        console.log('action新闻管理-删除数据，id：'+id);
-        fetch('http://localhost:88/api/column/del?id='+id)
+        console.log('action新闻管理-删除数据，ids：'+ids);
+        fetch('http://localhost:88/api/column/del?ids='+ids)
         .then(e=>e.json())
         .then(res=>{
             console.log(res);
@@ -252,7 +252,7 @@ export function getAccDetail(name){
 //账户管理-获取数据-操作发起
 export function getAccountData(num){
     return (dispatch)=>{
-        fetch(`http://127.0.0.1:88/api/account/getlist?page=`+num)
+        fetch(`http://127.0.0.1:88/api/account/getlist?page=${num}`)
         .then(e=>e.json())
         .then(res=>{
             dispatch(getAccountSuccess(res));
@@ -270,7 +270,7 @@ function getAccountSuccess(res){
 //账户管理-获取页码
 export function getAccountCount(){
     return (dispatch)=>{
-        fetch('http://127.0.0.1:88/api/account/getcount')
+        fetch(`http://127.0.0.1:88/api/account/getcount`)
         .then(e=>e.json())
         .then(res=>{
             dispatch(getacccount(res.count));
@@ -284,6 +284,44 @@ function getacccount(count){
         count
     }
 }
+
+//账户管理-查询数据-操作发起
+// export function getAccountData(num,searchName,searchKind){
+//     return (dispatch)=>{
+//         // console.log(num,searchName,searchKind);
+//         fetch(`http://127.0.0.1:88/api/account/getlist?page=${num}&account=${searchName}&kind=${searchKind}`)
+//         .then(e=>e.json())
+//         .then(res=>{
+//             dispatch(getAccountSuccess(res));
+//             console.log(res);
+//         })
+//     }
+// }
+// function getAccountSuccess(res){
+//     return {
+//         type:'GET_ACCOUNT',
+//         res
+//     }
+// }
+
+// //账户管理-查询数据页码
+// export function getAccountCount(searchName,searchKind){
+//     return (dispatch)=>{
+//         console.log(searchName,searchKind);
+//         fetch(`http://127.0.0.1:88/api/account/getcount?account=${searchName}&kind=${searchKind}`)
+//         .then(e=>e.json())
+//         .then(res=>{
+//             dispatch(getacccount(res.count));
+//             // console.log(res.count);
+//         })
+//     }
+// }
+// function getacccount(count){
+//     return {
+//         type:'GET_ACC_COUNT',
+//         count
+//     }
+// }
 
 //账户管理-添加数据-操作发起
 export function addAccount(obj){
@@ -323,10 +361,10 @@ export function addAccFail(){
 }
 
 //账户管理-删除数据-操作发起
-export function delAccData(id){
+export function delAccData(ids){
     return (dispatch)=>{
-        console.log('action账户管理-删除数据，id：'+id);
-        fetch('http://localhost:88/api/account/del?id='+id)
+        console.log('action账户管理-删除数据，id：'+ids);
+        fetch('http://localhost:88/api/account/del?ids='+ids)
         .then(e=>e.json())
         .then(res=>{
             console.log(res);

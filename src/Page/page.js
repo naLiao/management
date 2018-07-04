@@ -43,6 +43,10 @@ class Page extends Component {
         }
     }
 
+    pageInTr = (i)=>{
+        // changePage(i+1);
+    }
+
     render() {
         //len:总共多少页
         let {len,path,currentPage} = this.props;
@@ -56,6 +60,7 @@ class Page extends Component {
                     <NavLink
                         to={path+`/page${i+1}`} 
                         activeclassname="active"
+                        onClick={this.pageInTr.bind(this,i)}
                     >{i+1}</NavLink>
                 </li>
             );

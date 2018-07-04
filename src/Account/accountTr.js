@@ -8,22 +8,11 @@ class Tr extends React.Component {
             //当前登录用户
             name:'',
             level:'',
-            isCheck:false
          };
     }
 
     componentWillMount(){
         this.setState({name: cookie.load('user'),level:Number(cookie.load('level'))});
-    }
-
-    componentWillReceiveProps(){
-        let {isCheckAll} = this.props;
-        console.log(123);
-        
-        // let {isCheck} = this.state;
-        // isCheckAll = !isCheckAll;
-        this.setState({isCheck:!isCheckAll});
-        // console.log(isCheckAll);
     }
 
     //修改账户
@@ -59,7 +48,6 @@ class Tr extends React.Component {
     //点击勾选
     checkInTr = (ev)=>{
         let {e,check} = this.props;
-        this.setState({isCheck:ev.target.checked})
         check(e.id,ev.target.checked);
     }
     
@@ -74,7 +62,6 @@ class Tr extends React.Component {
             <tr>
                 <td><input 
                     type="checkbox"
-                    checked={isCheck}
                     onChange={this.checkInTr}
                 /></td>
                 <td>{i+1}</td>

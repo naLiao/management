@@ -36,6 +36,12 @@ class ColumnTr extends React.Component {
         }
     }
 
+    //点击勾选
+    checkInTr = (ev)=>{
+        let {e,check} = this.props;
+        check(e.id,ev.target.checked);
+    }
+
     render(){
         let {e} = this.props;
         let d = new Date();
@@ -43,7 +49,10 @@ class ColumnTr extends React.Component {
         let time = d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();
         return (
             <tr>
-                <td><input type="checkbox"/></td>
+                <td><input 
+                    type="checkbox" 
+                    onChange={this.checkInTr}
+                /></td>
                 <td>{e.column}</td>
                 <td>{e.path}</td>
                 <td>{e.readNum}</td>

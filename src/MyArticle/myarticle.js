@@ -12,6 +12,10 @@ class MyArticle extends React.Component {
     constructor(props){
         super(props);
         this.state = { 
+            //是否全选
+            isCheckAll:false,
+            //勾选数组
+            idArray:[],
             name:'',
             level:'',
             //是否全部勾选
@@ -56,6 +60,10 @@ class MyArticle extends React.Component {
         getMyCount(name);
     }
 
+    componentDidMount(){
+        // console.log(123); 
+    }
+
     componentWillReceiveProps({url:{match:{params:{id:id1}}}}){
         let {url:{match:{params}},getMyData,getApproveData} = this.props;
         let {name,level} = this.state;
@@ -77,52 +85,58 @@ class MyArticle extends React.Component {
         }
     }
 
-    //点击全选
-    checkAll = (ev)=>{
-        let {dataMy,dataApprove,dataColumn,url:{location:{pathname}},url:{match:{params:{kind}}},url:{history:{push}}} = this.props;
-        let {tanObj,idArray,name,currentPage} = this.state;
-        
-        switch(kind){
-            case 'my':
-                //将当前页面所有ID存储起来，批量提交数据
-                if(ev.target.checked){
-                    for(let i=0;i<dataMy.news.length;i++){
-                        idArray.push(dataMy.news[i].id);
-                    }
-                }else{
-                    idArray = [];
-                }
-                this.setState({isCheckAll:ev.target.checked,idArray});
-                break;
-            case 'approve':
-                if(ev.target.checked){
-                    for(let i=0;i<dataApprove.news.length;i++){
-                        idArray.push(dataApprove.news[i].id);
-                    }
-                }else{
-                    idArray = [];
-                }
-                this.setState({isCheckAll:ev.target.checked,idArray});
-                break;
-            default:
-                return;
-        }
-    }
+    //接收组件勾选，勾选就放数组里，取消勾选就从数组中删除
+    check = (id,isTrue)=>{
+        let {idArray,isCheckAll} = this.state;
 
-    //子组件勾选
-    check = (id,isCheck)=>{
-        let {idArray} = this.state;
-        if(isCheck){
+        if(isTrue){  //勾选
             idArray.push(id);
-        }else{
-            idArray = idArray.filter(e=>e!==id);
+            this.setState({idArray});
+        }else{  //取消勾选
+            idArray = idArray.filter(e=>e!=id);
+            this.setState({idArray});
         }
-        let inputs = document.querySelectorAll('.newsTable tbody tr td input');
-        if(idArray.length===inputs.length){
+        console.log(idArray);
+        let inputs = document.querySelectorAll('.newsTable tbody input');
+        if(idArray.length === inputs.length){
             this.setState({isCheckAll:true});
         }else{
             this.setState({isCheckAll:false});
         }
+    }
+
+    //勾选全部
+    checkAll = (ev)=>{
+        let {dataMy,dataApprove,url:{match:{params:{kind}}}} = this.props;
+        let {idArray} = this.state;
+        let inputs = Array.from(document.querySelectorAll('.newsTable tbody input'));
+        inputs.forEach(e=>e.checked=ev.target.checked);
+
+        this.setState({isCheckAll:ev.target.checked});
+
+        //将所有ID放入数组
+        if(ev.target.checked){
+            switch(kind){
+                case 'my':
+                    dataMy.news.forEach(e=>{
+                        idArray.push(e.id);
+                    })
+                    break;
+                case 'approve':
+                    dataApprove.news.forEach(e=>{
+                        idArray.push(e.id);
+                    })
+                    break;
+                default:
+                    dataMy.news.forEach(e=>{
+                        idArray.push(e.id);
+                    })
+            }  
+        }else{
+            idArray = [];
+        }
+        console.log(idArray);
+        this.setState({idArray});
     }
 
     approveFn = (e)=>{

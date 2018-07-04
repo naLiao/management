@@ -12,6 +12,10 @@ class News extends React.Component {
     constructor(props){
         super(props);
         this.state = {
+            //是否全选
+            isCheckAll:false,
+            //勾选数组
+            idArray:[],
             //当前登录用户
             name:'',
             level:'',
@@ -70,6 +74,47 @@ class News extends React.Component {
             getNewsData(path,currentPage);  //走中间件，栏目+页码
         }
     }
+
+    //接收组件勾选，勾选就放数组里，取消勾选就从数组中删除
+    check = (id,isTrue)=>{
+        let {idArray,isCheckAll} = this.state;
+
+        if(isTrue){  //勾选
+            idArray.push(id);
+            this.setState({idArray});
+        }else{  //取消勾选
+            idArray = idArray.filter(e=>e!=id);
+            this.setState({idArray});
+        }
+        console.log(idArray);
+        let inputs = document.querySelectorAll('.newsTable tbody input');
+        if(idArray.length === inputs.length){
+            this.setState({isCheckAll:true});
+        }else{
+            this.setState({isCheckAll:false});
+        }
+    }
+
+    //勾选全部 
+    checkAll = (ev)=>{
+        let {dataNews} = this.props;
+        let {idArray} = this.state;
+        let inputs = Array.from(document.querySelectorAll('.newsTable tbody input'));
+        inputs.forEach(e=>e.checked=ev.target.checked);
+
+        this.setState({isCheckAll:ev.target.checked});
+        
+        //将所有ID放入数组
+        if(ev.target.checked){
+            dataNews.news.forEach(e=>{
+                idArray.push(e.id);
+            })
+        }else{
+            idArray = [];
+        }
+        console.log(idArray);
+        this.setState({idArray});
+    }
     
     //添加新闻
     add = ()=>{
@@ -111,19 +156,51 @@ class News extends React.Component {
         await this.tipShow('保存成功');
     }
     
-    //删除新闻，删除完成后重新渲染数据、页码
-    del = async (id)=>{
+    //删除一个
+    del = (id)=>{
         let {getNewsData,dataNews,getCount,delNewsData,history} = this.props;
         let {path,currentPage} = this.state;
 
-        if(dataNews.news.length===1){
-            currentPage--;
-            history.push('/index/news/page'+ currentPage);
-        }
-        await delNewsData(id,currentPage);  //往中间件中发送数据
-        await getNewsData(path,currentPage);
-        await getCount(path);
-        this.tipShow('删除成功');
+        let ids = JSON.stringify([id]);
+        delNewsData(ids);  //往中间件中发送数据
+        let that = this;
+        setTimeout(function(){ 
+            if(dataNews.news.length===1&&currentPage>1){
+                currentPage--;
+                that.setState({currentPage});
+                history.push('/index/news/page'+ currentPage);
+                getCount();
+            }else{
+                getNewsData(currentPage);
+                getCount();
+            }
+            that.tipShow('删除成功');
+        },50);
+    }
+
+    //点击批量删除
+    delMulti = ()=>{
+        let {getNewsData,getCount,delNewsData,url:{history}} = this.props;
+        let {currentPage,isCheckAll,idArray,level} = this.state;
+
+        let ids = JSON.stringify(idArray);
+        delNewsData(ids);  //往中间件中发送数据
+        let that = this;
+        setTimeout(function(){
+            if(isCheckAll&&currentPage>1){
+                currentPage--;
+                that.setState({currentPage});
+                history.push('/index/news/page'+ currentPage);
+                getCount('all');
+            }else{
+                getNewsData('all',currentPage);
+                getCount('all');
+            }
+            let inputs = Array.from(document.querySelectorAll('.newsTable tbody input'));
+            inputs.forEach(e=>e.checked=false);
+            that.tipShow('删除成功');
+            that.setState({isCheckAll:false});
+        },50);
     }
 
     //栏目筛选
@@ -192,10 +269,10 @@ class News extends React.Component {
     
     render(){
         let {getNewsData,dataColumn,dataNews,url:{match:{params:{id}}},url:{history:{push}}} = this.props;  //栏目数据 新闻数据
-        let {isTipShow,path,tanObj,tipInfo,name,level} = this.state;
+        let {isTipShow,path,tanObj,tipInfo,name,level,isCheckAll} = this.state;
         let count = dataNews.count;  //页码
         let currentPage = id.split('page')[1]*1;  //当前页
-        // console.log(dataNews.news);
+        console.log(dataNews);
         
         //根据组件内的新闻数据渲染页面
         let newArr = dataNews.news.map((e,i)=>{
@@ -204,7 +281,8 @@ class News extends React.Component {
                 e,
                 i,
                 show:this.show,
-                del:this.del
+                del:this.del,
+                check:this.check
             }
             return <Tr {...obj}/>;
         })
@@ -236,7 +314,10 @@ class News extends React.Component {
                             onClick={this.add}
                         ><i className="fa fa-plus"></i>添加
                         </button> */}
-                        <button className="red"><i className="fa fa-trash"></i>批量删除</button>
+                        <button 
+                            className="red"
+                            onClick={this.delMulti}
+                        ><i className="fa fa-trash"></i>批量删除</button>
                         {/* <button><i className="fa fa-trash"></i>按日期排序</button>
                         <button><i className="fa fa-trash"></i>按阅读量排序</button> */}
                         <select
@@ -251,7 +332,11 @@ class News extends React.Component {
                     <table className="newsTable">
                         <thead>
                         <tr>
-                            <th><input type="checkbox"/></th>
+                            <th><input 
+                                type="checkbox"
+                                checked={isCheckAll}
+                                onChange={this.checkAll}
+                            /></th>
                             <th>ID</th>
                             <th>标题</th>
                             <th>栏目</th>
