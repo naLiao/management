@@ -4,13 +4,13 @@
  获取页码
  */
  //新闻管理-获取数据-操作发起
- export function getNewsData(column,num){
+ export function getNewsData(num){
     return (dispatch)=>{
-        fetch(`http://127.0.0.1:88/api/news/getlist?column=${column}&page=${num}`)
+        fetch(`http://127.0.0.1:88/api/news/getlist?page=${num}`)
         .then(e=>e.json())
         .then(res=>{
             dispatch(getData(res));
-            console.log(res);
+            // console.log(res);
         })
     }
 }
@@ -22,13 +22,14 @@ function getData(res){
 }
 
 //新闻管理-获取页码
-export function getCount(column){
+export function getCount(searchName,searchColumn){
+    // console.log(searchName,searchColumn);
     return (dispatch)=>{
-        fetch('http://127.0.0.1:88/api/news/getcount?column='+column)
+        fetch(`http://127.0.0.1:88/api/news/getcount?title=${searchName}&column=${searchColumn}`)
         .then(e=>e.json())
         .then(res=>{
             dispatch(getcount(res.count));
-            console.log(res.count);
+            // console.log(res.count);
         })
     }
 }
@@ -119,6 +120,25 @@ export function editNewsData(id,obj,status){
     }
 }
 
+//新闻管理-查询数据-操作发起
+export function searchNewsData(num,searchName,searchColumn){
+    return (dispatch)=>{
+        console.log(num,searchName,searchColumn);
+        fetch(`http://127.0.0.1:88/api/news/search?page=${num}&title=${searchName}&column=${searchColumn}`)
+        .then(e=>e.json())
+        .then(res=>{
+            dispatch(searchNewsSuccess(res));
+            console.log(res);
+        })
+    }
+}
+function searchNewsSuccess(res){
+    return {
+        type:'SEARCH_NEWS',
+        res
+    }
+}
+
 //------------------------------------------------------------------------------------
 
 //栏目管理-获取数据-操作发起
@@ -128,7 +148,7 @@ export function getColumnData(num){
         .then(e=>e.json())
         .then(res=>{
             dispatch(getColumnSuccess(res));
-            console.log(res);
+            // console.log(res);
         })
     }
 }
@@ -325,25 +345,6 @@ function searchAccountSuccess(res){
     }
 }
 
-// //账户管理-查询数据页码
-// export function getAccountCount(searchName,searchKind){
-//     return (dispatch)=>{
-//         console.log(searchName,searchKind);
-//         fetch(`http://127.0.0.1:88/api/account/getcount?account=${searchName}&kind=${searchKind}`)
-//         .then(e=>e.json())
-//         .then(res=>{
-//             dispatch(getacccount(res.count));
-//             // console.log(res.count);
-//         })
-//     }
-// }
-// function getacccount(count){
-//     return {
-//         type:'GET_ACC_COUNT',
-//         count
-//     }
-// }
-
 //账户管理-添加数据-操作发起
 export function addAccount(obj){
     return (dispatch,getState)=>{
@@ -421,7 +422,7 @@ export function editAccData(id,obj){
 //------------------------------------------------------------------------------------------
 
 //已审核-获取数据-操作发起
-export function getApproveData(name,num){
+export function getApproveData(num,name){
     return (dispatch)=>{
         fetch(`http://127.0.0.1:88/api/approve/getlist?name=${name}&page=${num}`)
         .then(e=>e.json())
@@ -438,9 +439,9 @@ function getApproveSuccess(res){
     }
 }
 //已审核-获取页码
-export function getAppCount(name){
+export function getAppCount(name,searchName,searchColumn){
     return (dispatch)=>{
-        fetch('http://127.0.0.1:88/api/approve/getcount?name='+name)
+        fetch(`http://127.0.0.1:88/api/approve/getcount?name=${name}&title=${searchName}&column=${searchColumn}`)
         .then(e=>e.json())
         .then(res=>{
             dispatch(getappcountsuccess(res.total,res.count));
@@ -466,11 +467,31 @@ export function approveArticle(id){
         })
     }
 }
+//已审核-查询数据-操作发起
+export function searchApproveData(num,name,searchName,searchColumn){
+    return (dispatch)=>{
+        console.log(num,searchName,searchColumn);
+        fetch(`http://127.0.0.1:88/api/approve/search?page=${num}&name=${name}&title=${searchName}&column=${searchColumn}`)
+        .then(e=>e.json())
+        .then(res=>{
+            dispatch(searchApproveSuccess(res));
+            console.log(res);
+        })
+    }
+}
+function searchApproveSuccess(res){
+    return {
+        type:'SEARCH_APPROVE',
+        res
+    }
+}
 
 //--------------------------------------------------------------------------------------------
 
 //我的-获取数据-操作发起
-export function getMyData(name,num){
+export function getMyData(num,name){
+    // console.log(num,name);
+    
     return (dispatch)=>{
         fetch(`http://127.0.0.1:88/api/my/getlist?name=${name}&page=${num}`)
         .then(e=>e.json())
@@ -487,13 +508,15 @@ function getMySuccess(res){
     }
 }
 //我的-获取页码
-export function getMyCount(name){
+export function getMyCount(name,searchName,searchColumn){
+    // console.log(name,searchName,searchColumn);
+    
     return (dispatch)=>{
-        fetch('http://127.0.0.1:88/api/my/getcount?name='+name)
+        fetch(`http://127.0.0.1:88/api/my/getcount?name=${name}&title=${searchName}&column=${searchColumn}`)
         .then(e=>e.json())
         .then(res=>{
             dispatch(getmycountsuccess(res.total,res.count));
-            console.log(res);
+            // console.log(res);
         })
     }
 }
@@ -502,5 +525,23 @@ function getmycountsuccess(total,count){
         type:'GET_MY_COUNT',
         total,
         count
+    }
+}
+//我的-查询数据-操作发起
+export function searchMyData(num,name,searchName,searchColumn){
+    return (dispatch)=>{
+        console.log(num,searchName,searchColumn);
+        fetch(`http://127.0.0.1:88/api/my/search?page=${num}&name=${name}&title=${searchName}&column=${searchColumn}`)
+        .then(e=>e.json())
+        .then(res=>{
+            dispatch(searchMySuccess(res));
+            console.log(res);
+        })
+    }
+}
+function searchMySuccess(res){
+    return {
+        type:'SEARCH_MY',
+        res
     }
 }

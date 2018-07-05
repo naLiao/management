@@ -13,6 +13,10 @@ const reducernews = (state={news:[],count:0},action)=>{
             let newObj2 = Object.assign({},state);
             newObj2.count = action.count;
             return newObj2;
+        case 'SEARCH_NEWS':
+            let newObj3 = Object.assign({},state);
+            newObj3.news = action.res;
+            return newObj3;
         default:
             return state;
     }
@@ -54,6 +58,11 @@ const reducermyarticle = (state={news:[],count:0},action)=>{
             newObj2.count = action.count;
             // console.log(action.count);
             return newObj2;
+        case 'SEARCH_MY':
+            let newObj3 = Object.assign({},state);
+            newObj3.news = action.res;
+            // console.log(action.res);
+            return newObj3;
         default:
             return state;
     }
@@ -72,6 +81,10 @@ const reducerapprove = (state={news:[],count:0,total:0},action)=>{
             newObj2.count = action.count;
             // console.log(state);
             return newObj2;
+        case 'SEARCH_APPROVE':
+            let newObj3 = Object.assign({},state);
+            newObj3.news = action.res;
+            return newObj3;
         default:
             return state;
     }

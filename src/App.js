@@ -46,8 +46,11 @@ class App extends Component {
               return <IndexContent url={url}/>
           }}/>
 
-          {/* 我的稿件 */}         
-          <Route path='/index/myarticle/:kind/:id' render={(url)=>{
+          {/* 我的稿件 */}
+          <Route path='/index/myarticle' exact render={(url)=>{
+              return <Redirect to="/index/myarticle/page1" />
+          }}/>
+          <Route path='/index/myarticle/:id' render={(url)=>{
               return <MyArticle {...{url}}/>
           }}/>
 

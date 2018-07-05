@@ -18,7 +18,7 @@ class SideBar extends React.Component {
                         </NavLink>
                     </li>
                     <li>
-                        <NavLink to="/index/myarticle/my/page1" activeClassName="active"><i className="fa fa-file-text-o"></i>
+                        <NavLink to="/index/myarticle/page1" activeClassName="active"><i className="fa fa-file-text-o"></i>
                             <span>我的稿件</span>
                         </NavLink>
                     </li>

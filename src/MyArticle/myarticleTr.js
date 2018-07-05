@@ -1,17 +1,12 @@
 import React from 'react';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as actionCreators from '../reducers/actions';
 
 class Tr extends React.Component {
     constructor(props){
         super(props);
-        this.state = { 
-            name:'',
-            level:'',
-            isChecked:false
-         };
-    }
-
-    componentDidMount(){
-        console.log(123); 
+        this.state = {  };
     }
 
     approveInTr = ()=>{
@@ -27,16 +22,39 @@ class Tr extends React.Component {
         del(e.id);
     }
 
+    //提示框弹出
+    tipShow = (info)=>{
+        this.setState({isTipShow:true,tipInfo:info});
+        let that = this;
+        setTimeout(function(){
+            that.setState({isTipShow:false,tipInfo:''});
+        },1000)
+    }
+
     //点击勾选
     checkInTr = (ev)=>{
-        let {e,check} = this.props;
-        check(e.id,ev.target.checked);
+        let {dataMy,dataApprove,e,cc,dataNews,isCheckAll,kind} = this.props;
+        e.checked = !e.checked;
+        console.log(kind);
+        
+        
+        // console.log(e.checked);
+        if(kind==='my'){
+            isCheckAll = dataMy.every(e=>e.checked);
+            cc(isCheckAll);
+            console.log(isCheckAll);
+            this.setState({dataMy});
+        }
+        if(kind==='approve'){
+            isCheckAll = dataApprove.every(e=>e.checked);
+            console.log(dataMy);
+            cc(isCheckAll);
+            this.setState({dataApprove});
+        }
     }
 
     render(){
-        let {e,isCheckAll} = this.props;
-        let {isChecked} = this.state;
-        let check = isChecked? 'checked':'';
+        let {e,i,isCheckAll} = this.props;
         let circleClass;
         switch(e.status){
             case '草稿箱':
@@ -62,6 +80,7 @@ class Tr extends React.Component {
             <tr>
                 <td><input 
                     type="checkbox"
+                    checked={e.checked?'checked':''}
                     onClick={this.checkInTr}
                 /></td>
                 <td>{e._id}</td>
@@ -93,4 +112,9 @@ class Tr extends React.Component {
         )
     }
 }
-export default Tr;
+export default connect((state)=>{
+    return {
+        dataMy:state.reducermyarticle.news,
+        dataApprove:state.reducerapprove.news,
+    };
+},dispatch=>bindActionCreators(actionCreators,dispatch))(Tr);

@@ -1,4 +1,7 @@
 import React from 'react';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as actionCreators from '../reducers/actions';
 
 class Tr extends React.Component {
     constructor(props){
@@ -17,10 +20,27 @@ class Tr extends React.Component {
         del(e.id);
     }
 
+    //提示框弹出
+    tipShow = (info)=>{
+        this.setState({isTipShow:true,tipInfo:info});
+        let that = this;
+        setTimeout(function(){
+            that.setState({isTipShow:false,tipInfo:''});
+        },1000)
+    }
+
     //点击勾选
     checkInTr = (ev)=>{
-        let {e,check} = this.props;
-        check(e.id,ev.target.checked);
+        let {e,cc,dataNews,isCheckAll} = this.props;
+        e.checked = !e.checked;
+        // console.log(e.checked);
+
+        isCheckAll = dataNews.every(e=>e.checked);
+        // console.log(isCheckAll);
+        
+        cc(isCheckAll);
+        this.setState({dataNews});
+        console.log(dataNews);
     }
 
     render(){
@@ -50,6 +70,7 @@ class Tr extends React.Component {
             <tr>
                 <td><input 
                     type="checkbox"
+                    checked={e.checked?'checked':''}
                     onChange={this.checkInTr}
                 /></td>
                 <td>{i+1}</td>
@@ -78,4 +99,8 @@ class Tr extends React.Component {
         )
     }
 }
-export default Tr;
+export default connect((state)=>{
+    return {
+        dataNews:state.reducernews.news
+    };
+},dispatch=>bindActionCreators(actionCreators,dispatch))(Tr);

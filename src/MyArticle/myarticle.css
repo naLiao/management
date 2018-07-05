@@ -70,13 +70,13 @@
     background: #d8e0e6;
     color: #555;
 }
-.tab_nav .active{
+.tab_nav .active a{
     background: #fff;
 }
-.redDotLi{
+.tab_nav li{
     position: relative;
 }
-.redDotLi .redDot{
+.redDot{
     position: absolute;
     top: 0;
     right: -20px;

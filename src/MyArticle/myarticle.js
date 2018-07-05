@@ -6,16 +6,21 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as actionCreators from '../reducers/actions';
 import cookie from 'react-cookies'
-// import Page from '../Page/page';
+import Tip from '../Tip/tip';
+import Page from './page';
 
 class MyArticle extends React.Component {
     constructor(props){
         super(props);
         this.state = { 
+            //当前路径
+            kind:'my',
+            //按名称查询
+            searchName:'',
+            searchColumn:'',
             //是否全选
             isCheckAll:false,
-            //勾选数组
-            idArray:[],
+            //当前登录用户
             name:'',
             level:'',
             //是否全部勾选
@@ -43,100 +48,86 @@ class MyArticle extends React.Component {
          };
     }
 
-    componentWillMount(){
+    componentDidMount(){ 
         let {getMyData,getMyCount,getColumnData,getApproveData,getAppCount} = this.props;
-        let {tanObj} = this.state;
+        let {tanObj,searchName,searchColumn} = this.state;
+
         //获取当前登录用户名和级别
         let name = cookie.load('user');
         let level = Number(cookie.load('level'));
         this.setState({name,level});
+        
         //判断级别获取已审核数据
         if(level<=2){
-            getApproveData(name,1);
-            getAppCount(name);
+            getApproveData(1,name);
+            getAppCount(name,searchName,searchColumn);
         }
         getColumnData(1);
-        getMyData(name,1);
-        getMyCount(name);
+        getMyData(1,name);
+        getMyCount(name,searchName,searchColumn);
     }
 
-    componentDidMount(){
-        // console.log(123); 
+    //修改查询名称
+    changeSearchName = (ev)=>{
+        this.setState({searchName:ev.target.value})
     }
 
-    componentWillReceiveProps({url:{match:{params:{id:id1}}}}){
-        let {url:{match:{params}},getMyData,getApproveData} = this.props;
-        let {name,level} = this.state;
-        let currentPage = id1.split('page')[1]*1;
-        this.setState({currentPage});
+    //修改查询栏目
+    changesearchColumn = (ev)=>{
+        this.setState({searchColumn:ev.target.value})
+    }
+
+    //查询
+    search = ()=>{
+        let {getMyData,searchMyData,getApproveData,searchApproveData,getMyCount,getAppCount,url:{history}} = this.props;
+        let {name,kind,searchName,searchColumn,currentPage} = this.state;
         
-        if(id1 !== params.id){
-            getApproveData(name);
-            switch(params.kind){
-                case 'my':
-                    getMyData(name,currentPage);
-                    break;
-                case 'approve':
-                    getApproveData(name,currentPage);
-                    break;
-                default:
-                    getMyData(name,currentPage);
+        if(kind==='my'){
+            if(!searchName&&!searchColumn){
+                getMyData(1,name);
+                getMyCount(name,searchName,searchColumn);
+            }else{
+                searchMyData(1,name,searchName,searchColumn); 
+                getMyCount(name,searchName,searchColumn);
             }
         }
+        if(kind==='approve'){
+            if(!searchName&&!searchColumn){
+                getApproveData(1,name);
+                getAppCount(name,searchName,searchColumn);
+            }else{
+                searchApproveData(1,name,searchName,searchColumn); 
+                getAppCount(name,searchName,searchColumn);
+            }
+        }
+        history.push('page1');
+        this.setState({currentPage:1});
     }
 
-    //接收组件勾选，勾选就放数组里，取消勾选就从数组中删除
-    check = (id,isTrue)=>{
-        let {idArray,isCheckAll} = this.state;
-
-        if(isTrue){  //勾选
-            idArray.push(id);
-            this.setState({idArray});
-        }else{  //取消勾选
-            idArray = idArray.filter(e=>e!=id);
-            this.setState({idArray});
-        }
-        console.log(idArray);
-        let inputs = document.querySelectorAll('.newsTable tbody input');
-        if(idArray.length === inputs.length){
-            this.setState({isCheckAll:true});
-        }else{
-            this.setState({isCheckAll:false});
-        }
+    //接收组件是否全选
+    cc = (isTrue)=>{
+        this.setState({isCheckAll:isTrue});
     }
 
-    //勾选全部
+    //点击全部勾选
     checkAll = (ev)=>{
-        let {dataMy,dataApprove,url:{match:{params:{kind}}}} = this.props;
-        let {idArray} = this.state;
-        let inputs = Array.from(document.querySelectorAll('.newsTable tbody input'));
-        inputs.forEach(e=>e.checked=ev.target.checked);
+        let {dataMy,dataApprove} = this.props;
+        let {kind,isCheckAll} = this.state;
 
-        this.setState({isCheckAll:ev.target.checked});
-
-        //将所有ID放入数组
-        if(ev.target.checked){
-            switch(kind){
-                case 'my':
-                    dataMy.news.forEach(e=>{
-                        idArray.push(e.id);
-                    })
-                    break;
-                case 'approve':
-                    dataApprove.news.forEach(e=>{
-                        idArray.push(e.id);
-                    })
-                    break;
-                default:
-                    dataMy.news.forEach(e=>{
-                        idArray.push(e.id);
-                    })
-            }  
-        }else{
-            idArray = [];
+        isCheckAll = !isCheckAll;
+        
+        if(kind==='my'){
+            dataMy.news.forEach(e=>{
+                e.checked = isCheckAll;
+            })
         }
-        console.log(idArray);
-        this.setState({idArray});
+        if(kind==='approve'){
+            dataApprove.news.forEach(e=>{
+                e.checked = isCheckAll;
+            })
+        }
+
+        this.setState({isCheckAll});
     }
 
     approveFn = (e)=>{
@@ -147,19 +138,19 @@ class MyArticle extends React.Component {
     //发布稿件
     pass = async()=>{
         let {approveArticle,getApproveData,getAppCount,url:{history:{location}}} = this.props;
-        let {name,currentPage} = this.state;
+        let {name,searchName,searchColumn,currentPage} = this.state;
         let {id} = this.state;
         await approveArticle(id);
         this.refs.tan.style.display = 'none';
         this.tipShow('发布成功');
         await getApproveData(name,currentPage);
-        await getAppCount(name);
+        await getAppCount(name,searchName,searchColumn);
     }
 
     //退回稿件
     back = async()=>{
         let {approveArticle,getApproveData,editNewsData,getAppCount,url:{history:{location}}} = this.props;
-        let {name,currentPage} = this.state;
+        let {name,searchName,searchColumn,currentPage} = this.state;
         let {tanObj,id} = this.state;
         console.log(tanObj);
         
@@ -167,7 +158,7 @@ class MyArticle extends React.Component {
         this.refs.tan.style.display = 'none';
         this.tipShow('退回成功');
         await getApproveData(name,currentPage);
-        await getAppCount(name);
+        await getAppCount(name,searchName,searchColumn);
     }
 
     //添加新闻
@@ -198,30 +189,35 @@ class MyArticle extends React.Component {
 
     //点击提交按钮
     submit = async ()=>{
-        let {getMyData,getApproveData,editNewsData,getMyCount,addnews,url:{match:{params:{kind}}}} = this.props;
-        let {tanObj,id,name,currentPage} = this.state;
+        let {getMyData,getApproveData,editNewsData,getMyCount,getAppCount,addnews} = this.props;
+        let {tanObj,id,kind,name,searchName,searchColumn,currentPage} = this.state;
         
         switch(kind){
             case 'my':
                 if(!id){
                     //添加新闻
+                    console.log(123);
+                    
                     await addnews(tanObj,'审核中');  
-                    await getMyData(name,currentPage);
-                    await getMyCount(name);
                     this.refs.tan2.style.display = 'none';
                     await this.tipShow('添加成功');
+                    await getMyData(currentPage,name);
+                    await getMyCount(name,searchName,searchColumn);
                 }else{
                     //修改新闻
-                    editNewsData(id,tanObj,'审核中');  
+                    await editNewsData(id,tanObj,'审核中');  
                     this.refs.tan2.style.display = 'none';
                     this.tipShow('修改成功');
+                    await getMyData(currentPage,name);
+                    await getMyCount(name,searchName,searchColumn);
                 }
                 break;
             case 'approve':
-                editNewsData(id,tanObj,'审核中');  //往中间件中发送数据
+                await editNewsData(id,tanObj,'审核中');  
+                await getApproveData(currentPage,name);
+                await getAppCount(name,searchName,searchColumn);
                 this.refs.tan2.style.display = 'none';
                 this.tipShow('修改成功');
-                // getApproveData(name,currentPage);
                 break;
             default:
                 return;
@@ -230,44 +226,164 @@ class MyArticle extends React.Component {
 
     //保存稿件
     draft = async()=>{
-        let {getMyData,editNewsData,getMyCount,addnews,url:{match:{params:{kind}}}} = this.props;
-        let {tanObj,id,name,currentPage} = this.state;
-        if(!id){
-            await addnews(tanObj,'编辑中');  
-            await getMyData(name,currentPage);
-            await getMyCount(name);
-            this.refs.tan2.style.display = 'none';
-            await this.tipShow('保存成功');
-        }else{
-            await editNewsData(id,tanObj,'编辑中');
-            this.refs.tan2.style.display = 'none';
-            await this.tipShow('保存成功');
-        }
-    }
+        let {getMyData,editNewsData,getMyCount,getApproveData,getAppCount,addnews} = this.props;
+        let {tanObj,id,name,kind,searchName,searchColumn,currentPage} = this.state;
 
-    //删除稿件
-    del = async (id)=>{
-        let {delNewsData,getMyData,getApproveData,editNewsData,getMyCount,getAppCount,addnews,url:{match:{params:{kind}}}} = this.props;
-        let {tanObj,name,currentPage} = this.state;
-        
         switch(kind){
             case 'my':
-                await delNewsData(id,currentPage);
-                this.refs.tan2.style.display = 'none';
-                await this.tipShow('删除成功');
-                await getMyData(name,currentPage);
-                await getMyCount(name);
+                if(!id){
+                    await addnews(tanObj,'编辑中');  
+                    await getMyData(currentPage,name);
+                    await getMyCount(name,searchName,searchColumn);
+                    this.refs.tan2.style.display = 'none';
+                    await this.tipShow('保存成功');
+                }else{
+                    await editNewsData(id,tanObj,'编辑中');
+                    await getMyData(currentPage,name);
+                    await getMyCount(name,searchName,searchColumn);
+                    this.refs.tan2.style.display = 'none';
+                    await this.tipShow('保存成功');
+                }
                 break;
             case 'approve':
-                editNewsData(id,tanObj);  
-                await delNewsData(id,currentPage);  
-                await getApproveData(name,currentPage);
-                await getAppCount(name);
+                await editNewsData(id,tanObj,'编辑中');
+                await getApproveData(currentPage,name);
+                await getAppCount(name,searchName,searchColumn);
                 this.refs.tan2.style.display = 'none';
-                this.tipShow('删除成功');
+                await this.tipShow('保存成功');
                 break;
             default:
                 return;
+        }
+    }
+
+    //删除一个
+    del = (id)=>{
+        let {getMyData,getApproveData,dataMy,dataApprove,getMyCount,getAppCount,delNewsData,url:{history}} = this.props;
+        let {currentPage,kind,name,searchName,searchColumn} = this.state;
+        let ids = JSON.stringify([id]);
+        delNewsData(ids);  //往中间件中发送数据
+        let that = this;
+        setTimeout(function(){
+            if(kind==='my'){
+                if(dataMy.news.length===1 &&currentPage>1){
+                    currentPage--;
+                    that.setState({currentPage});
+                    history.push('/index/myarticle/page'+ currentPage);
+                    getMyCount(name,searchName,searchColumn);
+                }else{
+                    getMyData(currentPage,name,searchName,searchColumn);
+                    getMyCount(name,searchName,searchColumn);
+                }
+            }
+            if(kind==='approve'){
+                if(dataApprove.news.length===1 &&currentPage>1){
+                    currentPage--;
+                    that.setState({currentPage});
+                    history.push('/index/myarticle/page'+ currentPage);
+                    getAppCount(name,searchName,searchColumn);
+                }else{
+                    getApproveData(currentPage,name);
+                    getAppCount(name,searchName,searchColumn);
+                }
+            }
+            
+            that.tipShow('删除成功');
+        },50);
+    }
+
+    //点击批量删除
+    delMulti = ()=>{
+        let {dataMy,getMyData,getMyCount,getApproveData,dataApprove,getAppCount,delNewsData,url:{history}} = this.props;
+        let {currentPage,kind,isCheckAll,idArray,level,name,searchName,searchColumn} = this.state;
+        console.log(kind);
+        
+        switch(kind){
+            case 'my':
+                let arr = [];
+                dataMy.news.forEach(e=>{
+                    if(e.checked){
+                        arr.push(e.id);
+                    }
+                })
+                console.log(arr);
+                
+                let ids = JSON.stringify(arr);
+                delNewsData(ids);  //往中间件中发送数据
+                let that = this;
+                setTimeout(function(){
+                    if(isCheckAll&&currentPage>1){
+                        currentPage--;
+                        that.setState({currentPage});
+                    }
+                    history.push('/index/myarticle/page'+ currentPage);
+                    getMyData(currentPage,name,searchName,searchColumn);
+                    getMyCount(name,searchName,searchColumn);
+                    that.tipShow('删除成功');
+                    that.setState({isCheckAll:false});
+                },50)
+                break;
+            case 'approve':
+                let arr2 = [];
+                dataApprove.news.forEach(e=>{
+                    if(e.checked){
+                        arr2.push(e.id);
+                    }
+                })
+                let ids2 = JSON.stringify(arr2);
+                delNewsData(ids2);  //往中间件中发送数据
+                let that2 = this;
+                setTimeout(function(){
+                    if(isCheckAll&&currentPage>1){
+                        currentPage--;
+                        that.setState({currentPage});
+                    }
+                    history.push('/index/myarticle/page'+ currentPage);
+                    getApproveData(currentPage,name);
+                    getAppCount(name,searchName,searchColumn);
+                    that2.tipShow('删除成功');
+                    that2.setState({isCheckAll:false});
+                },50)
+                break;
+            default:
+                return;
+        }
+    }
+
+    //点击我的稿件
+    navMy = ()=>{
+        let {getMyCount,getMyData} = this.props;
+        let {searchName,searchColumn,name,kind} = this.state;
+        //是否切换
+        if(kind==='approve'){
+            this.setState({
+                kind:'my',
+                searchName:'',
+                searchColumn:'',
+            });
+            getMyData(1,name);
+            getMyCount(1,name,searchName,searchColumn);
+            this.refs.search_name.value='';
+            this.refs.search_column.value='';
+            this.setState({searchName:'',searchColumn:''})
+        }
+    }
+
+    //点击待审核
+    navApprove = ()=>{
+        let {getAppCount,getApproveData} = this.props;
+        let {searchName,searchColumn,name,kind} = this.state;
+        if(kind==='my'){
+            this.setState({
+                kind:'approve',
+                searchName:'',
+                searchColumn:'',
+            });
+            getApproveData(1,name);
+            getAppCount(name,searchName,searchColumn);
+            this.refs.search_name.value='';
+            this.refs.search_column.value='';
+            this.setState({searchName:'',searchColumn:''})
         }
     }
 
@@ -322,40 +438,26 @@ class MyArticle extends React.Component {
         this.refs.tan2.style.display = 'none';
     }
 
+    //接收子组件页码
+    page = (currentPage)=>{
+        this.setState({currentPage,isCheckAll:false});
+    }
+
     render(){
-        let {dataMy,dataApprove,dataColumn,url:{location:{pathname}},url:{match:{params}},url:{history:{push}}} = this.props;
-        let {isTipShow,path,tanObj,tipInfo,name,level,isCheckAll} = this.state;
-        let currentPage = params.id.split('page')[1]*1;  //当前页
-        let sty = 'tab_nav noShow';  //默认子菜单不显示
-        let newArr = [];  //要渲染的数组
-        let total;
-        let count;
+        let {dataMy,dataApprove,dataColumn} = this.props;
+        let {searchName,searchColumn,currentPage,kind,isTipShow,tanObj,tipInfo,name,level,isCheckAll} = this.state;
+        
+        let total = dataApprove.total;
+        let count = dataMy.count;
+
+        //控制页面显示
+        let sty = 'tab_nav noShow';
         let com = '';
         let btns = '';
-        // console.log(dataMy.news);
-
         if(level<=2){
-            //显示子菜单
             sty = 'tab_nav';
-            total = dataApprove.total;
-            //判断当前是哪个子菜单
-            switch(params.kind){
-                case 'my':
-                    newArr = dataMy.news;
-                    count = dataMy.count;
-                    com = (
-                        <button
-                            onClick={this.add}
-                        ><i className="fa fa-plus"></i>添加</button>
-                    );
-                    break;
-                case 'approve':
-                    newArr = dataApprove.news;
-                    count = dataApprove.count;
-                    break;
-                default:
-                    newArr = dataMy.news;
-            }
+        }
+        if(level<=2&&kind==='approve'){
             btns=(
                 <div className="btn_sure">
                                 <button 
@@ -373,15 +475,26 @@ class MyArticle extends React.Component {
                                 >取消</button>
                             </div>
             )
-        }else{
-            com = (
-                <button
-                    onClick={this.add}
-                ><i className="fa fa-plus"></i>添加</button>
-            );
-            count = dataMy.count;
-            newArr = dataMy.news;
         }
+        if(kind==='my'){
+            com = (<button
+                onClick={this.add}
+            ><i className="fa fa-plus"></i>添加</button>)
+        }
+        console.log(dataApprove);
+        
+        //控制数据
+        let newArr = [];
+        if(kind==="approve"){
+            newArr = dataApprove.news;
+            count = dataApprove.count;
+        }
+        if(kind==="my"){
+            newArr = dataMy.news;
+            count = dataMy.count;
+        }
+        console.log(newArr);
+        
         newArr = newArr.map((e,i)=>{
             let obj={
                 key:i,
@@ -391,7 +504,9 @@ class MyArticle extends React.Component {
                 show:this.show,
                 del:this.del,
                 isCheckAll,
-                check:this.check
+                tipShow:this.tipShow,
+                cc:this.cc,
+                kind
             }
             return <Tr {...obj} />;
         })
@@ -405,22 +520,35 @@ class MyArticle extends React.Component {
 
         return (
             <div className="content1">
+                <Tip isTipShow={isTipShow} tipInfo={tipInfo}/>
                 <div className="table_top">
                     <div className="big">搜索查询</div>
                     <div className="tab_search">
                         <span>新闻标题</span>
-                        <input type="text" placeholder="请输入"/>
-                        <button>查询</button>
-                        <span>日期</span>
-                        <input type="text" placeholder="请输入"/>
-                        <button>查询</button>
+                        <input
+                            type="text" 
+                            placeholder="请输入"
+                            onChange={this.changeSearchName}
+                            ref="search_name"
+                        />
+                        <span>所属栏目</span>
+                        <input 
+                            type="text" 
+                            placeholder="请输入"
+                            onChange={this.changesearchColumn}
+                            ref="search_column"
+                        />
+                        <button
+                            onClick={this.search}
+                        >查询</button>
                     </div>
                     <ul className={sty}>
-                        <li><NavLink to="/index/myarticle/my/page1" activeClassName="active">我的稿件</NavLink></li>
-                        <li className="redDotLi">
-                            <NavLink to="/index/myarticle/approve/page1" activeClassName="active">
-                                待审核
-                            </NavLink>
+                        <li className={kind==='my'?'active':''}><a 
+                                onClick={this.navMy}
+                            >我的稿件</a></li>
+                        <li className={kind==='approve'?'active':''}><a 
+                                onClick={this.navApprove}
+                            >待审核</a>
                             <span className="redDot">{total}</span>
                         </li>
                     </ul>
@@ -428,14 +556,17 @@ class MyArticle extends React.Component {
                 <div className="table_main">
                     <div className="tableBtns">
                         {com}
-                        <button className="red"><i className="fa fa-trash"></i>批量删除</button>
+                        <button 
+                            className="red"
+                            onClick={this.delMulti}
+                        ><i className="fa fa-trash"></i>批量删除</button>
                     </div>
                     <table className="newsTable">
                         <thead>
                         <tr>
                             <th><input 
                                 type="checkbox"
-                                checked={isCheckAll}
+                                checked={isCheckAll?'checked':''}
                                 onClick={this.checkAll}
                             /></th>
                             <th>ID</th>
@@ -455,7 +586,15 @@ class MyArticle extends React.Component {
                             {newArr}
                         </tbody>
                     </table>
-                    {/* <Page len={count} path={`/index/myarticle/${params.kind}`} currentPage={currentPage} push={push} /> */}
+                    <Page 
+                        len={count} 
+                        currentPage={currentPage} 
+                        page={this.page}
+                        kind={kind}
+                        name={name}
+                        searchName={searchName}
+                        searchColumn={searchColumn}
+                    />
                 </div>
                 {/* 文章预览弹框 */}
                 <div className="tan_content" ref="tan" >
@@ -574,7 +713,6 @@ class MyArticle extends React.Component {
                                     onClick={this.closeTan}
                                 >取消</button>
                             </div>
-                            <span ref="tip" style={{'display':'none'}}>提交成功</span>
                         </div>   
                     </div>
                 </div>
