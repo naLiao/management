@@ -45,7 +45,7 @@ class Column extends React.Component {
         let {getColumnData,getColCount} = this.props;
         let {searchName,currentPage} = this.state;
 
-        console.log('栏目页初始化'+currentPage);
+        // console.log('栏目页初始化'+currentPage);
         //获取栏目
         getColumnData(1);  //走中间件，页码
         //获取页码
@@ -238,7 +238,7 @@ class Column extends React.Component {
         let count = dataColumn.count;  //页码
         let currentPage = id.split('page')[1]*1;  //当前页
         let columns = dataColumn.columns;
-        console.log(searchName);
+        // console.log(searchName);
         
         
         //渲染栏目数据

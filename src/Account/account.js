@@ -46,7 +46,7 @@ class Account extends React.Component {
     componentDidMount (){
         let {getAccountData,getAccountCount} = this.props;
         let {searchName,searchKind} = this.state;
-        console.log('账户页');
+        // console.log('账户页');
         //获取账户
         getAccountData(1);  //走中间件，页码
         //获取页码

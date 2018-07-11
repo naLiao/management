@@ -52,7 +52,7 @@ class News extends React.Component {
     componentDidMount (){
         let {getColumnData,getNewsData,getCount} = this.props;
         let {searchColumn,searchName} = this.state;
-        console.log('初始化');
+        // console.log('初始化');
         getColumnData(1);
         //获取新闻
         getNewsData(1);  //走中间件，栏目+页码
@@ -80,7 +80,7 @@ class News extends React.Component {
             getNewsData(1);
             getCount(searchName,searchColumn);
         }else{
-            console.log('走这里');
+            // console.log(searchName,searchColumn);
             
             searchNewsData(1,searchName,searchColumn); 
             getCount(searchName,searchColumn);

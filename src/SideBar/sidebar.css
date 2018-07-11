@@ -11,16 +11,16 @@
 .nav li {
     border-bottom: solid 1px #474747;
 }
-.nav li a:hover {
-    background: #232a2f;
-    color: #fff;
-}
-.nav li .active {
+.nav .active{
     background: #00acac;
+}
+.nav .active a{
     color: #fff!important;
 }
-.nav li .active:hover {
+.nav .active:hover{
     background: #00acac;
+}
+.nav .active:hover a{
     color: #fff!important;
 }
 .nav li a {

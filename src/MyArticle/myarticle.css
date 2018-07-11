@@ -202,3 +202,7 @@
 .preview button.back{
     background:#e74c3c;
 }
+.text_left{
+    padding-left: 20px;
+    text-align: left !important;
+}

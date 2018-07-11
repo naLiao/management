@@ -143,7 +143,7 @@ class MyArticle extends React.Component {
         await approveArticle(id);
         this.refs.tan.style.display = 'none';
         this.tipShow('发布成功');
-        await getApproveData(name,currentPage);
+        await getApproveData(currentPage,name);
         await getAppCount(name,searchName,searchColumn);
     }
 
@@ -157,7 +157,7 @@ class MyArticle extends React.Component {
         await editNewsData(id,tanObj,'已退回');
         this.refs.tan.style.display = 'none';
         this.tipShow('退回成功');
-        await getApproveData(name,currentPage);
+        await getApproveData(currentPage,name);
         await getAppCount(name,searchName,searchColumn);
     }
 
@@ -362,7 +362,7 @@ class MyArticle extends React.Component {
                 searchColumn:'',
             });
             getMyData(1,name);
-            getMyCount(1,name,searchName,searchColumn);
+            getMyCount(name,searchName,searchColumn);
             this.refs.search_name.value='';
             this.refs.search_column.value='';
             this.setState({searchName:'',searchColumn:''})
@@ -481,7 +481,7 @@ class MyArticle extends React.Component {
                 onClick={this.add}
             ><i className="fa fa-plus"></i>添加</button>)
         }
-        console.log(dataApprove);
+        // console.log(dataApprove);
         
         //控制数据
         let newArr = [];
@@ -493,7 +493,7 @@ class MyArticle extends React.Component {
             newArr = dataMy.news;
             count = dataMy.count;
         }
-        console.log(newArr);
+        // console.log(newArr);
         
         newArr = newArr.map((e,i)=>{
             let obj={

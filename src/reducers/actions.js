@@ -23,19 +23,20 @@ function getData(res){
 
 //新闻管理-获取页码
 export function getCount(searchName,searchColumn){
-    // console.log(searchName,searchColumn);
+    console.log(searchName,searchColumn);
     return (dispatch)=>{
         fetch(`http://127.0.0.1:88/api/news/getcount?title=${searchName}&column=${searchColumn}`)
         .then(e=>e.json())
         .then(res=>{
-            dispatch(getcount(res.count));
+            dispatch(getcount(res.count,res.total));
             // console.log(res.count);
         })
     }
 }
-function getcount(count){
+function getcount(count,total){
     return {
         type:'GET_COUNT',
+        total,
         count
     }
 }
@@ -123,7 +124,7 @@ export function editNewsData(id,obj,status){
 //新闻管理-查询数据-操作发起
 export function searchNewsData(num,searchName,searchColumn){
     return (dispatch)=>{
-        console.log(num,searchName,searchColumn);
+        // console.log(num,searchName,searchColumn);
         fetch(`http://127.0.0.1:88/api/news/search?page=${num}&title=${searchName}&column=${searchColumn}`)
         .then(e=>e.json())
         .then(res=>{
@@ -165,14 +166,15 @@ export function getColCount(searchName){
         fetch('http://127.0.0.1:88/api/column/getcolcount?column='+searchName)
         .then(e=>e.json())
         .then(res=>{
-            dispatch(getcolcount(res.count));
+            dispatch(getcolcount(res.count,res.total));
             // console.log(res.count);
         })
     }
 }
-function getcolcount(count){
+function getcolcount(count,total){
     return {
         type:'GET_COL_COUNT',
+        total,
         count
     }
 }
@@ -308,20 +310,21 @@ function getAccountSuccess(res){
 
 //账户管理-获取页码
 export function getAccountCount(searchName,searchKind){
-    console.log(searchName,searchKind);
+    // console.log(searchName,searchKind);
     
     return (dispatch)=>{
         fetch(`http://127.0.0.1:88/api/account/getcount?account=${searchName}&kind=${searchKind}`)
         .then(e=>e.json())
         .then(res=>{
-            dispatch(getacccount(res.count));
-            console.log(res.count);
+            dispatch(getacccount(res.count,res.total));
+            // console.log(res.count);
         })
     }
 }
-function getacccount(count){
+function getacccount(count,total){
     return {
         type:'GET_ACC_COUNT',
+        total,
         count
     }
 }

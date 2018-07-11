@@ -1,7 +1,7 @@
 import {combineReducers} from 'redux';
 
 //1.新闻管理
-const reducernews = (state={news:[],count:0},action)=>{
+const reducernews = (state={news:[],count:0,total:0},action)=>{
     switch(action.type){
         //初始化获取数据
         case 'GET_DATA':
@@ -12,6 +12,7 @@ const reducernews = (state={news:[],count:0},action)=>{
         case 'GET_COUNT':
             let newObj2 = Object.assign({},state);
             newObj2.count = action.count;
+            newObj2.total = action.total;
             return newObj2;
         case 'SEARCH_NEWS':
             let newObj3 = Object.assign({},state);
@@ -23,7 +24,7 @@ const reducernews = (state={news:[],count:0},action)=>{
 }
 
 //2.栏目数据
-const reducercolumn = (state={columns:[],count:0},action)=>{
+const reducercolumn = (state={columns:[],count:0,total:0},action)=>{
     switch(action.type){
         case 'GET_COLUMN':
             let newObj = Object.assign({},state);
@@ -33,6 +34,7 @@ const reducercolumn = (state={columns:[],count:0},action)=>{
         case 'GET_COL_COUNT':
             let newObj2 = Object.assign({},state);
             newObj2.count = action.count;
+            newObj2.total = action.total;
             // console.log(action.count);
             return newObj2;
         case 'SEARCH_COLUMN':
@@ -91,7 +93,7 @@ const reducerapprove = (state={news:[],count:0,total:0},action)=>{
 }
 
 //5.账户数据
-const reduceraccount = (state={accounts:[],count:0},action)=>{
+const reduceraccount = (state={accounts:[],count:0,total:0},action)=>{
     switch(action.type){
         case 'GET_ACCOUNT':
             let newObj = Object.assign({},state);
@@ -101,6 +103,7 @@ const reduceraccount = (state={accounts:[],count:0},action)=>{
         case 'GET_ACC_COUNT':
             let newObj2 = Object.assign({},state);
             newObj2.count = action.count;
+            newObj2.total = action.total;
             // console.log(action.count);
             return newObj2;
         case 'SEARCH_ACCOUNT':

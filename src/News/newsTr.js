@@ -45,6 +45,8 @@ class Tr extends React.Component {
 
     render(){
         let {e,i} = this.props;
+        // console.log(i);
+        
         let circleClass;
         switch(e.status){
             case '草稿箱':

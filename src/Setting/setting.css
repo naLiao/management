@@ -1,0 +1,138 @@
+.input_content2{
+    width: 550px;
+    margin:0 auto;
+    padding:120px 0;
+}
+.input_info{
+    width:100%;
+    margin-bottom:30px;
+    position: relative;
+}
+.input_content2 .input_info span{
+    font-size:14px;
+    color:#333;
+}
+.input_content2 .input_info input{
+    display:inline-block;
+    width:435px;
+    height:40px;
+    line-height:40px;
+    border:1px solid #d2d6de;
+    color:#666;
+    border-radius: 6px;
+    padding-left:10px;
+}
+.input_content2 .input_info .radio_btn{
+    width:14px;
+    height:14px;
+    vertical-align: middle;
+}
+.input_content2 .btn_sure button{
+    padding:6px 12px;
+    display:inline-block;
+    color:#fff;
+    font-size:18px;
+    border-radius:6px;
+    margin-right:10px;
+}
+.input_content2 .btn_sure .sure2{
+    cursor: no-drop;
+    padding:10px 20px;
+    background:#18bc9c;
+}
+.input_content2 .btn_sure button.cancel{
+    background:#ddd;
+    color:#444;
+}
+.delete_box{
+    width: 350px;
+    height: 200px;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    background: #fff;
+    border-radius: 8px 8px;
+    z-index: 110;
+    overflow: hidden;
+}
+.text_box{
+    width:160px;
+    margin:20px auto 10px;
+}
+.text_box i{
+    margin-right:10px;
+}
+.text_box span{
+    font-size:16px;
+    color:#333;
+    vertical-align: top;
+    display:inline-block;
+    margin-top:6px;
+}
+.input_content2 .btn_two{
+    width:150px;
+    margin-left:110px;
+}
+.input_content2 .input_info select{
+    display:inline-block;
+    width:235px;
+    height:30px;
+    line-height:30px;
+    border:1px solid #d2d6de;
+    color:#666;
+    padding-left:10px;
+}
+.input_content2 .input_info .left_text{
+    width:100px;
+}
+.input_content2 .input_info .img_box{
+    float:left;
+    width:285px;
+    height:100px;
+    padding-left:10px;
+    border:1px solid #d2d6de;
+}
+.input_content2 .input_info .tp{
+    float:left;
+    margin-right:5px;
+}
+.input_content2 .input_info .sc{
+    padding:5px 15px;
+    background:#18bc9c;
+    color:#fff;
+    font-size:14px;
+    float:left;
+    vertical-align: top;
+    margin:38px 40px;
+}
+.input_content2 .input_info textarea{
+    width:435px;
+    height:190px;
+    border:1px solid #d2d6de;
+    color:#666;
+    padding:10px 0 0 10px;
+}
+.input_content2 .input_info .xb{
+    margin-left:90px;
+}
+.colSel{
+    height: 30px;
+    padding: 0 5px;
+}
+.input_info.no-show{
+    display: none;
+    transition:800ms;
+}
+.input_info .fa-check{
+    font-size:26px;
+    color: rgb(89, 209, 149);
+    position: absolute;
+    top: 10px;
+    right: -10px;
+    opacity: 0;
+    transition:800ms;
+}
+.input_info:nth-last-child(2){
+    margin-left: -6px;
+}
