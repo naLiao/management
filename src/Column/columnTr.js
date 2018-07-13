@@ -76,7 +76,7 @@ class ColumnTr extends React.Component {
                 /></td>
                 <td>{e.column}</td>
                 <td>{e.path}</td>
-                <td>{e.readNum}</td>
+                {/* <td>{e.readNum}</td> */}
                 <td>{e.approve}</td>
                 <td>{time}</td>
                 <td>

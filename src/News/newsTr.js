@@ -59,6 +59,9 @@ class Tr extends React.Component {
                 circleClass = 'green';
                 break;
             case '审核中':
+                circleClass = 'orange';
+                break;
+            case '已退回':
                 circleClass = 'red';
                 break;
             default:

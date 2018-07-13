@@ -53,10 +53,11 @@ class SideBar extends React.Component {
                             <span>权限管理</span>
                         </Link>
                     </li>
-                    {/* <li><Link to="/index/user/page1"><i className="fa fa-user"></i>
+                    <li className={sty==='user'?'active':''}>
+                        <Link to="/index/user/page1"><i className="fa fa-user"></i>
                             <span>会员管理</span>
                         </Link>
-                    </li> */}
+                    </li>
                     <li className={sty==='setting'?'active':''}>
                         <Link to="/index/setting"><i className="fa fa-cogs"></i>
                             <span>系统设置</span>

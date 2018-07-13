@@ -57,7 +57,7 @@ class Tr extends React.Component {
         let {e,i,isCheckAll} = this.props;
         let circleClass;
         switch(e.status){
-            case '草稿箱':
+            case '编辑中':
                 circleClass = 'blue';
                 break;
             case '修改中':
@@ -67,6 +67,9 @@ class Tr extends React.Component {
                 circleClass = 'green';
                 break;
             case '审核中':
+                circleClass = 'orange';
+                break;
+            case '已退回':
                 circleClass = 'red';
                 break;
             default:

@@ -30,6 +30,9 @@ a{
     cursor: pointer;
 }
 /*公用样式*/
+body,html,#root,.bigBoss{
+    height: 100%;
+}
 body {
     font-size: 14px;
     font-family: Helvetiva, Arial, sans-serif;

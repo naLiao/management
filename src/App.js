@@ -22,7 +22,7 @@ import IndexContent from './Index/index';
 class App extends Component {
   render() {
     return (
-      <div>
+      <div className="bigBoss">
           {/* 登录 */}
           <Route path="/" exact render={(url)=>{
             if(document.cookie){
@@ -34,11 +34,11 @@ class App extends Component {
         
           {/* 头部和侧边栏 */}
           <Route path='/index' render={()=>{
-                if(document.cookie){
+                // if(document.cookie){
                     return <HeadSide />
-                }else{  
-                    return <Redirect to="/" />
-                }
+                // }else{  
+                    // return <Redirect to="/" />
+                // }
           }}/>
 
           {/* 首页 */}

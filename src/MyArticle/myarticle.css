@@ -163,7 +163,10 @@
     margin: 0 5px;
 }
 .newsTable .circle.blue{
-    color: rgb(170, 170, 170);
+    color: rgb(104, 236, 225);
+}
+.newsTable .circle.orange{
+    color: rgb(245, 196, 105);
 }
 .newsTable .circle.red{
     color:#e74c3c;

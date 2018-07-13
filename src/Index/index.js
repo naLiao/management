@@ -26,8 +26,6 @@ class IndexContent extends React.Component {
         fetch(`http://127.0.0.1:88/api/news/top10`)
         .then(e=>e.json())
         .then(dataTop10=>{
-            console.log(dataTop10);
-            
             this.setState({dataTop10});
         })
 
@@ -95,7 +93,7 @@ class IndexContent extends React.Component {
                             </li>
                         </ul>
                     </div>
-                    <h2 className="title_index">阅读量Top10</h2>
+                    <h2 className="title_index">阅读量Top5</h2>
                     <table className="newsTable">
                         <thead>
                         <tr>

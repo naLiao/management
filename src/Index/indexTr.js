@@ -71,7 +71,7 @@ class Tr extends React.Component {
         return (
             <tr>
                 <td>{i+1}</td>
-                <td style={{'text-align':'left','padding-left':'20px'}}>{e.title}</td>
+                <td style={{'textAlign':'left','paddingLeft':'20px'}}>{e.title}</td>
                 <td>{e.column}</td>
                 <td>{e.readNum}</td>
                 <td>{e.editor}</td>

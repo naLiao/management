@@ -13,7 +13,7 @@ class Page extends Component {
     }
 
     jumpToPrev = ()=>{
-        let {page,getNewsData,history} = this.props;
+        let {history} = this.props;
         let {currentPage} = this.state;
 
         currentPage--;
@@ -23,7 +23,7 @@ class Page extends Component {
     }
 
     jumpToNext = ()=>{
-        let {page,getNewsData,history} = this.props;
+        let {history} = this.props;
         let {currentPage} = this.state;
 
         currentPage++;
@@ -33,7 +33,7 @@ class Page extends Component {
     }
 
     jumpToFirst = ()=>{
-        let {page,len,getNewsData,history} = this.props;
+        let {history} = this.props;
         let {currentPage} = this.state;
 
         currentPage = 1;
@@ -44,7 +44,7 @@ class Page extends Component {
     }
 
     jumpToLast = ()=>{
-        let {page,len,getNewsData,history} = this.props;
+        let {len,history} = this.props;
         let {currentPage} = this.state;
 
         currentPage = len;
@@ -56,7 +56,7 @@ class Page extends Component {
     //跳转到多少页
     jumpTo = (ev)=>{
         if(ev.keyCode===13){
-            let {page,len,getNewsData,history} = this.props;
+            let {len,history} = this.props;
             let {currentPage} = this.state;
 
             currentPage = ev.target.value*1;

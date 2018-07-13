@@ -294,7 +294,6 @@ class Column extends React.Component {
                             /></th>
                             <th>栏目名称</th>
                             <th>栏目路径</th>
-                            <th>新闻数量</th>
                             <th>主编</th>
                             <th>创建时间</th>
                             <th>操作</th>

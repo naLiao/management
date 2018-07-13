@@ -5,6 +5,8 @@ import cookie from 'react-cookies';
 class Login extends React.Component {
     constructor(props) {
         super(props);
+        console.log(this);
+        
         this.state = { 
             account:'',
             password:'',
@@ -61,34 +63,31 @@ class Login extends React.Component {
                         },1000);
                     });
                     //种Cookie
-                    // if(isSevenDay){  //设置失效期为7天
-                    //     const expires = new Date()
-                    //     expires.setDate(expires.getDate() + 7)
-                    //     // cookie.save('user', account, { path: '/' ,expires:expTime.toUTCString()})
-                    //     // cookie.save('level', level, { path: '/' ,expires:expTime.toUTCString()})
-                    //     cookie.save(
-                    //         'user',
-                    //         account,
-                    //         {
-                    //           path: '/',
-                    //           expires,
-                    //           maxAge: 1000,
-                    //           secure: true
-                    //         }
-                    //       )
-                    //     // var days = 7;
-                    //     // var expTime  = new Date();
-                    //     // expTime.setTime(expTime.getTime() + days*24*60*60*1000);
-                    //     // document.cookie = 'user='+ account+';expires='+ expTime.toUTCString();
-                    //     // document.cookie = 'level='+level+';expires='+ expTime.toUTCString();
-                    // }else{
-                    //     cookie.save('user', account, { path: '/' })
-                    //     cookie.save('level', level, { path: '/' })
-                    //     // document.cookie = 'user='+ account;
-                    //     // document.cookie = 'level='+level;
-                    // }
-                    cookie.save('user', account, { path: '/' })
-                    cookie.save('level', level, { path: '/' })
+                    if(isSevenDay){  //设置失效期为7天  
+                        const expires = new Date()
+                        expires.setDate(expires.getDate() + 7)
+                        cookie.save(
+                            'user',
+                            account,
+                            {
+                              path: '/',
+                              expires
+                            }
+                        )
+                        cookie.save(
+                            'level',
+                            level,
+                            {
+                              path: '/',
+                              expires
+                            }
+                        )
+                    }else{
+                        cookie.save('user', account, { path: '/' })
+                        cookie.save('level', level, { path: '/' })
+                    }
+                    // cookie.save('user', account, { path: '/' })
+                    // cookie.save('level', level, { path: '/' })
                 }else if(data.code === -3){
                     this.setState({tip:data.msg,isTipShow:true,account:'',password:''},()=>{
                         setTimeout(()=>{
@@ -136,13 +135,13 @@ class Login extends React.Component {
                             onChange={this.changePassword}
                         />
                     </div>
-                    {/* <div className="seven">
+                    <div className="seven">
                         <input 
                             type="checkbox"
                             onChange={this.check}
                         />
                         <span>7天免登录</span>
-                    </div> */}
+                    </div>
                     <button
                         onClick={this.login}
                     >登录</button>
