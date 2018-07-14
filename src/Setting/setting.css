@@ -136,3 +136,8 @@
 .input_info:nth-last-child(2){
     margin-left: -6px;
 }
+.fa-user-circle{
+    font-size: 100px;
+    color: #999;
+    margin-bottom: 40px;
+}

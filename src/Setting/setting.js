@@ -82,7 +82,7 @@ class Setting extends Component {
                 if(newPassword1 === oldPassword){
                     this.tipShow('密码没有修改');
                 }else{
-                    fetch('http://127.0.0.1:88/api/user/update',{
+                    fetch('http://127.0.0.1:88/api/account/update',{
                         method:"post",
                         body :`account=${name}&password=${newPassword1}`,
                         headers: {
@@ -122,6 +122,7 @@ class Setting extends Component {
             <div className="content">
                 <Tip isTipShow={isTipShow} tipInfo={tipInfo}/>
                <div className="input_content2" ref="content2">
+                    <i className="fa fa-user-circle"></i>
                     <div className="input_info">
                         <span className='s1'>用户名：</span>
                         <input type="text" className='i1'

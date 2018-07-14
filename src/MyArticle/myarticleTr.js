@@ -102,6 +102,7 @@ class Tr extends React.Component {
                 <td>
                     <button
                         onClick={this.approveInTr}
+                        className="blue"
                     ><i className="fa fa-check"></i></button>
                     <button
                         onClick={this.showInTr}

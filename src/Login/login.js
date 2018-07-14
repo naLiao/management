@@ -45,7 +45,7 @@ class Login extends React.Component {
             },1000)
         }else{
             //开始登录
-            fetch('http://127.0.0.1:88/api/user/login',{
+            fetch('http://127.0.0.1:88/api/account/login',{
                 method:"post",
                 body :`account=${account}&password=${password}&isSevenDay=${isSevenDay}`,
                 headers: {

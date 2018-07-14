@@ -150,6 +150,9 @@
 .newsTable td button.red{
     background:#e74c3c;
 }
+.newsTable td button.blue{
+    background:rgb(86, 152, 255);
+}
 .newsTable td button i{
     font-size: 14px;
 }
@@ -163,10 +166,10 @@
     margin: 0 5px;
 }
 .newsTable .circle.blue{
-    color: rgb(104, 236, 225);
+    color: rgb(86, 152, 255);
 }
 .newsTable .circle.orange{
-    color: rgb(245, 196, 105);
+    color: rgb(255, 222, 52);
 }
 .newsTable .circle.red{
     color:#e74c3c;

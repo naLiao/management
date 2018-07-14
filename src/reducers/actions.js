@@ -4,7 +4,7 @@
  获取页码
  */
  //新闻管理-获取数据-操作发起
- export function getNewsData(num){
+export function getNewsData(num){
     return (dispatch)=>{
         fetch(`http://127.0.0.1:88/api/news/getlist?page=${num}`)
         .then(e=>e.json())
@@ -397,7 +397,7 @@ export function delAccData(ids){
     }
 }
 
-//账户管理-修改数据-操作发起/account/edit
+//账户管理-修改数据-操作发起
 export function editAccData(id,obj){
     return (dispatch)=>{
         obj.id=id;
@@ -546,5 +546,114 @@ function searchMySuccess(res){
     return {
         type:'SEARCH_MY',
         res
+    }
+}
+
+//--------------------------------------------------------------------------------------
+
+//会员管理-获取用户信息-操作发起
+export function getUserDetail(name){
+    return (dispatch)=>{
+        fetch(`http://127.0.0.1:88/api/account/detail?name=`+name)
+        .then(e=>e.json())
+        .then(res=>{
+            // dispatch(getAccDetailSuccess(res));
+            console.log(res);
+        })
+    }
+}
+
+//会员管理-获取数据-操作发起
+export function getUserData(num){
+    return (dispatch)=>{
+        fetch(`http://127.0.0.1:88/api/user/getlist?page=${num}`)
+        .then(e=>e.json())
+        .then(res=>{
+            dispatch(getUserSuccess(res));
+            // console.log(res);
+        })
+    }
+}
+function getUserSuccess(res){
+    return {
+        type:'GET_USER',
+        res
+    }
+}
+
+//会员管理-获取页码
+export function getUserCount(searchName){
+    // console.log(searchName);
+    
+    return (dispatch)=>{
+        fetch(`http://127.0.0.1:88/api/user/getcount?username=${searchName}`)
+        .then(e=>e.json())
+        .then(res=>{
+            dispatch(getuser(res.count,res.total));
+            // console.log(res.count);
+        })
+    }
+}
+function getuser(count,total){
+    return {
+        type:'GET_USER_COUNT',
+        total,
+        count
+    }
+}
+
+//会员管理-查询数据-操作发起
+export function searchUserData(num,searchName,searchKind){
+    return (dispatch)=>{
+        console.log(num,searchName,searchKind);
+        fetch(`http://127.0.0.1:88/api/user/search?page=${num}&account=${searchName}&kind=${searchKind}`)
+        .then(e=>e.json())
+        .then(res=>{
+            dispatch(searchUserSuccess(res));
+            console.log(res);
+        })
+    }
+}
+function searchUserSuccess(res){
+    return {
+        type:'SEARCH_USER',
+        res
+    }
+}
+
+//会员管理-删除数据-操作发起
+export function delUserData(ids){
+    return (dispatch)=>{
+        console.log('action会员管理-删除数据，id：'+ids);
+        fetch('http://localhost:88/api/user/del?ids='+ids)
+        .then(e=>e.json())
+        .then(res=>{
+            console.log(res);
+        })
+    }
+}
+
+//会员管理-修改数据-操作发起
+export function editUserData(id,obj){
+    return (dispatch)=>{
+        obj.id=id;
+        console.log(obj);
+        
+        fetch('http://127.0.0.1:88/api/user/edit',{
+            method:"post",
+            body :new URLSearchParams(obj).toString(),
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        })
+        .then(e=>e.json())
+        .then(data => {
+            console.log(data);
+            if(data.code===0){
+                console.log('成功');
+            }else if(data.code===-1){
+                console.log('修改失败');
+            }
+        })
     }
 }

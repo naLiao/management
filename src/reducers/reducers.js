@@ -116,37 +116,25 @@ const reduceraccount = (state={accounts:[],count:0,total:0},action)=>{
     }
 }
 
-const reducer3 = (state=[],action)=>{
+//会员数据
+const reduceruser = (state={users:[],count:0,total:0},action)=>{
     switch(action.type){
-        case 'ADD_TO_CART':
-            let arr = [...state];
-            let obj = arr.find(e=>e.id===action.e.id);
-            if(obj){
-                if(obj.num<obj.stock) obj.num++;
-                obj.currentTotal = (obj.price*obj.num).toFixed(2);
-            }else{
-                obj = action.e;
-                obj.num = action.num;
-                obj.currentTotal = (obj.price*action.num).toFixed(2);
-                arr.push(obj);
-            }
-            return arr;
-        case 'ADD_NUM':
-            return state.map(e=>{
-                if(e.id===action.id){
-                    if(e.num<e.stock) e.num++;
-                    e.currentTotal = (e.price*e.num).toFixed(2);
-                }
-                return e;
-            })
-        case "MINUS_NUM":
-            return state.filter(e=>{
-                if(e.id===action.id){
-                    e.num--;
-                    e.currentTotal = (e.price*e.num).toFixed(2);
-                }
-                return e.num > 0;
-            })
+        case 'GET_USER':
+            let newObj = Object.assign({},state);
+            newObj.users = action.res;
+            // console.log(action.res);
+            return newObj;
+        case 'GET_USER_COUNT':
+            let newObj2 = Object.assign({},state);
+            newObj2.count = action.count;
+            newObj2.total = action.total;
+            // console.log(action.count);
+            return newObj2;
+        case 'SEARCH_USER':
+            let newObj3 = Object.assign({},state);
+            newObj3.users = action.res;
+            console.log(action.res);
+            return newObj3;
         default:
             return state;
     }
@@ -158,7 +146,7 @@ const reducers = combineReducers({
     reducercolumn,
     reducernews,
     reduceraccount,
-    reducer3
+    reduceruser
 });
 
 export {reducers};

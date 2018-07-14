@@ -5,7 +5,7 @@ import {bindActionCreators} from 'redux';
 import * as actionCreators from '../reducers/actions';
 import './index.css';
 import Tr from './indexTr';
-import Bar from './bar';
+import EchartsTest from './echarts';
 
 class IndexContent extends React.Component {
     constructor(props){
@@ -110,7 +110,7 @@ class IndexContent extends React.Component {
                             {newArr}
                         </tbody>
                     </table>
-                    <Bar />
+                    <EchartsTest />
                 </div>
             </div>
         )

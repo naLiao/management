@@ -79,9 +79,10 @@ class App extends Component {
           }}/>
 
           {/* 会员管理 */}
-          <Route path="/index/user" render={(url)=>{
-              return <User url={url} />
+          <Route path="/index/user" exact render={()=>{
+              return <Redirect to="/index/user/page1" />
           }}/>
+          <Route path="/index/user/:id" component={User}/>
 
           {/* 系统设置 */}
           <Route path="/index/setting" component={Setting} />
