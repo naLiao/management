@@ -34,11 +34,11 @@ class App extends Component {
         
           {/* 头部和侧边栏 */}
           <Route path='/index' render={()=>{
-                // if(document.cookie){
+                   if(document.cookie){
                     return <HeadSide />
-                // }else{  
-                    // return <Redirect to="/" />
-                // }
+                   }else{  
+                       return <Redirect to="/" />
+                   }
           }}/>
 
           {/* 首页 */}
