@@ -13,42 +13,42 @@ class Page extends Component {
     }
 
     jumpToPrev = ()=>{
-        let {page,getAccountData,history} = this.props;
+        let {page,getUserData,history} = this.props;
         let {currentPage} = this.state;
 
         currentPage--;
-        history.push('/index/account/page'+currentPage);
+        history.push('/index/user/page'+currentPage);
 
         this.pageInTr(currentPage);
     }
 
     jumpToNext = ()=>{
-        let {page,getAccountData,history} = this.props;
+        let {page,getUserData,history} = this.props;
         let {currentPage} = this.state;
 
         currentPage++;
-        history.push('/index/account/page'+currentPage);
+        history.push('/index/user/page'+currentPage);
 
         this.pageInTr(currentPage);
     }
 
     jumpToFirst = ()=>{
-        let {page,len,getAccountData,history} = this.props;
+        let {page,len,getUserData,history} = this.props;
         let {currentPage} = this.state;
 
         currentPage = 1;
         
-        history.push('/index/account/page'+currentPage);
+        history.push('/index/user/page'+currentPage);
 
         this.pageInTr(currentPage);
     }
 
     jumpToLast = ()=>{
-        let {page,len,getAccountData,history} = this.props;
+        let {page,len,getUserData,history} = this.props;
         let {currentPage} = this.state;
 
         currentPage = len;
-        history.push('/index/account/page'+currentPage);
+        history.push('/index/user/page'+currentPage);
 
         this.pageInTr(currentPage);
     }
@@ -56,14 +56,14 @@ class Page extends Component {
     //跳转到多少页
     jumpTo = (ev)=>{
         if(ev.keyCode===13){
-            let {page,len,getAccountData,history} = this.props;
+            let {page,len,getUserData,history} = this.props;
             let {currentPage} = this.state;
 
             currentPage = ev.target.value*1;
             if(currentPage>len){
                 currentPage = len;
             }
-            history.push('/index/account/page'+currentPage);
+            history.push('/index/user/page'+currentPage);
             ev.target.value = '';
 
             this.pageInTr(currentPage);
@@ -71,12 +71,12 @@ class Page extends Component {
     }
 
     pageInTr = (i)=>{
-        let {page,searchAccountData,searchName,searchKind,getAccountData} = this.props;
+        let {page,searchUserData,searchName,searchKind,getUserData} = this.props;
         this.setState({currentPage:i})
-        if(!searchName&&!searchKind){
-            getAccountData(i);
+        if(!searchName){
+            getUserData(i);
         }else{
-            searchAccountData(i,searchName,searchKind);
+            searchUserData(i,searchName);
         }
         page(i);
     }
@@ -143,7 +143,7 @@ class Page extends Component {
 
 export default connect((state,ownProps)=>{
     return {
-        dataAccount:state.reduceraccount,
+        datauser:state.reduceruser,
         url:ownProps.url
     };
 },dispatch=>bindActionCreators(actionCreators,dispatch))(withRouter(Page));

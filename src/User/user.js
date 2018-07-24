@@ -15,7 +15,6 @@ class User extends React.Component {
         this.state = { 
             //按名称查询
             searchName:'',
-            searchKind:'',
             //是否全选
             isCheckAll:false,
             //当前用户
@@ -45,10 +44,10 @@ class User extends React.Component {
     //初始化
     componentDidMount (){
         let {getUserData,getUserCount} = this.props;
-        let {searchName,searchKind} = this.state;
+        let {searchName} = this.state;
 
         getUserData(1);  
-        getUserCount(searchName,searchKind);  //走中间件
+        getUserCount(searchName);  
     }
 
     //修改查询名称
@@ -56,23 +55,17 @@ class User extends React.Component {
         this.setState({searchName:ev.target.value})
     }
 
-    //修改查询种类
-    select = (ev)=>{
-        this.setState({searchKind:ev.target.value})
-    }
-
     //查询
     search = ()=>{
-        let {getuserData,searchuserData,getuserCount,url:{history}} = this.props;
-        let {searchName,searchKind,currentPage} = this.state;
+        let {getUserData,searchUserData,getUserCount,history} = this.props;
+        let {searchName,currentPage} = this.state;
         
-        //获取会员
-        if(!searchName&&!searchKind){
-            getuserData(1);
-            getuserCount(searchName,searchKind);
+        if(!searchName){
+            getUserData(1);
+            getUserCount(searchName);
         }else{
-            searchuserData(1,searchName,searchKind); 
-            getuserCount(searchName,searchKind);
+            searchUserData(1,searchName); 
+            getUserCount(searchName);
         }
         history.push('page1');
         this.setState({currentPage:1});
@@ -129,21 +122,21 @@ class User extends React.Component {
     }
 
     submit = ()=>{
-        let {getuserData,getuserCount,adduser,editAccData} = this.props;
-        let {tanObj,id,searchName,searchKind,currentPage} = this.state;
+        let {getUserData,getUserCount,adduser,editAccData} = this.props;
+        let {tanObj,id,searchName,currentPage} = this.state;
         
         if(!id){
             //添加会员
             adduser(tanObj);  //往中间件中发送数据
             this.refs.tan.style.display = 'none';
-            getuserData(currentPage);
-            getuserCount(searchName,searchKind);
+            getUserData(currentPage);
+            getUserCount(searchName);
             this.tipShow('添加成功');
         }else{
             //修改会员
             editAccData(id,tanObj);  //往中间件中发送数据
-            getuserData(currentPage);
-            getuserCount(searchName,searchKind);
+            getUserData(currentPage);
+            getUserCount(searchName);
             this.refs.tan.style.display = 'none';
             this.tipShow('修改成功');
         }
@@ -151,58 +144,23 @@ class User extends React.Component {
 
     //删除一个
     del = (id)=>{
-        let {getuserData,datauser,getuserCount,delAccData, url:{history}} = this.props;
-        let {path,currentPage,searchName,searchKind} = this.state;
+        let {getUserData,datauser,getUserCount,delUserData,history} = this.props;
+        let {path,currentPage,searchName} = this.state;
         let ids = JSON.stringify([id]);
-        delAccData(ids);  //往中间件中发送数据
+        delUserData(ids);  //往中间件中发送数据
         let that = this;
         setTimeout(function(){
             if(datauser.users.length===1 &&currentPage>1){
                 currentPage--;
                 that.setState({currentPage});
                 history.push('/index/user/page'+ currentPage);
-                getuserCount(searchName,searchKind);
+                getUserCount(searchName);
             }else{
-                getuserData(currentPage);
-                getuserCount(searchName,searchKind);
+                getUserData(currentPage);
+                getUserCount(searchName);
             }
             that.tipShow('删除成功');
         },50);
-    }
-    
-    //点击批量删除
-    delMulti = ()=>{
-        let {datauser,getuserData,getuserCount,delAccData,url:{history}} = this.props;
-        let {currentPage,isCheckAll,idArray,level,searchName,searchKind} = this.state;
-
-        if(level>1){
-            this.tipShow('您的级别不够');
-            return;
-        }else{
-            //批量删除
-            let arr = [];
-            datauser.users.forEach(e=>{
-                if(e.checked){
-                    arr.push(e.id);
-                }
-            })
-            console.log(arr);
-            let ids = JSON.stringify(arr);
-            delAccData(ids);  //往中间件中发送数据
-            let that = this;
-            setTimeout(function(){
-                if(isCheckAll&&currentPage>1){
-                    currentPage--;
-                    that.setState({currentPage});
-                }
-                console.log(currentPage);
-                history.push('/index/user/page'+ currentPage);
-                getuserData(currentPage);
-                getuserCount(searchName,searchKind);
-                that.tipShow('删除成功');
-                that.setState({isCheckAll:false});
-            },50)
-        }
     }
 
     //提示框弹出
@@ -248,13 +206,13 @@ class User extends React.Component {
 
     render(){
         let {datauser,match:{params:{id}},history:{push}} = this.props; 
-        let {user,isTipShow,tanObj,tipInfo,id:tanId,isCheckAll,searchName,searchKind} = this.state; 
-        // console.log(id);
+        let {user,isTipShow,tanObj,tipInfo,id:tanId,isCheckAll,searchName} = this.state; 
+        console.log(datauser);
         let count = datauser.count;  //页码
         let currentPage = id.split('page')[1]*1;  //当前页
         let users = datauser.users;
         let title = tanId? '修改': '添加';
-        let newArr = [].map((e,i)=>{
+        let newArr = users.map((e,i)=>{
             let obj={
                 key:i,
                 i,
@@ -263,7 +221,9 @@ class User extends React.Component {
                 show:this.show,
                 del:this.del,
                 tipShow:this.tipShow,
-                cc:this.cc
+                cc:this.cc,
+                currentPage,
+                searchName
             }
             
             return <Tr {...obj} />;
@@ -292,22 +252,18 @@ class User extends React.Component {
                         {/* <button
                             onClick={this.add}
                         ><i className="fa fa-plus"></i>添加</button> */}
-                        <button 
+                        {/*<button 
                             className="red"
                             onClick={this.delMulti}
-                        ><i className="fa fa-trash"></i>批量删除</button>
+                        ><i className="fa fa-trash"></i>批量删除</button>*/}
                     </div>
                     <table className="newsTable">
                         <thead>
                         <tr>
-                            <th><input
-                                type="checkbox"
-                                checked={isCheckAll?'checked':''}
-                                onChange={this.checkAll}
-                            /></th>
                             <th>ID</th>
                             <th>会员名称</th>
                             <th>会员手机</th>
+                            <th>账号创建时间</th>
                             <th>账号状态</th>
                             <th>操作</th>
                         </tr>
@@ -321,7 +277,6 @@ class User extends React.Component {
                         currentPage={currentPage}
                         page={this.page}
                         searchName={searchName}
-                        searchKind={searchKind}
                     />
                 </div>
 

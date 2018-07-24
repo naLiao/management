@@ -42,7 +42,7 @@ class MyArticle extends React.Component {
                 path:'',
                 editor:'',
                 approve:'',
-                isTop:true,
+                isTop:false,
                 status:''
             }
          };
@@ -172,7 +172,7 @@ class MyArticle extends React.Component {
         tanObj.path = '';
         tanObj.editor = name;
         tanObj.approve = '';
-        tanObj.isTop = true;
+        tanObj.isTop = false;
         tanObj.status = '';
         this.setState({tanObj,id:''})
     }
@@ -426,9 +426,14 @@ class MyArticle extends React.Component {
         tanObj.approve = ev.target.value;
         this.setState({tanObj});
     }
-    changeTop = (ev)=>{
+    changeTopTrue = (ev)=>{
         let {tanObj} = this.state;
-        tanObj.top = ev.target.checked;
+        tanObj.isTop = true;
+        this.setState({tanObj});
+    }
+    changeTopFalse = (ev)=>{
+        let {tanObj} = this.state;
+        tanObj.isTop = false;
         this.setState({tanObj});
     }
 
@@ -445,7 +450,7 @@ class MyArticle extends React.Component {
 
     render(){
         let {dataMy,dataApprove,dataColumn} = this.props;
-        let {searchName,searchColumn,currentPage,kind,isTipShow,tanObj,tipInfo,name,level,isCheckAll} = this.state;
+        let {searchName,searchColumn,id,currentPage,kind,isTipShow,tanObj,tipInfo,name,level,isCheckAll} = this.state;
         
         let total = dataApprove.total;
         let count = dataMy.count;
@@ -517,6 +522,17 @@ class MyArticle extends React.Component {
                 <option key={i} value={e.path} >{e.column}</option>
             )
         })
+
+        //文章主体
+        let mainArr = [];
+        if(tanObj.main){
+            let str = tanObj.main.replace(/\s{2}/g,'aaa');
+            let arr = str.split('aaa');
+            mainArr = arr.map((e,i)=>{
+                return <p key={i}>{e}</p>
+            })
+            // console.log(mainArr);
+        }
 
         return (
             <div className="content1">
@@ -612,7 +628,7 @@ class MyArticle extends React.Component {
                                 <span>{tanObj.column}</span>
                                 <span>{tanObj.editor}</span>
                             </div>
-                            <p>{tanObj.main}</p>
+                            {mainArr}
                             {btns}
                         </div>
                         <span ref="tip" style={{'display':'none'}}>提交成功</span>
@@ -623,7 +639,7 @@ class MyArticle extends React.Component {
                     <div className="bg"></div>
                     <div className="tan_box">
                         <div className="tan_title clear">
-                            <span>修改</span>
+                            <span>{id===''?'添加':'修改'}</span>
                             <i
                                 onClick={this.closeTan}
                             >×</i>
@@ -648,6 +664,7 @@ class MyArticle extends React.Component {
                             <div className="input_info">
                                 <span>栏&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;目：</span>
                                 <select
+                                	value={tanObj.path}
                                     onChange={this.changeColumn}
                                 >
                                     <option disabled>请选择</option>
@@ -677,14 +694,17 @@ class MyArticle extends React.Component {
                                     type="radio" 
                                     name="radio" 
                                     checked={tanObj.isTop?true:false}
-                                    onChange={this.changeTop}
-                                    className="radio_btn" />
+                                    value="yes"
+                                    onChange={this.changeTopTrue}
+                                    className="radio_btn" 
+                                />
                                 <span>是</span>
-                                <input 
+                                <input  
                                     type="radio" 
                                     name="radio" 
+                                    value="no"
                                     checked={tanObj.isTop?false:true}
-                                    onChange={this.changeTop}
+                                    onChange={this.changeTopFalse}
                                     className="radio_btn" 
                                 />
                                 <span>否</span>

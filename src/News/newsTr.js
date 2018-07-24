@@ -68,9 +68,11 @@ class Tr extends React.Component {
                 circleClass = 'green';
         }
         circleClass += ' circle fa fa-circle';
+        
         let d = new Date();
         d.setTime(d.getTime(e.time));
         let time = d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();
+        
         return (
             <tr>
                 <td><input 

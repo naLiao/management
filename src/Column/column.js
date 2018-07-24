@@ -234,7 +234,7 @@ class Column extends React.Component {
 
     render(){
         let {getNewsData,dataColumn,url:{match:{params:{id}}},url:{history:{push}}} = this.props;  //栏目数据 新闻数据
-        let {isTipShow,path,tanObj,isCheckAll,tipInfo,searchName} = this.state;  //控制提示框是否出现
+        let {isTipShow,id:id1,path,tanObj,isCheckAll,tipInfo,searchName} = this.state;  //控制提示框是否出现
         let count = dataColumn.count;  //页码
         let currentPage = id.split('page')[1]*1;  //当前页
         let columns = dataColumn.columns;
@@ -316,7 +316,7 @@ class Column extends React.Component {
                     <div className="bg"></div>
                     <div className="tan_box">
                         <div className="tan_title clear">
-                            <span>修改</span>
+                            <span>{id1===''?'添加':'修改'}</span>
                             <i
                                 onClick={this.closeTan}
                             >×</i>

@@ -23,7 +23,7 @@ function getData(res){
 
 //新闻管理-获取页码
 export function getCount(searchName,searchColumn){
-    console.log(searchName,searchColumn);
+//  console.log(searchName,searchColumn);
     return (dispatch)=>{
         fetch(`http://127.0.0.1:88/api/news/getcount?title=${searchName}&column=${searchColumn}`)
         .then(e=>e.json())
@@ -603,10 +603,10 @@ function getuser(count,total){
 }
 
 //会员管理-查询数据-操作发起
-export function searchUserData(num,searchName,searchKind){
+export function searchUserData(num,searchName){
     return (dispatch)=>{
-        console.log(num,searchName,searchKind);
-        fetch(`http://127.0.0.1:88/api/user/search?page=${num}&account=${searchName}&kind=${searchKind}`)
+        console.log(num,searchName);
+        fetch(`http://127.0.0.1:88/api/user/searchname?page=${num}&username=${searchName}`)
         .then(e=>e.json())
         .then(res=>{
             dispatch(searchUserSuccess(res));
@@ -634,14 +634,12 @@ export function delUserData(ids){
 }
 
 //会员管理-修改数据-操作发起
-export function editUserData(id,obj){
+export function editUserData(id,status){
     return (dispatch)=>{
-        obj.id=id;
-        console.log(obj);
         
         fetch('http://127.0.0.1:88/api/user/edit',{
             method:"post",
-            body :new URLSearchParams(obj).toString(),
+            body :new URLSearchParams({id,status}).toString(),
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
@@ -650,7 +648,7 @@ export function editUserData(id,obj){
         .then(data => {
             console.log(data);
             if(data.code===0){
-                console.log('成功');
+                console.log('修改成功');
             }else if(data.code===-1){
                 console.log('修改失败');
             }

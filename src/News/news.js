@@ -36,7 +36,7 @@ class News extends React.Component {
                 path:'',
                 editor:'',
                 approve:'',
-                isTop:true,
+                isTop:false,
                 status:''
             }
          };
@@ -119,24 +119,32 @@ class News extends React.Component {
             path:'',
             editor:'',
             approve:'',
-            isTop:true,
+            isTop:false,
             status:''
         },id:''})
     }
 
     //修改新闻
     show = (e)=>{
-        this.setState({tanObj:e,id:e.id});
+        this.setState({
+        	tanObj:e,
+        	id:e.id
+        });
         this.refs.tan.style.display = 'block';
     }
 
     submit = async ()=>{
-        let {tanObj,id,currentPage} = this.state;
+        let {getNewsData,getCount} = this.props;
+        let {tanObj,id,currentPage,searchName,searchColumn} = this.state;
         //修改新闻
         let {editNewsData} = this.props;
         editNewsData(id,tanObj,'审核中');  //往中间件中发送数据
         this.refs.tan.style.display = 'none';
         this.tipShow('修改成功');
+        setTimeout(function(){
+        	getNewsData(currentPage);
+        	getCount(searchName,searchColumn);
+        },50);
     }
 
     //保存稿件
@@ -247,9 +255,14 @@ class News extends React.Component {
         tanObj.approve = ev.target.value;
         this.setState({tanObj});
     }
-    changeTop = (ev)=>{
+    changeTopTrue = (ev)=>{
         let {tanObj} = this.state;
-        tanObj.top = ev.target.checked;
+        tanObj.isTop = true;
+        this.setState({tanObj});
+    }
+    changeTopFalse = (ev)=>{
+        let {tanObj} = this.state;
+        tanObj.isTop = false;
         this.setState({tanObj});
     }
 
@@ -263,7 +276,7 @@ class News extends React.Component {
         let {isTipShow,tanObj,tipInfo,searchName,searchColumn,name,level,isCheckAll} = this.state;
         let count = dataNews.count;  //页码
         let currentPage = id.split('page')[1]*1;  //当前页
-        // console.log(dataNews);
+           console.log(dataNews);
         
         //根据组件内的新闻数据渲染页面
         let newArr = dataNews.news.map((e,i)=>{
@@ -397,6 +410,7 @@ class News extends React.Component {
                             <div className="input_info">
                                 <span>栏&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;目：</span>
                                 <select
+                                	value={tanObj.path}
                                     onChange={this.changeColumn}
                                 >
                                     <option disabled>请选择</option>
@@ -426,14 +440,17 @@ class News extends React.Component {
                                     type="radio" 
                                     name="radio" 
                                     checked={tanObj.isTop?true:false}
-                                    onChange={this.changeTop}
-                                    className="radio_btn" />
+                                    value="yes"
+                                    onChange={this.changeTopTrue}
+                                    className="radio_btn" 
+                                />
                                 <span>是</span>
-                                <input 
+                                <input  
                                     type="radio" 
                                     name="radio" 
+                                    value="no"
                                     checked={tanObj.isTop?false:true}
-                                    onChange={this.changeTop}
+                                    onChange={this.changeTopFalse}
                                     className="radio_btn" 
                                 />
                                 <span>否</span>
